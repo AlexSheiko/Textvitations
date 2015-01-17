@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:descendantFocusability="blocksDescendants"
+	android:paddingLeft="@dimen/aviary_iap_list_item_padding_left"
+	android:paddingRight="@dimen/aviary_iap_list_item_padding_right"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_weight="1">
+
+	<RelativeLayout
+		android:paddingTop="@dimen/aviary_iap_list_item_padding_top"
+		android:paddingBottom="@dimen/aviary_iap_list_item_padding_bottom"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<ImageView
+			android:id="@+id/aviary_image"
+			android:layout_width="@dimen/aviary_store_list_icon_size"
+			android:layout_height="@dimen/aviary_store_list_icon_size"
+			android:layout_marginRight="10dip"
+			android:layout_centerVertical="true"
+			android:adjustViewBounds="false"
+			android:scaleType="fitXY"
+			android:src="@drawable/aviary_store_placeholder" />
+
+		<com.aviary.android.feather.sdk.widget.AviaryTextView
+			android:layout_toRightOf="@+id/aviary_image"
+			android:layout_alignTop="@+id/aviary_image"
+			android:id="@+id/aviary_title"
+			style="@style/AviaryStoreListItemTitle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="0dip" />
+
+		<com.aviary.android.feather.sdk.widget.AviaryTextView
+			android:layout_toRightOf="@+id/aviary_image"
+			android:layout_below="@+id/aviary_title"
+			android:id="@+id/aviary_text"
+			style="@style/AviaryStoreListItemSubTitle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="0dip" />
+
+		<include
+			layout="@layout/aviary_store_buy_button"
+			android:layout_height="wrap_content"
+			android:layout_width="@dimen/aviary_store_list_buy_button_width"
+			android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" />
+
+	</RelativeLayout>
+
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/aviary_iap_list_divider_height"
+		android:background="@color/aviary_iap_list_divider"
+		android:layout_alignParentBottom="true" />
+</RelativeLayout>

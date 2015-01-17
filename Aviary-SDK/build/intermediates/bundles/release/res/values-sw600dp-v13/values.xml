@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp/aviary_config.xml -->
+    <eat-comment/>
+    <bool name="aviary_is_tablet">true</bool>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp/aviary_dimens.xml -->
+    <eat-comment/>
+    <dimen name="aviary_focus_button_padding_left">28dip</dimen>
+    <dimen name="aviary_focus_button_padding_right">28dip</dimen>
+    <dimen name="aviary_iap_list_item_padding_bottom">5dip</dimen>
+    <dimen name="aviary_iap_list_item_padding_left">10dip</dimen>
+    <dimen name="aviary_iap_list_item_padding_right">10dip</dimen>
+    <dimen name="aviary_iap_list_item_padding_top">5dip</dimen>
+    <dimen name="aviary_iap_list_padding_top">10dip</dimen>
+    <dimen name="aviary_store_detail_description_size">20sp</dimen>
+    <dimen name="aviary_store_detail_image_height_iap2">283dip</dimen>
+    <dimen name="aviary_store_detail_image_right_margin">20dip</dimen>
+    <dimen name="aviary_store_detail_passport_banner_v_margin">20dip</dimen>
+    <dimen name="aviary_store_detail_subscription_size">18sp</dimen>
+    <dimen name="aviary_store_detail_title_size">30sp</dimen>
+    <dimen name="aviary_store_list_item_title_size">22sp</dimen>
+    <dimen name="aviary_subscription_textarea_height">200dip</dimen>
+    <dimen name="aviary_textSizeLarge">24sp</dimen>
+    <dimen name="aviary_textSizeMedium">16sp</dimen>
+    <dimen name="aviary_textSizeMediumBigger">18sp</dimen>
+    <dimen name="aviary_textSizeSmall">14sp</dimen>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_adjust_item_weight">25</integer>
+    <integer name="aviary_color_splash_item_weight">10</integer>
+    <integer name="aviary_enhance_item_weight">10</integer>
+    <integer name="aviary_iap_dialog_cols_effects">3</integer>
+    <integer name="aviary_iap_dialog_cols_stickers">5</integer>
+    <integer name="aviary_iap_dialog_height_weight">75</integer>
+    <integer name="aviary_iap_dialog_margin_top_weight">8</integer>
+    <integer name="aviary_iap_dialog_rows_effects">2</integer>
+    <integer name="aviary_iap_dialog_rows_stickers">3</integer>
+    <integer name="aviary_iap_dialog_width_weight">80</integer>
+    <integer name="aviary_seekbar_weight">80</integer>
+    <integer name="aviary_sticker_opacity_confirm_button_weight">10</integer>
+    <integer name="aviary_sticker_opactiy_slider_weight">50</integer>
+    <integer name="aviary_store_detail_cols_effects">3</integer>
+    <integer name="aviary_store_detail_cols_frames">4</integer>
+    <integer name="aviary_store_detail_cols_stickers">4</integer>
+    <integer name="aviary_wheel_weight">80</integer>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp/aviary_styles.xml -->
+    <eat-comment/>
+    <style name="AviaryConsolidatedAdjustButtons">
+		<item name="android:layout_width">400dip</item>
+	</style>
+</resources>

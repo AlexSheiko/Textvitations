@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-pt/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navegar para a página inicial"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Navegar para cima"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Mais opções"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Concluído"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Ver tudo"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Selecione um aplicativo"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Limpar consulta"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Consulta de pesquisa"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Pesquisar"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Enviar consulta"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Pesquisa por voz"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Compartilhar com"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Compartilhar com %s"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-pt/values.xml -->
+    <eat-comment/>
+    <string name="confirm_quit_message">Espere! Você não gravou as alterações. Tem certeza que quer fechar este editor?</string>
+    <string name="feather_about_dialog_message">O Aviary é a plataforma líder mundial de edição de fotos. Desenvolvedores: saibam como adicioná-lo ao seu aplicativo em minutos.</string>
+    <string name="feather_activity_not_found">Desculpe, mas não há nenhuma aplicação no seu aparelho para realizar esta ação. Quer tentar fazer agora download de uma aplicação?</string>
+    <string name="feather_adjust">Orientação</string>
+    <string name="feather_apply">Aplicar</string>
+    <string name="feather_applying_actions_counter">A aplicar ação %1$d de %2$d</string>
+    <string name="feather_attention">Atenção</string>
+    <string name="feather_blemish">Borrar</string>
+    <string name="feather_blur">Borrar</string>
+    <string name="feather_borders">Molduras</string>
+    <string name="feather_brightness">Brilho</string>
+    <string name="feather_cancel">Cancelar</string>
+    <string name="feather_circle">Círculo</string>
+    <string name="feather_close">Fechar</string>
+    <string name="feather_colorfix">Correção de cor</string>
+    <string name="feather_confirm">Confirmar</string>
+    <string name="feather_contrast">Contraste</string>
+    <string name="feather_crop">Recortar</string>
+    <string name="feather_custom">Personalizado</string>
+    <string name="feather_delete">Apagar</string>
+    <string name="feather_details">Detalhes</string>
+    <string name="feather_draw">Desenhar</string>
+    <string name="feather_edit_bottom_text">Editar subescrito</string>
+    <string name="feather_edit_top_text">Editar sobrescrito</string>
+    <string name="feather_edit_your_photo">Editor de Fotos</string>
+    <string name="feather_effect_loading_message">A aplicar efeitos</string>
+    <string name="feather_effects">Efeitos</string>
+    <string name="feather_enhance">Realçar</string>
+    <string name="feather_enter_text_here">Escreva o texto aqui</string>
+    <string name="feather_error_download_image_message">Houve um erro fazer download da imagem. Tente novamente mais tarde.</string>
+    <string name="feather_error_saving_image">Oops, ocorreu um erro ao tentar gravar a imagem.</string>
+    <string name="feather_feedback">Comentário</string>
+    <string name="feather_feedback_dialog_message">Tem uma sugestão para melhorar este editor de fotos? Conte para nós.</string>
+    <string name="feather_flip">Virar</string>
+    <string name="feather_generic_error_title">Erro</string>
+    <string name="feather_hidef">Alta definição</string>
+    <string name="feather_illuminate">Iluminar</string>
+    <string name="feather_infoscreen_bottom_button">Sobre este editor</string>
+    <string name="feather_keep_editing">Continuar a editar</string>
+    <string name="feather_loading_image">A carregar imagem...</string>
+    <string name="feather_loading_title">A carregar</string>
+    <string name="feather_meme">Meme</string>
+    <string name="feather_message_button_no">Não, obrigado.</string>
+    <string name="feather_message_button_yes">Claro!</string>
+    <string name="feather_original">Original</string>
+    <string name="feather_overlay_blemish_close_text">Experimente a nova ferramenta &lt;b>Desfocar&lt;/b>!</string>
+    <string name="feather_overlay_blemish_close_title">À procura da velha Mancha?</string>
+    <string name="feather_powered_by_aviary">Desenvolvido por Aviary.com</string>
+    <string name="feather_rectangle">Retângulo</string>
+    <string name="feather_red_eye">Olhos</string>
+    <string name="feather_revert_dialog_message">Está prestes a perder todas as alterações que fez. Tem certeza de que quer reverter para a imagem original?</string>
+    <string name="feather_revert_dialog_title">Reverter para o original?</string>
+    <string name="feather_rotate">Rodar</string>
+    <string name="feather_saturation">Saturação</string>
+    <string name="feather_save">Feito</string>
+    <string name="feather_save_progress">A gravar...</string>
+    <string name="feather_send_feedback">Enviar comentário</string>
+    <string name="feather_shapes">Formatos</string>
+    <string name="feather_sharpen">Nitidez</string>
+    <string name="feather_square">Quadrado</string>
+    <string name="feather_stickers">Autocolantes</string>
+    <string name="feather_store_title">Loja Aviária</string>
+    <string name="feather_text">Texto</string>
+    <string name="feather_tool">Ferramenta</string>
+    <string name="feather_tool_leave_question">Tem certeza que quer rejeitar as alterações feitas com esta ferramenta?</string>
+    <string name="feather_tool_temperature">Temperatura</string>
+    <string name="feather_tool_tiltshift">Foco</string>
+    <string name="feather_version">Versão</string>
+    <string name="feather_welcome_to_frames">Bem-vindo às Molduras!</string>
+    <string name="feather_welcome_to_stickers">Bem-vindo aos Adesivos!</string>
+    <string name="feather_whiten">Clarear</string>
+    <string name="feather_yes_leave">Sair do editor</string>
+    <string name="feather_zoom_mode">Modo de zoom</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-v11/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_feature_image_cycle_time">10000</integer>
+</resources>

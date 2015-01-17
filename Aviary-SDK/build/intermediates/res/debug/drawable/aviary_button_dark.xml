@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item>
+		<shape android:shape="rectangle">
+			<corners android:radius="5dip"></corners>
+			<solid android:color="#ff08090a"></solid>
+		</shape>
+	</item>
+
+	<item android:top="1dip" android:bottom="1dip" android:left="1dip" android:right="1dip">
+		<shape android:shape="rectangle">
+			<corners android:radius="4dip"></corners>
+			<solid android:color="#4ca9acb4"></solid>
+		</shape>
+	</item>
+
+	<item android:top="2dip" android:bottom="1dip" android:left="1dip" android:right="1dip">
+		<shape android:shape="rectangle" >
+			<gradient
+				android:angle="270"
+				android:centerX="50%p"
+				android:centerY="50%p"
+				android:startColor="#ff1c2025"
+				android:endColor="#ff08090a"
+				android:type="linear" />
+
+			<corners android:radius="4dip"/>
+
+		</shape>
+	</item>
+
+</layer-list><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_button_dark.xml -->

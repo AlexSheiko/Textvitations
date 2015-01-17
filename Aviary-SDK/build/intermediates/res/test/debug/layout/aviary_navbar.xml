@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aviary.android.feather.sdk.widget.AviaryNavBarViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+	style="?attr/aviaryNavBarStyle"
+	android:layout_width="match_parent"
+	android:layout_height="?attr/actionBarSize">
+
+	<!-- child: 0 -->
+	<!-- default view (title and apply button) -->
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center_vertical"
+		android:paddingLeft="12dip">
+
+		<com.aviary.android.feather.sdk.widget.AviaryTextView
+			android:id="@+id/navbar_text1"
+			style="?attr/aviaryNavTitleStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:focusable="false"
+			android:text="@string/feather_edit_your_photo" />
+
+		<ProgressBar
+			android:id="@+id/navbar_progress1"
+			style="?android:attr/indeterminateProgressStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/navbar_divider1"
+			android:indeterminate="true"
+			android:visibility="gone"
+			android:minWidth="@dimen/aviary_action_bar_progress_bar_size"
+			android:maxWidth="@dimen/aviary_action_bar_progress_bar_size"
+			android:minHeight="@dimen/aviary_action_bar_progress_bar_size"
+			android:maxHeight="@dimen/aviary_action_bar_progress_bar_size" />
+
+		<LinearLayout
+			android:id="@+id/navbar_divider1"
+			style="?attr/aviaryNavDividerStyle"
+			android:layout_toLeftOf="@+id/navbar_button1"
+			android:orientation="horizontal" />
+
+		<com.aviary.android.feather.sdk.widget.AviaryButton
+			android:id="@+id/navbar_button1"
+			style="?attr/aviaryNavButtonApplyStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:text="@string/feather_save" />
+	</RelativeLayout>
+
+	<!-- child: 1 -->
+	<!-- tools view, tool title and done button -->
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center_vertical"
+		android:paddingLeft="12dip">
+
+		<TextSwitcher
+			android:id="@+id/navbar_text2"
+			style="?aviaryNavTitleStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:animateFirstView="false" />
+
+		<ProgressBar
+			android:id="@+id/navbar_progress2"
+			style="?android:attr/indeterminateProgressStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/navbar_divider2"
+			android:indeterminate="true"
+			android:visibility="invisible"
+			android:minWidth="@dimen/aviary_action_bar_progress_bar_size"
+			android:minHeight="@dimen/aviary_action_bar_progress_bar_size"
+			android:maxWidth="@dimen/aviary_action_bar_progress_bar_size"
+			android:maxHeight="@dimen/aviary_action_bar_progress_bar_size" />
+
+		<LinearLayout
+			android:id="@+id/navbar_divider2"
+			style="?attr/aviaryNavDividerStyle"
+			android:layout_toLeftOf="@+id/navbar_button2"
+			android:orientation="horizontal" />
+
+		<com.aviary.android.feather.sdk.widget.AviaryButton
+			android:id="@+id/navbar_button2"
+			style="?attr/aviaryNavButtonStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:text="@string/feather_apply" />
+	</RelativeLayout>
+
+</com.aviary.android.feather.sdk.widget.AviaryNavBarViewFlipper><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/layout/aviary_navbar.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/layout/aviary_navbar.xml -->

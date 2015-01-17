@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-cs/strings.xml -->
+    <eat-comment/>
+    <string name="confirm_quit_message">Počkejte! Neuložili jste svou práci. Opravdu chcete editor zavřít?</string>
+    <string name="feather_activity_not_found">Omlouvám se, ale na Vašem zařízení není aplikace, která toto umí. Chcete jí nyní stáhnout z obchodu?</string>
+    <string name="feather_adjust">Orientace</string>
+    <string name="feather_apply">Použít</string>
+    <string name="feather_applying_actions_counter">Provádím akci %1$d z %2$d</string>
+    <string name="feather_attention">Pozor</string>
+    <string name="feather_blemish">Zašpinit</string>
+    <string name="feather_blur">Rozmazání</string>
+    <string name="feather_borders">Rámečky</string>
+    <string name="feather_brightness">Jas</string>
+    <string name="feather_cancel">Zrušit</string>
+    <string name="feather_close">Zavřít</string>
+    <string name="feather_confirm">Potvrdit</string>
+    <string name="feather_contrast">Kontrast</string>
+    <string name="feather_crop">Ořez</string>
+    <string name="feather_custom">Vlastní</string>
+    <string name="feather_delete">Smazat</string>
+    <string name="feather_details">Detaily</string>
+    <string name="feather_draw">Kreslit</string>
+    <string name="feather_edit_bottom_text">Upravit spodní text</string>
+    <string name="feather_edit_top_text">Upravit vrchní text</string>
+    <string name="feather_edit_your_photo">Editor fotografií</string>
+    <string name="feather_effect_loading_message">Aplikuji efekty</string>
+    <string name="feather_effects">Efekty</string>
+    <string name="feather_enhance">Vylepšit</string>
+    <string name="feather_enter_text_here">Zde vložte text</string>
+    <string name="feather_error_download_image_message">Došlo k chybě při stahování obrázku. Zkuste to prosím znovu.</string>
+    <string name="feather_error_saving_image">Jejda, došlo k chybě při ukládání obrázku!</string>
+    <string name="feather_flip">Převrátit</string>
+    <string name="feather_generic_error_title">Chyba</string>
+    <string name="feather_infoscreen_bottom_button">O tomto editoru</string>
+    <string name="feather_keep_editing">Pokračovat v úpravách</string>
+    <string name="feather_loading_image">Nahrávám obrázek...</string>
+    <string name="feather_loading_title">Nahrávám</string>
+    <string name="feather_meme">Meme</string>
+    <string name="feather_original">Původní</string>
+    <string name="feather_powered_by_aviary">Powered by Aviary.com</string>
+    <string name="feather_red_eye">Červené oči</string>
+    <string name="feather_revert_dialog_message">Tímto ztratíte všechny změny, které jste provedli. Vážně se chcete vrátit k původnímu obrázku?</string>
+    <string name="feather_revert_dialog_title">Vrátit do původního stavu?</string>
+    <string name="feather_rotate">Otočit</string>
+    <string name="feather_saturation">Saturace</string>
+    <string name="feather_save">Hotovo</string>
+    <string name="feather_save_progress">Ukládám...</string>
+    <string name="feather_sharpen">Ostrost</string>
+    <string name="feather_square">Čtverec</string>
+    <string name="feather_stickers">Samolepky</string>
+    <string name="feather_text">Text</string>
+    <string name="feather_tool">Nástroj</string>
+    <string name="feather_tool_leave_question">Opravdu chcete zrušit změny provedené tímto nástrojem?</string>
+    <string name="feather_tool_temperature">Teplota</string>
+    <string name="feather_whiten">Vybělit</string>
+    <string name="feather_yes_leave">Opustit editor</string>
+    <string name="feather_zoom_mode">Mód zoomu</string>
+</resources>

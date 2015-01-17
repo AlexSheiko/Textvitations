@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-sw360dp-v13/values.xml -->
+    <eat-comment/>
+    <dimen name="aviary_store_detail_image_height_iap2">212dip</dimen>
+</resources>

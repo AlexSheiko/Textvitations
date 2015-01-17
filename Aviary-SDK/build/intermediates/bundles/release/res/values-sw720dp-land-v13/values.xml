@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw720dp-land/aviary_dimens.xml -->
+    <eat-comment/>
+    <dimen name="aviary_store_detail_image_height_iap2">302dip</dimen>
+    <dimen name="aviary_store_featured_image_landscape">300dip</dimen>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw720dp-land/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_iap_dialog_cols_effects">3</integer>
+    <integer name="aviary_iap_dialog_cols_stickers">6</integer>
+    <integer name="aviary_iap_dialog_height_weight">87</integer>
+    <integer name="aviary_iap_dialog_margin_top_weight">6</integer>
+    <integer name="aviary_iap_dialog_rows_effects">2</integer>
+    <integer name="aviary_iap_dialog_rows_stickers">3</integer>
+    <integer name="aviary_iap_dialog_width_weight">40</integer>
+</resources>

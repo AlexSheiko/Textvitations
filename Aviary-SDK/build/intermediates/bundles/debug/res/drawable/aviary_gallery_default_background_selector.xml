@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- color selector for the gallery items -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true" android:state_pressed="false" android:drawable="@color/aviary_gallery_item_background_color2"/>
+
+    <item android:state_selected="false" android:state_pressed="true" android:drawable="@color/aviary_gallery_item_background_color3"/>
+
+    <item android:state_selected="true" android:state_pressed="true" android:drawable="@color/aviary_gallery_item_background_color3"/>
+
+    <item android:drawable="@android:color/transparent"/>
+
+</selector><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_gallery_default_background_selector.xml -->

@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.aviary.android.feather.library.Constants;
+import com.aviary.android.feather.sdk.FeatherActivity;
+
 import sheyko.aleksey.eventy.util.IabHelper;
 import sheyko.aleksey.eventy.util.IabResult;
 import sheyko.aleksey.eventy.util.Inventory;
@@ -193,15 +196,14 @@ public class CategoryActivity extends ListActivity {
             tools = new String[]{"TEXT", "DRAW", "CROP"};
         }
 
-//        TODO: Start Aviary intent
-//        Intent aviaryIntent = new Intent(CategoryActivity.this, FeatherActivity.class);
-//        aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
-//        aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
-//        aviaryIntent.setData(Uri.parse(sharedPref.getString("image_path", null)));
-//
-//        aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
-//        aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
-//        startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
+        Intent aviaryIntent = new Intent(CategoryActivity.this, FeatherActivity.class);
+        aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
+        aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
+        aviaryIntent.setData(Uri.parse(sharedPref.getString("image_path", null)));
+
+        aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
+        aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
+        startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
     }
 }
 

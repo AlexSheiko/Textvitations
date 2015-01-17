@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-sw720dp-v13/values.xml -->
+    <eat-comment/>
+    <dimen name="aviary_store_detail_image_height_iap2">377dip</dimen>
+    <integer name="aviary_iap_dialog_cols_effects">3</integer>
+    <integer name="aviary_iap_dialog_cols_stickers">5</integer>
+    <integer name="aviary_iap_dialog_height_weight">62</integer>
+    <integer name="aviary_iap_dialog_margin_top_weight">10</integer>
+    <integer name="aviary_iap_dialog_rows_effects">2</integer>
+    <integer name="aviary_iap_dialog_rows_stickers">3</integer>
+    <integer name="aviary_iap_dialog_width_weight">80</integer>
+</resources>

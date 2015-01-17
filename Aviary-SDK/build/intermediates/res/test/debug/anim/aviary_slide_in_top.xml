@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+	android:duration="@android:integer/config_shortAnimTime"
+	android:interpolator="@android:anim/decelerate_interpolator"
+	android:shareInterpolator="true">
+	<translate
+		android:fromYDelta="-30%p"
+		android:toYDelta="0" />
+	<alpha
+		android:fromAlpha="0.0"
+		android:toAlpha="1.0" />
+</set><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/anim/aviary_slide_in_top.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/anim/aviary_slide_in_top.xml -->

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-zh-rTW/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"瀏覽首頁"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"向上瀏覽"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"更多選項"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"完成"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"查看全部"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"選擇應用程式"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"清除查詢"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"搜尋查詢"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"搜尋"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"提交查詢"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"語音搜尋"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"選擇分享對象"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"與「%s」分享"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-zh-rTW/strings.xml -->
+    <eat-comment/>
+    <string name="aviary_passport">護照</string>
+    <string name="aviary_subscription_tier1_description">一個月</string>
+    <string name="aviary_subscription_tier2_description">一年</string>
+    <string name="confirm_quit_message">請稍等！您還沒有儲存您的修改。您確定要關閉此編輯器嗎？</string>
+    <string name="feather_about_dialog_message">Aviary是全世界首屈一指的相片編輯平台。程式開發員：學習如何在幾分鐘之內就把Aviary增加到你們的應用程式裡。</string>
+    <string name="feather_acc_a_sticker">一張貼圖</string>
+    <string name="feather_acc_color">顏色</string>
+    <string name="feather_acc_decrease_value">減少數值</string>
+    <string name="feather_acc_flip_h">水平翻轉</string>
+    <string name="feather_acc_flip_v">垂直翻轉</string>
+    <string name="feather_acc_increase_value">增加數值</string>
+    <string name="feather_acc_lens_toggle">定點縮放</string>
+    <string name="feather_acc_rotate_ccw">逆時針旋轉</string>
+    <string name="feather_acc_rotate_cw">順時針旋轉</string>
+    <string name="feather_acc_size">尺寸</string>
+    <string name="feather_adjust">方向</string>
+    <string name="feather_an_error_occurred">發生一項錯誤</string>
+    <string name="feather_apply">套用</string>
+    <string name="feather_attention">注意</string>
+    <string name="feather_blemish">清除污點</string>
+    <string name="feather_blemish_tool_tip">輕按</string>
+    <string name="feather_blur">模糊</string>
+    <string name="feather_borders">幀</string>
+    <string name="feather_borders_dialog_first_time">開始安裝免費的Aviary高解析度精美相框</string>
+    <string name="feather_brightness">亮度</string>
+    <string name="feather_cancel">取消</string>
+    <string name="feather_cant_undo_anymore">無法還原更多</string>
+    <string name="feather_cant_undo_anymore_text">長按照片來恢復原始圖像。</string>
+    <string name="feather_circle">圓形</string>
+    <string name="feather_close">關閉</string>
+    <string name="feather_colorfix">色彩修正</string>
+    <string name="feather_colorsplash_eraser">橡皮擦</string>
+    <string name="feather_colorsplash_free">自由玩色</string>
+    <string name="feather_colorsplash_smart">智慧配色</string>
+    <string name="feather_confirm">確認</string>
+    <string name="feather_contrast">對比度</string>
+    <string name="feather_crop">裁切</string>
+    <string name="feather_custom">自訂</string>
+    <string name="feather_delete">刪除</string>
+    <string name="feather_details">詳情</string>
+    <string name="feather_download">下載</string>
+    <string name="feather_download_start_failed">購買失敗，請再試一次。</string>
+    <string name="feather_draw">繪圖</string>
+    <string name="feather_edit_bottom_text">編輯底部文字</string>
+    <string name="feather_edit_top_text">編輯頂部文字</string>
+    <string name="feather_edit_your_photo">照片編輯器</string>
+    <string name="feather_effect_intensity_tooltip">向上或向下滑動以調整強度</string>
+    <string name="feather_effect_loading_message">套用效果</string>
+    <string name="feather_effects">效果</string>
+    <string name="feather_enhance">增強</string>
+    <string name="feather_enhance_effect_food">食物</string>
+    <string name="feather_enhance_effect_night">夜晚</string>
+    <string name="feather_enhance_effect_portrait">人像</string>
+    <string name="feather_enhance_effect_scenery">風景</string>
+    <string name="feather_enter_text_here">在此輸入文字</string>
+    <string name="feather_error_download_image_message">下載圖片時出現錯誤，請於稍後重試</string>
+    <string name="feather_featured">特色</string>
+    <string name="feather_feedback">意見回饋</string>
+    <string name="feather_feedback_dialog_message">有可以改善這個相片編輯器的建議嗎？請告知我們。</string>
+    <string name="feather_filters">篩選器</string>
+    <string name="feather_flip">翻轉</string>
+    <string name="feather_generic_error_title">錯誤</string>
+    <string name="feather_get_more">購買</string>
+    <string name="feather_hidef">高解析度</string>
+    <string name="feather_iap_download">免費</string>
+    <string name="feather_iap_download_failed">下載失敗</string>
+    <string name="feather_iap_failed_download_informations">所需資訊下載失敗</string>
+    <string name="feather_iap_failed_download_previews">預覽下載失敗</string>
+    <string name="feather_iap_install">安裝</string>
+    <string name="feather_iap_notification_installed_summary">外掛程式已成功安裝</string>
+    <string name="feather_iap_owned">已安裝</string>
+    <string name="feather_iap_pack_installed">已安裝</string>
+    <string name="feather_iap_restore">復原</string>
+    <string name="feather_iap_restore_all">全部復原</string>
+    <string name="feather_iap_restore_all_failed">修復全部失敗</string>
+    <string name="feather_iap_restore_all_in_progress">修復全部進行中</string>
+    <string name="feather_iap_restore_all_summary">已購買過？點擊下方以免費復原你所有的內部購買。</string>
+    <string name="feather_iap_retry">重試</string>
+    <string name="feather_iap_subscription_banner_text">「使用 Aviary 護照，低價取得此套件和其他多種 Aviary 特效！」</string>
+    <string name="feather_iap_unavailable">無法使用</string>
+    <string name="feather_iap_uninstall">解除安裝</string>
+    <string name="feather_illuminate">照明</string>
+    <string name="feather_infoscreen_bottom_button">關於此編輯器</string>
+    <string name="feather_keep_editing">繼續編輯</string>
+    <string name="feather_loading_image">正在載入圖片...</string>
+    <string name="feather_loading_title">正在載入</string>
+    <string name="feather_meme">瀰因</string>
+    <string name="feather_message_button_no">不了，謝謝</string>
+    <string name="feather_message_button_yes">當然了！</string>
+    <string name="feather_new_stickers">新貼圖</string>
+    <string name="feather_notification_n_items_cant_be_restored">有%1$s個項目無法修復</string>
+    <string name="feather_notification_no_items_to_restore">沒有需要修復的項目</string>
+    <string name="feather_notification_plugins_installed_count">已安裝%1$d個外掛程式</string>
+    <string name="feather_notification_plus_more">還有%1$d個</string>
+    <string name="feather_notification_restore_all_completed">修復全部完成</string>
+    <string name="feather_notification_some_items_cant_be_restored">有些項目無法修復</string>
+    <string name="feather_ops_error_download_image">我們遇到連線問題:(</string>
+    <string name="feather_original">原始照片</string>
+    <string name="feather_overlay_blemish_close_text">看看新的&lt;b>模糊&lt;/b> 工具！</string>
+    <string name="feather_overlay_blemish_close_title">在找舊的清除污點工具嗎？</string>
+    <string name="feather_overlay_blemish_tap_text">輕按以去除瑕疵。</string>
+    <string name="feather_overlay_stickers_text">安裝這個免費套包立即開始！</string>
+    <string name="feather_overlay_tap_title">輕按</string>
+    <string name="feather_overlay_undo_title">滑動螢幕來還原或重做編輯</string>
+    <string name="feather_overlay_zoom_text">你也可以輕捏進行縮放！</string>
+    <string name="feather_overlay_zoom_title">縮放</string>
+    <string name="feather_passport">Aviary 護照</string>
+    <string name="feather_please_try_again_later">請稍候再試</string>
+    <string name="feather_powered_by_aviary">由Aviary.com 提供技術支援</string>
+    <string name="feather_rectangle">長方形</string>
+    <string name="feather_red_eye">消除紅眼</string>
+    <string name="feather_redo">重做</string>
+    <string name="feather_refresh">更新</string>
+    <string name="feather_restore_all_request_sent">請求已寄出。請檢視您裝置中的通知區域來取得詳情</string>
+    <string name="feather_revert_dialog_message">你的所有改動將會丟失。 確定要恢復到原始圖片嗎？</string>
+    <string name="feather_revert_dialog_title">恢復到原始狀態？</string>
+    <string name="feather_rotate">旋轉</string>
+    <string name="feather_saturation">飽和度</string>
+    <string name="feather_save">完成</string>
+    <string name="feather_see_more">更多資訊</string>
+    <string name="feather_send_feedback">寄出意見回饋</string>
+    <string name="feather_settings_join_beta_description">提早享受新的特色工具並幫忙建立一個更棒的 Aviary！</string>
+    <string name="feather_settings_join_beta_title">加入 Aviary Beta</string>
+    <string name="feather_shapes">形狀</string>
+    <string name="feather_sharpen">銳利度</string>
+    <string name="feather_square">和諧</string>
+    <string name="feather_sticker_flip_tooltip">點按來翻轉這張貼紙</string>
+    <string name="feather_stickers">貼紙</string>
+    <string name="feather_stickers_dialog_first_time">開始安裝免費的Aviary高解析度精美貼紙包</string>
+    <string name="feather_store_ask_uninstall_free_body">這是個免費的限量版套裝。一旦解除安裝，將來可能無法再次恢復。</string>
+    <string name="feather_store_checking_additional_packs">正檢查你是否仍有額外的套裝……</string>
+    <string name="feather_store_connection_problem">連結至 Google Play 商店時發生錯誤。請重試一次。</string>
+    <string name="feather_store_monthly">每月的</string>
+    <string name="feather_store_my_stuff">我的裝備</string>
+    <string name="feather_store_passport_account_info">護照帳戶資訊</string>
+    <string name="feather_store_passport_banner_text">用 Aviary 護照以低價得到這個套組及超多其他的 Aviary 效果！點這裡獲得更多資訊！</string>
+    <string name="feather_store_passport_cancelled">已取消</string>
+    <string name="feather_store_passport_refunded">已退款</string>
+    <string name="feather_store_passport_status">護照狀態</string>
+    <string name="feather_store_passport_subscribed">已訂閱</string>
+    <string name="feather_store_passport_type">護照種類</string>
+    <string name="feather_store_passport_unknown">未知</string>
+    <string name="feather_store_passport_welcome_body">現在你可無限次使用我們提供的所有效果、貼紙和相框套裝，包括所有未來推出的套裝。要管理你的訂閱，請在商店瀏覽護照帳戶頁面。你可慢慢編輯，直到你滿意為止！</string>
+    <string name="feather_store_passport_welcome_title">歡迎使用護照！</string>
+    <string name="feather_store_purchase_date">購買日期</string>
+    <string name="feather_store_title">Aviary商店</string>
+    <string name="feather_store_unsubscribe">取消註冊</string>
+    <string name="feather_store_yearly">每年的</string>
+    <string name="feather_subscribe">註冊</string>
+    <string name="feather_text">文字</string>
+    <string name="feather_tool">工具</string>
+    <string name="feather_tool_colorsplash">濺</string>
+    <string name="feather_tool_leave_question">你確定要放棄在此工具中所做的修改？</string>
+    <string name="feather_tool_temperature">熱情</string>
+    <string name="feather_tool_tiltshift">對焦</string>
+    <string name="feather_undo">還原</string>
+    <string name="feather_version">版本</string>
+    <string name="feather_vignette">暈影</string>
+    <string name="feather_warning">警告</string>
+    <string name="feather_welcome_to_frames">歡迎來到相框！</string>
+    <string name="feather_welcome_to_stickers">歡迎來到貼紙！</string>
+    <string name="feather_whiten">漂白</string>
+    <string name="feather_yes_leave">離開編輯器</string>
+    <string name="feather_zoom_mode">縮放模式</string>
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-vi/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Điều hướng về trang chủ"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Điều hướng lên trên"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Thêm tùy chọn"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Xong"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Xem tất cả"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Chọn một ứng dụng"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Xóa truy vấn"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Tìm kiếm truy vấn"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Tìm kiếm"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Gửi truy vấn"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Tìm kiếm bằng giọng nói"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Chia sẻ với"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Chia sẻ với %s"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-vi/values.xml -->
+    <eat-comment/>
+    <string name="confirm_quit_message">Xin đợi! Bạn chưa lưu tác phẩm của mình. Bạn có chắc muốn đóng trình sửa ảnh này không?</string>
+    <string name="feather_adjust">Hướng</string>
+    <string name="feather_apply">Áp dụng</string>
+    <string name="feather_attention">Lưu ý</string>
+    <string name="feather_blemish">Làm trầy</string>
+    <string name="feather_blur">Mờ</string>
+    <string name="feather_borders">Khung</string>
+    <string name="feather_brightness">Độ sáng</string>
+    <string name="feather_cancel">Hủy</string>
+    <string name="feather_close">Đóng</string>
+    <string name="feather_colorsplash_free">Màu Miễn Phí</string>
+    <string name="feather_confirm">Xác nhận</string>
+    <string name="feather_contrast">Tương phản</string>
+    <string name="feather_crop">Cắt</string>
+    <string name="feather_custom">Tùy chỉnh</string>
+    <string name="feather_delete">Xóa</string>
+    <string name="feather_draw">Vẽ</string>
+    <string name="feather_edit_bottom_text">Chỉnh sửa văn bản dưới cùng</string>
+    <string name="feather_edit_top_text">Chỉnh sửa văn bản trên cùng</string>
+    <string name="feather_edit_your_photo">Trình sửa ảnh</string>
+    <string name="feather_effect_loading_message">Áp dụng hiệu ứng</string>
+    <string name="feather_effects">Hiệu ứng</string>
+    <string name="feather_enhance">Tăng cường</string>
+    <string name="feather_enter_text_here">Nhập văn bản vào đây</string>
+    <string name="feather_error_download_image_message">Đã xảy ra lỗi khi tải xuống hình ảnh, vui lòng thử lại sau</string>
+    <string name="feather_flip">Lật</string>
+    <string name="feather_generic_error_title">Lỗi</string>
+    <string name="feather_infoscreen_bottom_button">Giới thiệu về trình sửa ảnh</string>
+    <string name="feather_keep_editing">Tiếp tục chỉnh sửa</string>
+    <string name="feather_loading_image">Đang tải hình ảnh...</string>
+    <string name="feather_loading_title">Đang tải</string>
+    <string name="feather_meme">Trào lưu</string>
+    <string name="feather_original">Gốc</string>
+    <string name="feather_powered_by_aviary">Cung cấp bởi Aviary.com</string>
+    <string name="feather_red_eye">Mắt đỏ</string>
+    <string name="feather_revert_dialog_message">Bạn sắp mất tất cả những thay đổi bạn đã thực hiện. Bạn có chắc muốn trở về hình ảnh nguyên bản không?</string>
+    <string name="feather_revert_dialog_title">Trở về nguyên bản?</string>
+    <string name="feather_rotate">Xoay</string>
+    <string name="feather_saturation">Bão hòa</string>
+    <string name="feather_save">Xong</string>
+    <string name="feather_sharpen">Độ sắc nét</string>
+    <string name="feather_square">Vuông</string>
+    <string name="feather_stickers">Nhãn dán</string>
+    <string name="feather_text">Nội dung</string>
+    <string name="feather_tool">Công cụ</string>
+    <string name="feather_tool_leave_question">Bạn có chắc muốn hủy bỏ những thay đổi khỏi công cụ này không?</string>
+    <string name="feather_tool_temperature">Ấm áp</string>
+    <string name="feather_tool_tiltshift">Tiêu Điểm</string>
+    <string name="feather_whiten">Làm trắng</string>
+    <string name="feather_yes_leave">Thoát trình sửa ảnh</string>
+    <string name="feather_zoom_mode">Chế độ thu phóng</string>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/Users/alessandro/Documents/git/sephiroth74/android-target-tooltip/library/src/main/res/values/attrs.xml -->
+    <eat-comment />
+
+    <attr name="ttlm_defaultStyle" format="reference" />
+    <!-- From: file:/Users/alessandro/Documents/git/sephiroth74/android-target-tooltip/library/src/main/res/values/colors.xml -->
+    <eat-comment />
+
+    <color name="ttlm_default_background_color">#EE131518</color>
+    <color name="ttlm_default_stroke_color">#FFE9ECEF</color>
+    <!-- From: file:/Users/alessandro/Documents/git/sephiroth74/android-target-tooltip/library/src/main/res/values/attrs.xml -->
+    <eat-comment />
+
+    <declare-styleable name="TooltipLayout">
+        <attr name="ttlm_padding" format="dimension" />
+        <attr name="ttlm_strokeColor" format="color" />
+        <attr name="ttlm_backgroundColor" format="color" />
+        <attr name="ttlm_strokeWeight" format="dimension" />
+        <attr name="ttlm_cornerRadius" format="dimension" />
+        <attr name="ttlm_arrowRatio" format="float" />
+    </declare-styleable>
+    <!-- From: file:/Users/alessandro/Documents/git/sephiroth74/android-target-tooltip/library/src/main/res/values/dimens.xml -->
+    <eat-comment />
+
+    <dimen name="ttlm_default_corner_radius">4dip</dimen>
+    <dimen name="ttlm_default_padding">20dip</dimen>
+    <dimen name="ttlm_default_stroke_weight">1.3sp</dimen>
+    <!-- From: file:/Users/alessandro/Documents/git/sephiroth74/android-target-tooltip/library/src/main/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="ToolTipLayoutDefaultStyle">
+        <item name="ttlm_padding">@dimen/ttlm_default_padding</item>
+        <item name="ttlm_strokeColor">@color/ttlm_default_stroke_color</item>
+        <item name="ttlm_backgroundColor">@color/ttlm_default_background_color</item>
+        <item name="ttlm_strokeWeight">@dimen/ttlm_default_stroke_weight</item>
+        <item name="ttlm_cornerRadius">@dimen/ttlm_default_corner_radius</item>
+        <item name="ttlm_arrowRatio">1.4</item>
+    </style>
+
+</resources>

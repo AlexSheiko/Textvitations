@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+	android:duration="@integer/aviary_iap_animator_time"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:fromXDelta="100%p"
+    android:toXDelta="0" />
+<!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/anim/aviary_slide_in_right.xml -->

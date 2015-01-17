@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <color android:color="@color/aviary_nav_divider_dark" />
+    </item>
+    <item
+        android:top="@dimen/aviary_nav_divider"
+        android:left="@dimen/aviary_nav_divider">
+        <shape android:shape="rectangle">
+	        <solid android:color="@color/aviary_nav_divider_light" />
+        </shape>
+    </item>
+
+</layer-list><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_bottombar_thumb_divider_right.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/drawable/aviary_bottombar_thumb_divider_right.xml -->

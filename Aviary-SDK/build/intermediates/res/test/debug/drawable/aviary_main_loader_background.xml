@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+	<item>
+		<shape android:shape="rectangle">
+		    <corners android:radius="@dimen/aviary_main_loader_radius" />
+		    <solid android:color="@color/aviary_main_loader_background" />
+		</shape>	    
+	</item>
+</layer-list><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_main_loader_background.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/drawable/aviary_main_loader_background.xml -->

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-iw/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"נווט לדף הבית"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"נווט למעלה"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"עוד אפשרויות"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"בוצע"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"ראה הכול"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"בחר אפליקציה"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"מחק שאילתה"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"שאילתת חיפוש"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"חפש"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"שלח שאילתה"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"חיפוש קולי"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"שתף עם"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"‏שתף עם %s"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-iw/strings.xml -->
+    <eat-comment/>
+    <string name="confirm_quit_message">רגע! לא שמרת את הקובץ! האם את/ה בטוח/ה שברצונך לסגור את העורך?</string>
+    <string name="feather_activity_not_found">איננו מוצאים אפליקציה על המכשיר שלך שיכולה לבצע את הפעולה הנדרשת. האם ברצונך להוריד אותה מחנות האפליקציות?</string>
+    <string name="feather_adjust">אוריינטציה</string>
+    <string name="feather_apply">בצע</string>
+    <string name="feather_applying_actions_counter">מבצע פעולה %1$d מתוך %2$d</string>
+    <string name="feather_attention">שימ/י לב</string>
+    <string name="feather_blemish">כתם</string>
+    <string name="feather_blur">טשטוש</string>
+    <string name="feather_borders">מסגרות</string>
+    <string name="feather_brightness">בהירות</string>
+    <string name="feather_cancel">ביטול</string>
+    <string name="feather_close">סגירה</string>
+    <string name="feather_confirm">אישור</string>
+    <string name="feather_contrast">ניגוד</string>
+    <string name="feather_crop">חתוך</string>
+    <string name="feather_custom">התאם</string>
+    <string name="feather_delete">מחק</string>
+    <string name="feather_draw">צייר</string>
+    <string name="feather_edit_bottom_text">עריכת טקסט תחתון</string>
+    <string name="feather_edit_top_text">עריכת טקסט עליון</string>
+    <string name="feather_edit_your_photo">עורך תמונות</string>
+    <string name="feather_effect_loading_message">מוסיף אפקטים</string>
+    <string name="feather_effects">אפקטים</string>
+    <string name="feather_enhance">שיפור</string>
+    <string name="feather_enter_text_here">הזנ/י טקסט כאן</string>
+    <string name="feather_error_download_image_message">לה תקלה במהלך הורדת התמונה. אנא נסה/י שנית מאוחר יותר.</string>
+    <string name="feather_error_saving_image">אופס, קרתה תקלה בזמן שמירת התמונה</string>
+    <string name="feather_flip">הפוך</string>
+    <string name="feather_generic_error_title">שגיאה</string>
+    <string name="feather_infoscreen_bottom_button">אודות עורך זה</string>
+    <string name="feather_keep_editing">המשך בעריכה</string>
+    <string name="feather_loading_image">טוען תמונה</string>
+    <string name="feather_loading_title">טוען</string>
+    <string name="feather_meme">מם</string>
+    <string name="feather_original">מקור</string>
+    <string name="feather_powered_by_aviary">רץ על Aviary.com</string>
+    <string name="feather_red_eye">עין אדומה</string>
+    <string name="feather_revert_dialog_message">את/ה עומד/ת לאבד את כל השינויים שביצעת. האם את/ה בטוח/ה שברצונך לחזור לתמונה המקורית?</string>
+    <string name="feather_revert_dialog_title">החזר למקור?</string>
+    <string name="feather_rotate">סיבוב</string>
+    <string name="feather_saturation">רוויה</string>
+    <string name="feather_save">בוצע</string>
+    <string name="feather_save_progress">שומר</string>
+    <string name="feather_sharpen">חדות</string>
+    <string name="feather_square">ריבוע</string>
+    <string name="feather_stickers">מדבקות</string>
+    <string name="feather_text">טקסט</string>
+    <string name="feather_tool">כלי</string>
+    <string name="feather_tool_leave_question">it\'s a name, sticking to it is ok in hebrew</string>
+    <string name="feather_tool_temperature">חום</string>
+    <string name="feather_whiten">הלבן</string>
+    <string name="feather_yes_leave">צא מהעורך</string>
+    <string name="feather_zoom_mode">מצב זום</string>
+</resources>

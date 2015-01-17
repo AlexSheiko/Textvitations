@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <color android:color="@color/aviary_nav_divider_dark" />
+    </item>
+
+    <item android:top="@dimen/aviary_nav_divider_double" android:drawable="@drawable/aviary_bottombar_thumb_external_background_selector">
+    </item>
+
+</layer-list>

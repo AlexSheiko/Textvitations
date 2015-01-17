@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-nl/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navigeren naar startpositie"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Omhoog navigeren"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Meer opties"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Gereed"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Alles weergeven"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Een app selecteren"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Zoekopdracht wissen"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Zoekopdracht"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Zoeken"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Zoekopdracht verzenden"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Gesproken zoekopdracht"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Delen met"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Delen met %s"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-nl/values.xml -->
+    <eat-comment/>
+    <string name="aviary_passport">Paspoort</string>
+    <string name="aviary_subscription_tier1_description">1 Maand</string>
+    <string name="aviary_subscription_tier2_description">1 Jaar</string>
+    <string name="confirm_quit_message">Wacht!  U heeft uw werk niet opgeslagen.  Bent u zeker dat u deze editor wil sluiten?</string>
+    <string name="feather_about_dialog_message">Aviary is ´s werelds voornaamste fotobewerkingsplatform. Ontwikkelaars: leer hoe het toe te voegen aan uw applicatie in een paar minuten.</string>
+    <string name="feather_acc_a_sticker">Een sticker</string>
+    <string name="feather_acc_color">Kleur</string>
+    <string name="feather_acc_decrease_value">Waarde verlagen</string>
+    <string name="feather_acc_flip_h">Horizontaal omklappen</string>
+    <string name="feather_acc_flip_v">Verticaal omklappen</string>
+    <string name="feather_acc_increase_value">Waarde verhogen</string>
+    <string name="feather_acc_lens_toggle">Zoom schakelen</string>
+    <string name="feather_acc_rotate_ccw">Roteer tegen de klok in</string>
+    <string name="feather_acc_rotate_cw">Roteer met de klok mee</string>
+    <string name="feather_acc_size">Grootte</string>
+    <string name="feather_activity_not_found">Sorry, er bevindt zich geen toepassing op uw telefoon om deze actie mee uit te voeren. Wilt u de toepassing van de markt downloaden?</string>
+    <string name="feather_adjust">Draaien</string>
+    <string name="feather_an_error_occurred">Er is een fout opgetreden</string>
+    <string name="feather_apply">Toepassen</string>
+    <string name="feather_applying_actions_counter">Actie %1$d van %2$d wordt uitgevoerd</string>
+    <string name="feather_attention">Aandacht</string>
+    <string name="feather_blemish">Vlek</string>
+    <string name="feather_blemish_tool_tip">Alleen tikken</string>
+    <string name="feather_blur">Waas</string>
+    <string name="feather_borders">Frames</string>
+    <string name="feather_borders_dialog_first_time">Installeer gratis Aviary\'s pakket van mooie hoge resolutie kaders om te beginnen.</string>
+    <string name="feather_brightness">Helderheid</string>
+    <string name="feather_cancel">Annuleren</string>
+    <string name="feather_cant_undo_anymore">Kan niet meer ongedaan gemaakt worden</string>
+    <string name="feather_cant_undo_anymore_text">Druk lang op de foto om originele afbeelding te herstellen.</string>
+    <string name="feather_circle">Cirkel</string>
+    <string name="feather_close">Klaar</string>
+    <string name="feather_colorfix">Kleur Fix</string>
+    <string name="feather_colorsplash_eraser">Gom</string>
+    <string name="feather_colorsplash_free">Vrije Kleurinstelling</string>
+    <string name="feather_colorsplash_smart">Gecontroleerde Kleurinstelling</string>
+    <string name="feather_confirm">Bevestigen</string>
+    <string name="feather_contrast">Contrast</string>
+    <string name="feather_crop">Bijsnijden</string>
+    <string name="feather_custom">Eigen</string>
+    <string name="feather_delete">Verwijderen</string>
+    <string name="feather_details">Details</string>
+    <string name="feather_download">Download</string>
+    <string name="feather_download_start_failed">Aankoop mislukt. Probeer opnieuw.</string>
+    <string name="feather_draw">Tekening</string>
+    <string name="feather_edit_your_photo">Photo Editor</string>
+    <string name="feather_effect_intensity_tooltip">Veeg naar boven of beneden om de intensiteit aan te passen</string>
+    <string name="feather_effects">Effecten</string>
+    <string name="feather_enhance">Verbeteren</string>
+    <string name="feather_enhance_effect_food">Eten</string>
+    <string name="feather_enhance_effect_night">Nacht</string>
+    <string name="feather_enhance_effect_portrait">Portret</string>
+    <string name="feather_enhance_effect_scenery">Landschap</string>
+    <string name="feather_enter_text_here">Vul hier uw tekst in</string>
+    <string name="feather_error_download_image_message">Er is een fout opgetreden tijdens het downloaden van de afbeelding, probeer het later opnieuw.</string>
+    <string name="feather_error_saving_image">Oeps, er is een fout opgetreden tijdens het opslaan van de afbeelding.</string>
+    <string name="feather_featured">Aanbevolen</string>
+    <string name="feather_feedback">Feedback</string>
+    <string name="feather_feedback_dialog_message">Heeft u een voorstel om deze foto-editor te verbeteren? Laat het ons weten.</string>
+    <string name="feather_filters">Filters</string>
+    <string name="feather_flip">Omdraaien</string>
+    <string name="feather_generic_error_title">Fout</string>
+    <string name="feather_get_more">Winkelen</string>
+    <string name="feather_hidef">Hoge Definitie</string>
+    <string name="feather_iap_download">Gratis</string>
+    <string name="feather_iap_download_failed">Downloaden mislukt</string>
+    <string name="feather_iap_failed_download_informations">Het downloaden van de benodigde informatie is mislukt</string>
+    <string name="feather_iap_failed_download_previews">Het downloaden van de previews is mislukt</string>
+    <string name="feather_iap_install">Installeer</string>
+    <string name="feather_iap_notification_installed_summary">Plug-in succesvol geïnstalleerd</string>
+    <string name="feather_iap_owned">Geïnstalleerd</string>
+    <string name="feather_iap_pack_installed">Geïnstalleerd</string>
+    <string name="feather_iap_restore">Herstellen</string>
+    <string name="feather_iap_restore_all">Herstel alles</string>
+    <string name="feather_iap_restore_all_failed">Alles dat mislukt is herstellen</string>
+    <string name="feather_iap_restore_all_in_progress">Alles in uitvoering herstellen</string>
+    <string name="feather_iap_restore_all_summary">Al gekocht? Tik hier onder om al je in-app aankopen gratis te herstellen.</string>
+    <string name="feather_iap_retry">Opnieuw proberen</string>
+    <string name="feather_iap_subscription_banner_text">Verkrijg dit pakket en tonnen van andere Aviary-effecten voor een lage prijs met Aviary-paspoort!\'</string>
+    <string name="feather_iap_unavailable">Niet beschikbaar</string>
+    <string name="feather_iap_uninstall">Verwijder</string>
+    <string name="feather_illuminate">Verlichten</string>
+    <string name="feather_infoscreen_bottom_button">Over deze editor</string>
+    <string name="feather_keep_editing">Verder werken</string>
+    <string name="feather_loading_image">Bezig met het laden van de afbeelding…</string>
+    <string name="feather_loading_title">Bezig met laden</string>
+    <string name="feather_message_button_no">Nee, dank je.</string>
+    <string name="feather_message_button_yes">Zeker!</string>
+    <string name="feather_new_stickers">Nieuwe Stickers</string>
+    <string name="feather_notification_n_items_cant_be_restored">%1$s onderdelen kon(den) niet worden hersteld</string>
+    <string name="feather_notification_no_items_to_restore">Geen onderdeel hoeft te worden hersteld</string>
+    <string name="feather_notification_plugins_installed_count">%1$d plug-ins geïnstalleerd</string>
+    <string name="feather_notification_plus_more">%1$d meer</string>
+    <string name="feather_notification_restore_all_completed">Herstel alles wat compleet is</string>
+    <string name="feather_notification_some_items_cant_be_restored">Sommige onderdelen konden niet worden hersteld</string>
+    <string name="feather_ops_error_download_image">We hebben problemen met de verbinding :(</string>
+    <string name="feather_original">Origineel</string>
+    <string name="feather_overlay_blemish_close_text">Bekijk de nieuwe &lt;b>Blur&lt;/b> tool!</string>
+    <string name="feather_overlay_blemish_close_title">Op zoek naar de oude Blemish</string>
+    <string name="feather_overlay_blemish_tap_text">Tik op de onvolkomenheden om te verwijderen.</string>
+    <string name="feather_overlay_stickers_text">Installeer dit gratis pakket om te beginnen!</string>
+    <string name="feather_overlay_tap_title">Tik</string>
+    <string name="feather_overlay_undo_title">Veeg om bijwerkingen ongedaan te maken of opnieuw te doen</string>
+    <string name="feather_overlay_zoom_text">Je kan ook knijpen om te zoomen!</string>
+    <string name="feather_overlay_zoom_title">Zoom</string>
+    <string name="feather_passport">Aviary Paspoort</string>
+    <string name="feather_please_try_again_later">Probeer het later opnieuw</string>
+    <string name="feather_powered_by_aviary">Aangedreven door Aviary.com</string>
+    <string name="feather_rectangle">Rechthoek</string>
+    <string name="feather_red_eye">Roodoog</string>
+    <string name="feather_redo">Opnieuw</string>
+    <string name="feather_refresh">Vernieuw</string>
+    <string name="feather_restore_all_request_sent">Verzoek verstuurd. Controleer het berichtencentrum van je apparaat voor meer info</string>
+    <string name="feather_revert_dialog_message">U staat op het punt om al de door u gemaakte veranderingen te verliezen. Weet u zuker dat u terug wilt gaan naar het origineel?</string>
+    <string name="feather_revert_dialog_title">Terug naar origineel</string>
+    <string name="feather_rotate">Roteren</string>
+    <string name="feather_saturation">Saturatie</string>
+    <string name="feather_save">Klaar</string>
+    <string name="feather_save_progress">Bezig met opslaan…</string>
+    <string name="feather_see_more">Zie meer</string>
+    <string name="feather_send_feedback">Verstuur Feedback</string>
+    <string name="feather_settings_join_beta_description">Krijg vroege toegang tot nieuwe eigenschappen en help om een nog betere Aviary te maken!</string>
+    <string name="feather_settings_join_beta_title">Doe mee aan de Aviary Bèta</string>
+    <string name="feather_shapes">Vormen</string>
+    <string name="feather_sharpen">Scherpte</string>
+    <string name="feather_square">Vierkant</string>
+    <string name="feather_sticker_flip_tooltip">Tikken om deze sticker om te keren</string>
+    <string name="feather_stickers">Stickers</string>
+    <string name="feather_stickers_dialog_first_time">Installeer gratis Aviary\'s pakket van mooie hoge resolutie stickers om te beginnen.</string>
+    <string name="feather_store_ask_uninstall_free_body">Dit is een gratis, limited edition pakket. Als je het verwijdert, kan het zijn dat je niet in staat bent om het te herstellen in de toekomst</string>
+    <string name="feather_store_checking_additional_packs">Kijk of er extra pakketten zijn...</string>
+    <string name="feather_store_connection_problem">Er was een probleem met de verbinding met de Google Play-winkel. Probeer het opnieuw.</string>
+    <string name="feather_store_monthly">Maandelijks</string>
+    <string name="feather_store_my_stuff">Mijn voorraden</string>
+    <string name="feather_store_passport_account_info">Paspoort account informatie</string>
+    <string name="feather_store_passport_banner_text">Koop dit pakket en heel veel andere Aviary-effecten voor één lage prijs met Aviary Paspoort! Klik hier voor meer informatie!</string>
+    <string name="feather_store_passport_cancelled">Geannuleerd</string>
+    <string name="feather_store_passport_refunded">Terugbetaald</string>
+    <string name="feather_store_passport_status">Paspoort Status</string>
+    <string name="feather_store_passport_subscribed">Geabonneerd</string>
+    <string name="feather_store_passport_type">Paspoort soort</string>
+    <string name="feather_store_passport_unknown">Onbekend</string>
+    <string name="feather_store_passport_welcome_body">Je hebt nu onbeperkte toegang tot elk effect, sticker, en lijstenpakket die wij bieden, met inbegrip van alle toekomstige pakketten. Om je abonnementstatus te beheren, kun je het paspoort-account scherm bekijken in de winkel. Success met het bewerken!</string>
+    <string name="feather_store_passport_welcome_title">Welkom bij Paspoort!</string>
+    <string name="feather_store_purchase_date">Aankoopdatum</string>
+    <string name="feather_store_unsubscribe">Uitschrijven</string>
+    <string name="feather_store_yearly">Jaarlijks</string>
+    <string name="feather_subscribe">Inschrijven</string>
+    <string name="feather_text">Tekst</string>
+    <string name="feather_tool">Gereedschap</string>
+    <string name="feather_tool_colorsplash">Spetterende</string>
+    <string name="feather_tool_temperature">Warmte</string>
+    <string name="feather_tool_tiltshift">Fokus</string>
+    <string name="feather_undo">Ongedaan maken</string>
+    <string name="feather_version">Versie</string>
+    <string name="feather_vignette">Vignet</string>
+    <string name="feather_warning">Waarschuwing</string>
+    <string name="feather_welcome_to_frames">Welkom bij Kaders!</string>
+    <string name="feather_welcome_to_stickers">Welkom bij Stickers!</string>
+    <string name="feather_whiten">Witter</string>
+    <string name="feather_yes_leave">Editor afsluiten</string>
+    <string name="feather_zoom_mode">Zoom-stand</string>
+</resources>

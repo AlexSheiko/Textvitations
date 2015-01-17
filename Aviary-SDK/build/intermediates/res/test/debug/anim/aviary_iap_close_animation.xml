@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@android:integer/config_shortAnimTime"
+    android:fromAlpha="1.0"
+    android:interpolator="@android:anim/accelerate_interpolator"
+    android:toAlpha="0.0" />
+<!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/anim/aviary_iap_close_animation.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/anim/aviary_iap_close_animation.xml -->

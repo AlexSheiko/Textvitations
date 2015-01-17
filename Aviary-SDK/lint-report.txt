@@ -1,0 +1,1103 @@
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/FeatherActivity.java:1121: Warning: Field requires API level 11 (current min is 10): android.R.attr#actionBarSize [InlinedApi]
+            attrs = new int[]{android.R.attr.actionBarSize};
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "InlinedApi":
+   This check scans through all the Android API field references in the
+   application and flags certain constants, such as static final integers and
+   Strings, which were introduced in later versions. These will actually be
+   copied into the class files rather than being referenced, which means that
+   the value is available even when running on older devices. In some cases
+   that's fine, and in other cases it can result in a runtime crash or
+   incorrect behavior. It depends on the context, so consider the code
+   carefully and device whether it's safe and can be suppressed or whether the
+   code needs tbe guarded.
+
+   If you really want to use this API and don't need to support older devices
+   just set the minSdkVersion in your build.gradle or AndroidManifest.xml
+   files.
+   If your code is deliberately accessing newer APIs, and you have ensured
+   (e.g. with conditional execution) that this code will only ever be called
+   on a supported platform, then you can annotate your class or method with
+   the @TargetApi annotation specifying the local minimum SDK to apply, such
+   as @TargetApi(11), such that this check considers 11 rather than your
+   manifest file's minimum SDK as the required API level.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_bottombar.xml:6: Warning: Attribute animateFirstView is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+    android:animateFirstView="false" >
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_detail_banner.xml:12: Warning: Attribute animateFirstView is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+  android:animateFirstView="false">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_gallery_item_view.xml:14: Warning: Attribute layerType is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+        android:layerType="software"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_container.xml:4: Warning: Attribute layerType is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+ android:layerType="hardware"
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_container.xml:42: Warning: Attribute animateFirstView is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+    android:animateFirstView="false"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:71: Warning: Attribute animateFirstView is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+   android:animateFirstView="false" />
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable/aviary_store_list_item_selector.xml:3: Warning: Attribute exitFadeDuration is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_shortAnimTime">
+                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable/aviary_store_list_item_selector.xml:4: Warning: Attribute state_activated is only used in API level 11 and higher (current min is 10) [UnusedAttribute]
+ <item android:state_activated="true" android:drawable="@drawable/aviary_store_list_item_checked" />
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedAttribute":
+   This check finds attributes set in XML files that were introduced in a
+   version newer than the oldest version targeted by your application (with
+   the the minSdkVersion attribute).
+
+   This is not an error; the application will simply ignore the attribute.
+   However, if the attribute is important to the appearance of functionality
+   of your application, you should consider finding an alternative way to
+   achieve the same result with only available attributes, and then you can
+   optionally create a copy of the layout in a layout-vNN folder which will be
+   used on API NN or higher where you can take advantage of the newer
+   attribute.
+
+   Note: This check does not only apply to attributes. For example, some tags
+   can be unused too, such as the new <tag> element in layouts introduced in
+   API 21.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/widget/AviaryNavBarViewFlipper.java:180: Warning: Avoid passing null as the view root (needed to resolve layout parameters on the inflated layout's root element) [InflateParams]
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.aviary_navbar_text, null);
+                                                                                           ~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/panels/BordersPanel.java:566: Warning: Avoid passing null as the view root (needed to resolve layout parameters on the inflated layout's root element) [InflateParams]
+        return inflater.inflate(R.layout.aviary_content_frames, null);
+                                                                ~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/panels/OverlaysPanel.java:46: Warning: Avoid passing null as the view root (needed to resolve layout parameters on the inflated layout's root element) [InflateParams]
+        return inflater.inflate(R.layout.aviary_content_overlays, null);
+                                                                  ~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/panels/VignettePanel.java:74: Warning: Avoid passing null as the view root (needed to resolve layout parameters on the inflated layout's root element) [InflateParams]
+        return inflater.inflate(R.layout.aviary_content_vignette, null);
+                                                                  ~~~~
+
+   Explanation for issues of type "InflateParams":
+   When inflating a layout, avoid passing in null as the parent view, since
+   otherwise any layout parameters on the root of the inflated layout will be
+   ignored.
+
+   http://www.doubleencore.com/2013/05/layout-inflation-as-intended
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-es/strings.xml:114: Warning: Repeated word "más" in message: possible typo [Typos]
+ <string name="feather_restore_all_request_sent">Solicitud enviada. Compruebe el área de notificaciones de su dispositivo más más información</string>
+                                                                                                                          ^
+
+   Explanation for issues of type "Typos":
+   This check looks through the string definitions, and if it finds any words
+   that look like likely misspellings, they are flagged.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-fi/strings.xml:42: Warning: Inconsistent number of arguments in formatting string feather_applying_actions_counter; found both 2 and 1 [StringFormatCount]
+ <string name="feather_applying_actions_counter">Suoritetaan toimintoa %1$d/21$d</string>
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:118: Conflicting number of arguments here
+
+   Explanation for issues of type "StringFormatCount":
+   When a formatted string takes arguments, it usually needs to reference the
+   same arguments in all translations (or all arguments if there are no
+   translations.
+
+   There are cases where this is not the case, so this issue is a warning
+   rather than an error by default. However, this usually happens when a
+   language is not translated or updated correctly.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/gradle/wrapper/gradle-wrapper.properties:6: Warning: Replace HTTP with HTTPS for better security; use https\://services.gradle.org/distributions/gradle-1.9-bin.zip [UsingHttp]
+distributionUrl=http\://services.gradle.org/distributions/gradle-1.9-bin.zip
+                ~~~~
+
+   Explanation for issues of type "UsingHttp":
+   The Gradle Wrapper is available both via HTTP and HTTPS. HTTPS is more
+   secure since it protects against man-in-the-middle attacks etc. Older
+   projects created in Android Studio used HTTP but we now default to HTTPS
+   and recommend upgrading existing projects.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/widget/ImageViewOverlay.java:99: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                    Matrix matrix = new Matrix();
+                                    ~~~~~~~~~~~~
+
+   Explanation for issues of type "DrawAllocation":
+   You should avoid allocating objects during a drawing or layout operation.
+   These are called frequently, so a smooth UI can be interrupted by garbage
+   collection pauses caused by the object allocations.
+
+   The way this is generally handled is to allocate the needed objects up
+   front and to reuse them for each drawing operation.
+
+   Some methods allocate memory on your behalf (such as Bitmap.create), and
+   these should be handled in the same way.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_container.xml:2: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_enhance.xml:2: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+^
+
+   Explanation for issues of type "DisableBaselineAlignment":
+   When a LinearLayout is used to distribute the space proportionally between
+   nested layouts, the baseline alignment property should be turned off to
+   make the layout computation faster.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_container.xml:31: Warning: Nested weights are bad for performance [NestedWeights]
+   android:layout_weight="@integer/aviary_iap_dialog_margin_top_weight" />
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NestedWeights":
+   Layout weights require a widget to be measured twice. When a LinearLayout
+   with non-zero weights is nested inside another LinearLayout with non-zero
+   weights, then the number of measurements increase exponentially.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_detail.xml:6: Warning: Possible overdraw: Root element paints background @android:color/white with a theme that also paints a background (inferred theme is @android:style/Theme.Holo) [Overdraw]
+ android:background="@android:color/white"
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_list.xml:5: Warning: Possible overdraw: Root element paints background @android:color/white with a theme that also paints a background (inferred theme is @android:style/Theme.Holo) [Overdraw]
+ android:background="@android:color/white"
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "Overdraw":
+   If you set a background drawable on a root view, then you should use a
+   custom theme where the theme background is null. Otherwise, the theme
+   background will be painted first, only to have your custom background
+   completely cover it; this is called "overdraw".
+
+   NOTE: This detector relies on figuring out which layouts are associated
+   with which activities based on scanning the Java code, and it's currently
+   doing that using an inexact pattern matching algorithm. Therefore, it can
+   incorrectly conclude which activity the layout is associated with and then
+   wrongly complain that a background-theme is hidden.
+
+   If you want your custom background on multiple pages, then you should
+   consider making a custom theme with your custom background and just using
+   that theme instead of a root element background.
+
+   Of course it's possible that your custom drawable is translucent and you
+   want it to be mixed with the background. However, you will get better
+   performance if you pre-mix the background with your drawable and use that
+   resulting image or color as a custom theme background instead.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_adjust_intro_tooltip.xml: Warning: The resource R.layout.aviary_adjust_intro_tooltip appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:103: Warning: The resource R.color.aviary_text_highlight_background_normal appears to be unused [UnusedResources]
+ <color name="aviary_text_highlight_background_normal">#ff000000</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:105: Warning: The resource R.color.aviary_text_highlight_background_inner_pressed appears to be unused [UnusedResources]
+ <color name="aviary_text_highlight_background_inner_pressed">#ffe1e1e1</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:112: Warning: The resource R.color.aviary_store_theme_color appears to be unused [UnusedResources]
+ <color name="aviary_store_theme_color">#ff13a6f7</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:114: Warning: The resource R.color.aviary_store_list_divider appears to be unused [UnusedResources]
+ <color name="aviary_store_list_divider">#ffcccccc</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:115: Warning: The resource R.color.aviary_store_background appears to be unused [UnusedResources]
+ <color name="aviary_store_background">#ffe9ecef</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:116: Warning: The resource R.color.aviary_store_featured_transparent_black appears to be unused [UnusedResources]
+ <color name="aviary_store_featured_transparent_black">#66000000</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:118: Warning: The resource R.color.aviary_store_detail_background appears to be unused [UnusedResources]
+ <color name="aviary_store_detail_background">#ffdadde0</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:120: Warning: The resource R.color.aviary_store_passport_banner_background_normal appears to be unused [UnusedResources]
+ <color name="aviary_store_passport_banner_background_normal">#ffcdd1d5</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:121: Warning: The resource R.color.aviary_store_passport_banner_background_pressed appears to be unused [UnusedResources]
+ <color name="aviary_store_passport_banner_background_pressed">#ffb9bdc0</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:124: Warning: The resource R.color.aviary_subscription_divider_light appears to be unused [UnusedResources]
+ <color name="aviary_subscription_divider_light">#ffc5cacf</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:125: Warning: The resource R.color.aviary_subscription_bottombar_primary_color appears to be unused [UnusedResources]
+ <color name="aviary_subscription_bottombar_primary_color">#fffafafa</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:126: Warning: The resource R.color.aviary_subscription_bottombar_secondary_color appears to be unused [UnusedResources]
+ <color name="aviary_subscription_bottombar_secondary_color">#ffdfe6ea</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:127: Warning: The resource R.color.aviary_subscription_main_primary_color appears to be unused [UnusedResources]
+ <color name="aviary_subscription_main_primary_color">#fff0f4f5</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:128: Warning: The resource R.color.aviary_subscription_main_secondary_color appears to be unused [UnusedResources]
+ <color name="aviary_subscription_main_secondary_color">#ffd9e0e4</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:129: Warning: The resource R.color.aviary_subscription_light_line_color1 appears to be unused [UnusedResources]
+ <color name="aviary_subscription_light_line_color1">#ffd8dde1</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:130: Warning: The resource R.color.aviary_subscription_light_line_color2 appears to be unused [UnusedResources]
+ <color name="aviary_subscription_light_line_color2">#fff6f8f9</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:133: Warning: The resource R.color.aviary_supply_passport_banner_background_light appears to be unused [UnusedResources]
+ <color name="aviary_supply_passport_banner_background_light">#ff24d7f8</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:134: Warning: The resource R.color.aviary_supply_passport_banner_background appears to be unused [UnusedResources]
+ <color name="aviary_supply_passport_banner_background">#ff11a6f8</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:136: Warning: The resource R.color.aviary_supply_passport_banner_background_pressed_light appears to be unused [UnusedResources]
+ <color name="aviary_supply_passport_banner_background_pressed_light">#ff1499b2</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_colors.xml:137: Warning: The resource R.color.aviary_supply_passport_banner_background_pressed appears to be unused [UnusedResources]
+ <color name="aviary_supply_passport_banner_background_pressed">#ff0c74ad</color>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-v10/aviary_config.xml:5: Warning: The resource R.integer.aviary_feature_image_cycle_time appears to be unused [UnusedResources]
+    <integer name="aviary_feature_image_cycle_time">5000</integer>
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-sw600dp/aviary_config.xml:6: Warning: The resource R.integer.aviary_iap_dialog_cols_stickers appears to be unused [UnusedResources]
+ <integer name="aviary_iap_dialog_cols_stickers">5</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-sw600dp/aviary_config.xml:9: Warning: The resource R.integer.aviary_iap_dialog_cols_effects appears to be unused [UnusedResources]
+ <integer name="aviary_iap_dialog_cols_effects">3</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:15: Warning: The resource R.integer.aviary_mediumAnimTime appears to be unused [UnusedResources]
+ <integer name="aviary_mediumAnimTime">400</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:26: Warning: The resource R.integer.aviary_image_restore_timeout appears to be unused [UnusedResources]
+ <integer name="aviary_image_restore_timeout">2500</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:262: Warning: The resource R.integer.aviary_iap_dialog_rows_stickers appears to be unused [UnusedResources]
+ <integer name="aviary_iap_dialog_rows_stickers">3</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:263: Warning: The resource R.integer.aviary_iap_dialog_rows_effects appears to be unused [UnusedResources]
+ <integer name="aviary_iap_dialog_rows_effects">2</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:291: Warning: The resource R.integer.aviary_asyncimagemanager_tag appears to be unused [UnusedResources]
+ <integer name="aviary_asyncimagemanager_tag">100</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:298: Warning: The resource R.fraction.aviary_overlay_blemish_text3_width appears to be unused [UnusedResources]
+ <fraction name="aviary_overlay_blemish_text3_width">90%p</fraction>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:299: Warning: The resource R.fraction.aviary_overlay_blemish_text4_width appears to be unused [UnusedResources]
+ <fraction name="aviary_overlay_blemish_text4_width">70%p</fraction>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:311: Warning: The resource R.integer.aviary_store_featured_cell_weightSum appears to be unused [UnusedResources]
+ <integer name="aviary_store_featured_cell_weightSum">1097</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:312: Warning: The resource R.integer.aviary_store_featured_cell_weight appears to be unused [UnusedResources]
+ <integer name="aviary_store_featured_cell_weight">341</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:313: Warning: The resource R.integer.aviary_store_featured_cols appears to be unused [UnusedResources]
+ <integer name="aviary_store_featured_cols">3</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:315: Warning: The resource R.integer.aviary_store_detail_cols_stickers appears to be unused [UnusedResources]
+ <integer name="aviary_store_detail_cols_stickers">3</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:316: Warning: The resource R.integer.aviary_store_detail_cols_frames appears to be unused [UnusedResources]
+ <integer name="aviary_store_detail_cols_frames">3</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:317: Warning: The resource R.integer.aviary_store_detail_cols_effects appears to be unused [UnusedResources]
+ <integer name="aviary_store_detail_cols_effects">3</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:320: Warning: The resource R.integer.aviary_store_featured_has_featured appears to be unused [UnusedResources]
+ <integer name="aviary_store_featured_has_featured">1</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:321: Warning: The resource R.integer.aviary_store_detail_top_weight appears to be unused [UnusedResources]
+ <integer name="aviary_store_detail_top_weight">10</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:322: Warning: The resource R.integer.aviary_store_detail_bottom_weight appears to be unused [UnusedResources]
+ <integer name="aviary_store_detail_bottom_weight">10</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:324: Warning: The resource R.fraction.aviary_store_detail_image_height_ratio appears to be unused [UnusedResources]
+ <fraction name="aviary_store_detail_image_height_ratio">59%p</fraction>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_config.xml:326: Warning: The resource R.integer.aviary_sticker_opacity_confirm_button_weight appears to be unused [UnusedResources]
+ <integer name="aviary_sticker_opacity_confirm_button_weight">10</integer>
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_content_effects_gl.xml: Warning: The resource R.layout.aviary_content_effects_gl appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-sw600dp-land/aviary_dimens.xml:3: Warning: The resource R.dimen.aviary_store_featured_image_landscape appears to be unused [UnusedResources]
+ <dimen name="aviary_store_featured_image_landscape">200dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:4: Warning: The resource R.dimen.aviary_textSizeMediumBigger appears to be unused [UnusedResources]
+ <dimen name="aviary_textSizeMediumBigger">16sp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:24: Warning: The resource R.dimen.aviary_nav_height appears to be unused [UnusedResources]
+ <dimen name="aviary_nav_height">48dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:46: Warning: The resource R.dimen.aviary_main_loader_padding appears to be unused [UnusedResources]
+ <dimen name="aviary_main_loader_padding">30dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:88: Warning: The resource R.dimen.aviary_text_highlight_background_radius appears to be unused [UnusedResources]
+ <dimen name="aviary_text_highlight_background_radius">6dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:90: Warning: The resource R.dimen.aviary_text_highlight_background_stroke_width appears to be unused [UnusedResources]
+ <dimen name="aviary_text_highlight_background_stroke_width">2dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:92: Warning: The resource R.dimen.aviary_text_highlight_background_inner_stroke_width appears to be unused [UnusedResources]
+ <dimen name="aviary_text_highlight_background_inner_stroke_width">1dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:167: Warning: The resource R.dimen.aviary_overlay_text_margins appears to be unused [UnusedResources]
+ <dimen name="aviary_overlay_text_margins">10dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:168: Warning: The resource R.dimen.aviary_overlay_title_margins appears to be unused [UnusedResources]
+ <dimen name="aviary_overlay_title_margins">2dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:172: Warning: The resource R.dimen.aviary_store_list_item_padding_left appears to be unused [UnusedResources]
+ <dimen name="aviary_store_list_item_padding_left">16dp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:173: Warning: The resource R.dimen.aviary_store_list_item_padding_right appears to be unused [UnusedResources]
+ <dimen name="aviary_store_list_item_padding_right">16dp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:174: Warning: The resource R.dimen.aviary_store_list_item_padding_top appears to be unused [UnusedResources]
+ <dimen name="aviary_store_list_item_padding_top">10dp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:175: Warning: The resource R.dimen.aviary_store_list_item_padding_bottom appears to be unused [UnusedResources]
+ <dimen name="aviary_store_list_item_padding_bottom">10dp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:178: Warning: The resource R.dimen.aviary_store_list_divider_height appears to be unused [UnusedResources]
+ <dimen name="aviary_store_list_divider_height">1px</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:181: Warning: The resource R.dimen.aviary_store_passport_button_width appears to be unused [UnusedResources]
+ <dimen name="aviary_store_passport_button_width">100dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:183: Warning: The resource R.dimen.aviary_store_detail_title_size appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_title_size">22sp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:184: Warning: The resource R.dimen.aviary_store_detail_description_size appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_description_size">16sp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:185: Warning: The resource R.dimen.aviary_store_detail_subscription_size appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_subscription_size">12sp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:186: Warning: The resource R.dimen.aviary_store_detail_icon_size appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_icon_size">100dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:187: Warning: The resource R.dimen.aviary_store_detail_padding_horizontal appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_padding_horizontal">16dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:188: Warning: The resource R.dimen.aviary_store_detail_padding_vertical appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_padding_vertical">16dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:189: Warning: The resource R.dimen.aviary_store_detail_preview_padding_horizontal appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_preview_padding_horizontal">8dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:191: Warning: The resource R.dimen.aviary_store_featured_padding_vertical appears to be unused [UnusedResources]
+ <dimen name="aviary_store_featured_padding_vertical">10dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:196: Warning: The resource R.dimen.aviary_store_detail_image_right_margin appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_image_right_margin">10dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:197: Warning: The resource R.dimen.aviary_store_detail_passport_banner_v_margin appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_passport_banner_v_margin">15dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:199: Warning: The resource R.dimen.aviary_store_detail_grid_v_space appears to be unused [UnusedResources]
+ <dimen name="aviary_store_detail_grid_v_space">15dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:208: Warning: The resource R.dimen.aviary_subscription_text_padding_h appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_text_padding_h">10dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:209: Warning: The resource R.dimen.aviary_subscription_text_padding_v appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_text_padding_v">10dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:211: Warning: The resource R.dimen.aviary_subscription_message_h_padding appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_message_h_padding">17dp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:212: Warning: The resource R.dimen.aviary_subscription_message_v_padding appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_message_v_padding">17dp</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:214: Warning: The resource R.dimen.aviary_subscription_bottombar_padding_v appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_bottombar_padding_v">10dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:215: Warning: The resource R.dimen.aviary_subscription_bottombar_padding_h appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_bottombar_padding_h">20dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:216: Warning: The resource R.dimen.aviary_subscription_textarea_height appears to be unused [UnusedResources]
+ <dimen name="aviary_subscription_textarea_height">160dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/aviary_dimens.xml:222: Warning: The resource R.dimen.aviary_adjust_consolidation_tip_width appears to be unused [UnusedResources]
+ <dimen name="aviary_adjust_consolidation_tip_width">185dip</dimen>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xhdpi/aviary_iap_notification_group.png: Warning: The resource R.drawable.aviary_iap_notification_group appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xhdpi/aviary_iap_notification_ok.png: Warning: The resource R.drawable.aviary_iap_notification_ok appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable/aviary_nav_background_transparent.xml: Warning: The resource R.drawable.aviary_nav_background_transparent appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-mdpi/aviary_seekbar_thumb_focused.png: Warning: The resource R.drawable.aviary_seekbar_thumb_focused appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/anim/aviary_slide_in_left.xml: Warning: The resource R.anim.aviary_slide_in_left appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/anim/aviary_slide_out_left.xml: Warning: The resource R.anim.aviary_slide_out_left appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable/aviary_store_blue_button_selector.xml: Warning: The resource R.drawable.aviary_store_blue_button_selector appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable/aviary_store_list_item_selector.xml: Warning: The resource R.drawable.aviary_store_list_item_selector appears to be unused [UnusedResources]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:3: Warning: The resource R.string.feather_enhance_effect_scenery appears to be unused [UnusedResources]
+ <string name="feather_enhance_effect_scenery">Scenery</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:4: Warning: The resource R.string.feather_store_ask_uninstall_free_body appears to be unused [UnusedResources]
+ <string name="feather_store_ask_uninstall_free_body">This is a free, limited edition pack. If you uninstall it, you may not be able to restore it again in the future.</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:6: Warning: The resource R.string.feather_details appears to be unused [UnusedResources]
+ <string name="feather_details">Details</string>
+         ~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:7: Warning: The resource R.string.feather_tool appears to be unused [UnusedResources]
+ <string name="feather_tool">Tool</string>
+         ~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:8: Warning: The resource R.string.aviary_passport appears to be unused [UnusedResources]
+ <string name="aviary_passport">Passport</string>
+         ~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:9: Warning: The resource R.string.feather_notification_restore_all_completed appears to be unused [UnusedResources]
+ <string name="feather_notification_restore_all_completed">Restore All Completed</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:11: Warning: The resource R.string.aviary_subscription_tier1_description appears to be unused [UnusedResources]
+ <string name="aviary_subscription_tier1_description">1 Month</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:12: Warning: The resource R.string.feather_enhance_effect_food appears to be unused [UnusedResources]
+ <string name="feather_enhance_effect_food">Food</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:14: Warning: The resource R.string.feather_store_passport_welcome_title appears to be unused [UnusedResources]
+ <string name="feather_store_passport_welcome_title">Welcome to Passport!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:16: Warning: The resource R.string.feather_store_passport_welcome_body appears to be unused [UnusedResources]
+ <string name="feather_store_passport_welcome_body">You now have unlimited access to every single Effect, Sticker, and Frame pack we offer, including all future packs. To manage your subscription status, visit the Passport account screen in the Shop. Happy Editing!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:18: Warning: The resource R.string.feather_store_passport_status appears to be unused [UnusedResources]
+ <string name="feather_store_passport_status">Passport Status</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:21: Warning: The resource R.string.feather_store_yearly appears to be unused [UnusedResources]
+ <string name="feather_store_yearly">Yearly</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:24: Warning: The resource R.string.feather_notification_n_items_cant_be_restored appears to be unused [UnusedResources]
+ <string name="feather_notification_n_items_cant_be_restored">%1$s item(s) could not be restored</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:27: Warning: The resource R.string.feather_new_stickers appears to be unused [UnusedResources]
+ <string name="feather_new_stickers">New Stickers</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:28: Warning: The resource R.string.feather_store_passport_account_info appears to be unused [UnusedResources]
+ <string name="feather_store_passport_account_info">Passport Account Info</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:31: Warning: The resource R.string.feather_message_button_no appears to be unused [UnusedResources]
+ <string name="feather_message_button_no">No, thanks.</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:35: Warning: The resource R.string.aviary_subscription_tier2_description appears to be unused [UnusedResources]
+ <string name="aviary_subscription_tier2_description">1 Year</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:38: Warning: The resource R.string.feather_infoscreen_bottom_button appears to be unused [UnusedResources]
+ <string name="feather_infoscreen_bottom_button">About this editor</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:39: Warning: The resource R.string.feather_message_button_yes appears to be unused [UnusedResources]
+ <string name="feather_message_button_yes">Sure!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:49: Warning: The resource R.string.feather_store_passport_refunded appears to be unused [UnusedResources]
+ <string name="feather_store_passport_refunded">Refunded</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:50: Warning: The resource R.string.feather_stickers_dialog_first_time appears to be unused [UnusedResources]
+ <string name="feather_stickers_dialog_first_time">Install Aviary\'s free pack of beautiful high resolution stickers to get started.</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:52: Warning: The resource R.string.feather_restore_original appears to be unused [UnusedResources]
+ <string name="feather_restore_original">Restore Original</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:53: Warning: The resource R.string.feather_store_my_stuff appears to be unused [UnusedResources]
+ <string name="feather_store_my_stuff">My Supplies</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:54: Warning: The resource R.string.feather_iap_failed_download_previews appears to be unused [UnusedResources]
+ <string name="feather_iap_failed_download_previews">Failed to download the previews</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:59: Warning: The resource R.string.feather_enhance_effect_portrait appears to be unused [UnusedResources]
+ <string name="feather_enhance_effect_portrait">Portrait</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:61: Warning: The resource R.string.feather_store_unsubscribe appears to be unused [UnusedResources]
+ <string name="feather_store_unsubscribe">Unsubscribe</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:63: Warning: The resource R.string.feather_cant_undo_anymore_text appears to be unused [UnusedResources]
+ <string name="feather_cant_undo_anymore_text">Long press on the photo to restore your original image.</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:68: Warning: The resource R.string.feather_iap_restore_all_in_progress appears to be unused [UnusedResources]
+ <string name="feather_iap_restore_all_in_progress">Restore All in Progress</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:70: Warning: The resource R.string.feather_my_account appears to be unused [UnusedResources]
+ <string name="feather_my_account">Account</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:71: Warning: The resource R.string.feather_iap_subscription_banner_text appears to be unused [UnusedResources]
+ <string name="feather_iap_subscription_banner_text">Get this pack and tons of other Aviary effects for one 
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:74: Warning: The resource R.string.feather_settings_join_beta_title appears to be unused [UnusedResources]
+ <string name="feather_settings_join_beta_title">Join the Aviary Beta</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:76: Warning: The resource R.string.feather_enhance_effect_night appears to be unused [UnusedResources]
+ <string name="feather_enhance_effect_night">Night</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:78: Warning: The resource R.string.feather_delete appears to be unused [UnusedResources]
+ <string name="feather_delete">Delete</string>
+         ~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:80: Warning: The resource R.string.feather_overlay_blemish_close_title appears to be unused [UnusedResources]
+ <string name="feather_overlay_blemish_close_title">Looking for the Old Blemish?</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:82: Warning: The resource R.string.feather_settings_join_beta_description appears to be unused [UnusedResources]
+ <string name="feather_settings_join_beta_description">Get early access to new features and help create an even better Aviary!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:84: Warning: The resource R.string.feather_iap_failed_download_informations appears to be unused [UnusedResources]
+ <string name="feather_iap_failed_download_informations">Failed to download the required informations</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:87: Warning: The resource R.string.feather_warning appears to be unused [UnusedResources]
+ <string name="feather_warning">Warning</string>
+         ~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:88: Warning: The resource R.string.feather_notification_some_items_cant_be_restored appears to be unused [UnusedResources]
+ <string name="feather_notification_some_items_cant_be_restored">Some items could not be restored</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:89: Warning: The resource R.string.feather_refresh appears to be unused [UnusedResources]
+ <string name="feather_refresh">Refresh</string>
+         ~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:91: Warning: The resource R.string.feather_tool_consolidation_adjust appears to be unused [UnusedResources]
+ <string name="feather_tool_consolidation_adjust">Adjust</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:97: Warning: The resource R.string.feather_store_passport_cancelled appears to be unused [UnusedResources]
+ <string name="feather_store_passport_cancelled">Cancelled</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:99: Warning: The resource R.string.feather_an_error_occurred appears to be unused [UnusedResources]
+ <string name="feather_an_error_occurred">An error occurred</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:100: Warning: The resource R.string.feather_see_more appears to be unused [UnusedResources]
+ <string name="feather_see_more">See More</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:102: Warning: The resource R.string.feather_filters appears to be unused [UnusedResources]
+ <string name="feather_filters">Filters</string>
+         ~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:104: Warning: The resource R.string.feather_store_passport_unknown appears to be unused [UnusedResources]
+ <string name="feather_store_passport_unknown">Unknown</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:109: Warning: The resource R.string.feather_store_passport_type appears to be unused [UnusedResources]
+ <string name="feather_store_passport_type">Passport Type</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:112: Warning: The resource R.string.feather_activity_not_found appears to be unused [UnusedResources]
+ <string name="feather_activity_not_found">Sorry, there\'s no application on your device to handle this action. Do you want to download it now from the market?</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:116: Warning: The resource R.string.feather_passport appears to be unused [UnusedResources]
+ <string name="feather_passport">Aviary Passport</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:118: Warning: The resource R.string.feather_applying_actions_counter appears to be unused [UnusedResources]
+ <string name="feather_applying_actions_counter">Applying action %1$d of %2$d</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:131: Warning: The resource R.string.feather_overlay_blemish_close_text appears to be unused [UnusedResources]
+ <string name="feather_overlay_blemish_close_text">Check out the new &lt;b&gt;Blur&lt;/b&gt; tool!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:133: Warning: The resource R.string.feather_iap_pack_installed appears to be unused [UnusedResources]
+ <string name="feather_iap_pack_installed">Installed</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:139: Warning: The resource R.string.feather_iap_restore_all_failed appears to be unused [UnusedResources]
+ <string name="feather_iap_restore_all_failed">Restore All Failed</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:140: Warning: The resource R.string.feather_borders_dialog_first_time appears to be unused [UnusedResources]
+ <string name="feather_borders_dialog_first_time">Install Aviary\'s free pack of beautiful high resolution frames to get started.</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:142: Warning: The resource R.string.feather_download appears to be unused [UnusedResources]
+ <string name="feather_download">Download</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:145: Warning: The resource R.string.feather_notification_plus_more appears to be unused [UnusedResources]
+ <string name="feather_notification_plus_more">%1$d more</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:148: Warning: The resource R.string.feather_welcome_to_frames appears to be unused [UnusedResources]
+ <string name="feather_welcome_to_frames">Welcome to Frames!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:153: Warning: The resource R.string.feather_please_try_again_later appears to be unused [UnusedResources]
+ <string name="feather_please_try_again_later">Plase try again later</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:156: Warning: The resource R.string.feather_store_title appears to be unused [UnusedResources]
+ <string name="feather_store_title">Aviary Supply Shop</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:158: Warning: The resource R.string.feather_store_monthly appears to be unused [UnusedResources]
+ <string name="feather_store_monthly">Monthly</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:160: Warning: The resource R.string.feather_store_purchase_date appears to be unused [UnusedResources]
+ <string name="feather_store_purchase_date">Purchase Date</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:162: Warning: The resource R.string.feather_store_passport_banner_text appears to be unused [UnusedResources]
+ <string name="feather_store_passport_banner_text">Get this pack and tons of other Aviary effects for one low price with Aviary Passport! Click here for more information!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:164: Warning: The resource R.string.feather_iap_notification_installed_summary appears to be unused [UnusedResources]
+ <string name="feather_iap_notification_installed_summary">Plugin successfully installed</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:168: Warning: The resource R.string.feather_ops_error_download_image appears to be unused [UnusedResources]
+ <string name="feather_ops_error_download_image">We\'re having connection problems :(</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:170: Warning: The resource R.string.feather_notification_no_items_to_restore appears to be unused [UnusedResources]
+ <string name="feather_notification_no_items_to_restore">No item needs to be restored</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:172: Warning: The resource R.string.feather_store_passport_subscribed appears to be unused [UnusedResources]
+ <string name="feather_store_passport_subscribed">Subscribed</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:177: Warning: The resource R.string.feather_subscribe appears to be unused [UnusedResources]
+ <string name="feather_subscribe">Subscribe</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:178: Warning: The resource R.string.feather_cancel appears to be unused [UnusedResources]
+ <string name="feather_cancel">Cancel</string>
+         ~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:181: Warning: The resource R.string.feather_featured appears to be unused [UnusedResources]
+ <string name="feather_featured">Featured</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:182: Warning: The resource R.string.feather_welcome_to_stickers appears to be unused [UnusedResources]
+ <string name="feather_welcome_to_stickers">Welcome to Stickers!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:183: Warning: The resource R.string.feather_tooltip_adjust_intro appears to be unused [UnusedResources]
+ <string name="feather_tooltip_adjust_intro">Brightness, Contrast, Warmth and Saturation are now here!</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:184: Warning: The resource R.string.feather_notification_plugins_installed_count appears to be unused [UnusedResources]
+ <string name="feather_notification_plugins_installed_count">%1$d Plugins Installed</string>
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_detail_banner.xml:8: Warning: This ViewAnimator layout or its RelativeLayout parent is possibly useless [UselessParent]
+ <ViewAnimator
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_dialog_container.xml:16: Warning: This LinearLayout layout or its LinearLayout parent is possibly useless [UselessParent]
+ <LinearLayout
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_modal_progress_view.xml:7: Warning: This RelativeLayout layout or its RelativeLayout parent is useless [UselessParent]
+    <RelativeLayout
+    ^
+
+   Explanation for issues of type "UselessParent":
+   A layout with children that has no siblings, is not a scrollview or a root
+   layout, and does not have a background, can be removed and have its
+   children moved directly into the parent for a flatter and more efficient
+   layout hierarchy.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-bg/strings.xml:15: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Записвам...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-cs/strings.xml:16: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Ukládám...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-bg/strings.xml:17: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Зареждане на картинката...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-cs/strings.xml:18: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Nahrávám obrázek...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-in/strings.xml:19: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Memuat Gambar...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-el/strings.xml:20: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Φόρτωμα εικόνας...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-pt/strings.xml:22: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">A gravar...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-pt/strings.xml:25: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">A carregar imagem...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-ru/strings.xml:54: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Загрузка изображения...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-hu/strings.xml:57: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Kép betöltése...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-es/strings.xml:58: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Cargando imagen...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-ko/strings.xml:59: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">이미지 로딩 중...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-it/strings.xml:60: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Caricamento immagine...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-pl/strings.xml:61: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Wczytywanie obrazka...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:62: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_image">Loading Image...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-no/strings.xml:76: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_title">Laster...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-no/strings.xml:92: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Lagrer...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-fr/strings.xml:101: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">Vérification de packs supplémentaires...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-ru/strings.xml:102: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_title">Загрузка...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-hu/strings.xml:108: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_title">Betöltés...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-es/strings.xml:112: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">Comprobando packs adicionales...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-ko/strings.xml:114: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">추가 서비스 알아보기...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-it/strings.xml:116: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">Controllo in corso per pacchetti aggiuntivi...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-de/strings.xml:118: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">Sucht nach zusätzlichen Paketen...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-pl/strings.xml:119: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">Trwa sprawdzanie, czy dostępne są dodatkowe pakiety...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-ru/strings.xml:124: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Сохраняется...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:126: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_loading_title">Loading...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-hu/strings.xml:128: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Mentés...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:130: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_store_checking_additional_packs">Checking for additional packs...</string>
+                                                        ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-es/strings.xml:132: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Guardando...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-it/strings.xml:135: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Salvataggio in corso...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-pt-rBR/strings.xml:136: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Salvando...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-de/strings.xml:138: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Speichert...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-pl/strings.xml:139: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Zapisywanie...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values/strings.xml:150: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_save_progress">Saving...</string>
+                                      ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/values-de/strings.xml:167: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+ <string name="feather_iap_installing">Installiert...</string>
+                                       ^
+
+   Explanation for issues of type "TypographyEllipsis":
+   You can replace the string "..." with a dedicated ellipsis character,
+   ellipsis character (…, &#8230;). This can help make the text more
+   readable.
+
+   http://en.wikipedia.org/wiki/Ellipsis
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xxhdpi/aviary_effects_pack_background.png: Warning: The image aviary_effects_pack_background.png varies significantly in its density-independent (dip) size across the various density versions: drawable-mdpi/aviary_effects_pack_background.png: 125x125 dp (125x125 px), drawable-xxhdpi/aviary_effects_pack_background.png: 83x83 dp (250x250 px) [IconDipSize]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xhdpi/aviary_frame_item_selected_image.png: Warning: The image aviary_frame_item_selected_image.png varies significantly in its density-independent (dip) size across the various density versions: drawable-mdpi/aviary_frame_item_selected_image.png: 40x9 dp (40x9 px), drawable-xhdpi/aviary_frame_item_selected_image.png: 30x7 dp (60x14 px) [IconDipSize]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-mdpi/aviary_overlay_undo_redo.png: Warning: The image aviary_overlay_undo_redo.png varies significantly in its density-independent (dip) size across the various density versions: drawable-xxhdpi/aviary_overlay_undo_redo.png: 239x32 dp (717x96 px), drawable-hdpi/aviary_overlay_undo_redo.png: 239x32 dp (359x48 px), drawable-xhdpi/aviary_overlay_undo_redo.png: 237x32 dp (473x63 px), drawable-mdpi/aviary_overlay_undo_redo.png: 179x24 dp (179x24 px) [IconDipSize]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-mdpi/aviary_overlay_undo_undo.png: Warning: The image aviary_overlay_undo_undo.png varies significantly in its density-independent (dip) size across the various density versions: drawable-xxhdpi/aviary_overlay_undo_undo.png: 239x32 dp (717x96 px), drawable-hdpi/aviary_overlay_undo_undo.png: 239x32 dp (359x48 px), drawable-xhdpi/aviary_overlay_undo_undo.png: 237x32 dp (473x63 px), drawable-mdpi/aviary_overlay_undo_undo.png: 179x24 dp (179x24 px) [IconDipSize]
+
+   Explanation for issues of type "IconDipSize":
+   Checks the all icons which are provided in multiple densities, all compute
+   to roughly the same density-independent pixel (dip) size. This catches
+   errors where images are either placed in the wrong folder, or icons are
+   changed to new sizes but some folders are forgotten.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xxhdpi/aviary_store_list_item_checked.9.png: Warning: The aviary_store_list_item_checked.9.png icon has identical contents in the following configuration folders: drawable-hdpi, drawable-xxhdpi [IconDuplicatesConfig]
+
+   Explanation for issues of type "IconDuplicatesConfig":
+   If an icon is provided under different configuration parameters such as
+   drawable-hdpi or -v11, they should typically be different. This detector
+   catches cases where the same icon is provided in different configuration
+   folder which is usually not intentional.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-hdpi: Warning: Missing the following drawables in drawable-hdpi: aviary_adjust_knob.png, aviary_badge_icon.png, aviary_blue_button_normal.9.png, aviary_blue_button_pressed.9.png, aviary_crop_invert_indicator.png... (109 more) [IconDensities]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-mdpi: Warning: Missing the following drawables in drawable-mdpi: aviary_badge_icon.png, aviary_blue_button_normal.9.png, aviary_blue_button_pressed.9.png, aviary_effect_item_getmore.png, aviary_frame_item_getmore.png... (28 more) [IconDensities]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xhdpi: Warning: Missing the following drawables in drawable-xhdpi: aviary_badge_icon.png, aviary_blue_button_normal.9.png, aviary_blue_button_pressed.9.png, aviary_effect_item_getmore.png, aviary_effects_pack_background.png... (17 more) [IconDensities]
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/drawable-xxhdpi: Warning: Missing the following drawables in drawable-xxhdpi: aviary_adjust_knob.png, aviary_crop_invert_indicator.png, aviary_crop_invert_indicator_inverted.png, aviary_crop_invert_indicator_transparent.png, aviary_delete_knob_normal.png... (93 more) [IconDensities]
+
+   Explanation for issues of type "IconDensities":
+   Icons will look best if a custom version is provided for each of the major
+   screen density classes (low, medium, high, extra high). This lint check
+   identifies icons which do not have complete coverage across the densities.
+
+   Low density is not really used much anymore, so this check ignores the ldpi
+   density. To force lint to include it, set the environment variable
+   ANDROID_LINT_INCLUDE_LDPI=true. For more information on current density
+   usage, see http://developer.android.com/resources/dashboard/screens.html
+
+   http://developer.android.com/guide/practices/screens_support.html
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res: Warning: Missing density variation folders in src/main/res: drawable-xxxhdpi [IconMissingDensityFolder]
+
+   Explanation for issues of type "IconMissingDensityFolder":
+   Icons will look best if a custom version is provided for each of the major
+   screen density classes (low, medium, high, extra-high, extra-extra-high).
+   This lint check identifies folders which are missing, such as
+   drawable-hdpi.
+   Low density is not really used much anymore, so this check ignores the ldpi
+   density. To force lint to include it, set the environment variable
+   ANDROID_LINT_INCLUDE_LDPI=true. For more information on current density
+   usage, see http://developer.android.com/resources/dashboard/screens.html
+
+   http://developer.android.com/guide/practices/screens_support.html
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/overlays/BlemishOverlay.java:21: Warning: Custom view BlemishOverlay is missing constructor used by tools: (Context) or (Context,AttributeSet) or (Context,AttributeSet,int) [ViewConstructor]
+public class BlemishOverlay extends AviaryOverlay {
+             ~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/overlays/OverlayOverlay.java:17: Warning: Custom view OverlayOverlay is missing constructor used by tools: (Context) or (Context,AttributeSet) or (Context,AttributeSet,int) [ViewConstructor]
+public class OverlayOverlay extends AviaryOverlay {
+             ~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/overlays/StickersOverlay.java:25: Warning: Custom view StickersOverlay is missing constructor used by tools: (Context) or (Context,AttributeSet) or (Context,AttributeSet,int) [ViewConstructor]
+public class StickersOverlay extends AviaryOverlay {
+             ~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/overlays/UndoRedoOverlay.java:21: Warning: Custom view UndoRedoOverlay is missing constructor used by tools: (Context) or (Context,AttributeSet) or (Context,AttributeSet,int) [ViewConstructor]
+public class UndoRedoOverlay extends AviaryOverlay {
+             ~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ViewConstructor":
+   Some layout tools (such as the Android layout editor for Studio & Eclipse)
+   needs to find a constructor with one of the following signatures:
+   * View(Context context)
+   * View(Context context, AttributeSet attrs)
+   * View(Context context, AttributeSet attrs, int defStyle)
+
+   If your custom view needs to perform initialization which does not apply
+   when used in a layout editor, you can surround the given code with a check
+   to see if View#isInEditMode() is false, since that method will return false
+   at runtime but true within a user interface editor.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/widget/AdjustImageView.java:1105: Warning: Custom view com/aviary/android/feather/sdk/widget/AdjustImageView overrides onTouchEvent but not performClick [ClickableViewAccessibility]
+    public boolean onTouchEvent(MotionEvent ev) {
+                   ~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/java/com/aviary/android/feather/sdk/widget/AviaryWheel.java:128: Warning: Custom view com/aviary/android/feather/sdk/widget/AviaryWheel overrides onTouchEvent but not performClick [ClickableViewAccessibility]
+    public boolean onTouchEvent(MotionEvent event) {
+                   ~~~~~~~~~~~~
+
+   Explanation for issues of type "ClickableViewAccessibility":
+   If a View that overrides onTouchEvent or uses an OnTouchListener does not
+   also implement performClick and call it when clicks are detected, the View
+   may not handle accessibility actions properly. Logic handling the click
+   actions should ideally be placed in View#performClick as some accessibility
+   services invoke performClick when a click action should occur.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_adjust_seekbar.xml:8: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_adjust_seekbar.xml:27: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_detail_banner.xml:15: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+  <ImageView
+  ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_detail_banner.xml:25: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+   <ImageView
+   ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_detail_banner.xml:37: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_detail_banner.xml:59: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+  <ImageView
+  ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_effect_item_external.xml:8: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_effect_item_more.xml:9: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_feedback_dialog_view.xml:13: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_frame_item.xml:11: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_frame_item.xml:21: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_frame_item_divider.xml:10: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_gallery_item_divider.xml:2: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_gallery_item_view.xml:9: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_download_error_message.xml:11: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:16: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+  <ImageView
+  ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_pack_detail_layout_previews.xml:30: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_seekbar.xml:8: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_seekbar.xml:22: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_stickers.xml:49: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+  <ImageView
+  ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_stickers.xml:71: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+  <ImageView
+  ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_sticker_item.xml:8: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+ <ImageView
+ ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_sticker_item_single.xml:10: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_toast_layout.xml:9: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+    <ImageView
+    ^
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_tool_layout.xml:30: Warning: [Accessibility] Missing contentDescription attribute on image [ContentDescription]
+  <ImageView
+  ^
+
+   Explanation for issues of type "ContentDescription":
+   Non-textual widgets like ImageViews and ImageButtons should use the
+   contentDescription attribute to specify a textual description of the widget
+   such that screen readers and other accessibility tools can adequately
+   describe the user interface.
+
+   Note that elements in application screens that are purely decorative and do
+   not provide any content or enable a user action should not have
+   accessibility content descriptions. In this case, just suppress the lint
+   warning with a tools:ignore="ContentDescription" attribute.
+
+   Note that for text fields, you should not set both the hint and the
+   contentDescription attributes since the hint will never be shown. Just set
+   the hint. See
+   http://developer.android.com/guide/topics/ui/accessibility/checklist.html#s
+   ecial-cases.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:14: Warning: When you define paddingLeft you should probably also define paddingRight for right-to-left symmetry [RtlSymmetry]
+  android:paddingLeft="12dip">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:62: Warning: When you define paddingLeft you should probably also define paddingRight for right-to-left symmetry [RtlSymmetry]
+  android:paddingLeft="12dip">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_pack_detail_layout_content.xml:64: Warning: When you define paddingRight you should probably also define paddingLeft for right-to-left symmetry [RtlSymmetry]
+  android:paddingRight="5dip"
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RtlSymmetry":
+   If you specify padding or margin on the left side of a layout, you should
+   probably also specify padding on the right side (and vice versa) for
+   right-to-left layout symmetry.
+
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_content_blemish.xml:24: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_alignParentRight="true" />
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_content_draw.xml:20: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_alignParentRight="true" />
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_content_spot_draw.xml:24: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_alignParentRight="true" />
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_effect_item_more.xml:24: Warning: Consider adding android:layout_alignStart="@+id/aviary_image" to better support right-to-left layouts [RtlHardcoded]
+  android:layout_alignLeft="@+id/aviary_image"
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_effect_item_more.xml:25: Warning: Consider adding android:layout_alignEnd="@+id/aviary_image" to better support right-to-left layouts [RtlHardcoded]
+  android:layout_alignRight="@+id/aviary_image"
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:4: Warning: Consider adding android:paddingStart="@dimen/aviary_iap_list_item_padding_left" to better support right-to-left layouts [RtlHardcoded]
+ android:paddingLeft="@dimen/aviary_iap_list_item_padding_left"
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:5: Warning: Consider adding android:paddingEnd="@dimen/aviary_iap_list_item_padding_right" to better support right-to-left layouts [RtlHardcoded]
+ android:paddingRight="@dimen/aviary_iap_list_item_padding_right"
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:20: Warning: Consider adding android:layout_marginEnd="10dip" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_marginRight="10dip"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:27: Warning: Consider adding android:layout_toEndOf="@+id/aviary_image" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_toRightOf="@+id/aviary_image"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:36: Warning: Consider adding android:layout_toEndOf="@+id/aviary_image" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_toRightOf="@+id/aviary_image"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_iap_list_item.xml:49: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignParentRight="true" />
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:14: Warning: Consider adding android:paddingStart="12dip" to better support right-to-left layouts [RtlHardcoded]
+  android:paddingLeft="12dip">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:31: Warning: Consider adding android:layout_toStartOf="@+id/navbar_divider1" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_toLeftOf="@+id/navbar_divider1"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:42: Warning: Consider adding android:layout_toStartOf="@+id/navbar_button1" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_toLeftOf="@+id/navbar_button1"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:50: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignParentRight="true"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:62: Warning: Consider adding android:paddingStart="12dip" to better support right-to-left layouts [RtlHardcoded]
+  android:paddingLeft="12dip">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:69: Warning: Consider adding android:layout_alignParentStart="true" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignParentLeft="true"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:79: Warning: Consider adding android:layout_toStartOf="@+id/navbar_divider2" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_toLeftOf="@+id/navbar_divider2"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:90: Warning: Consider adding android:layout_toStartOf="@+id/navbar_button2" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_toLeftOf="@+id/navbar_button2"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar.xml:98: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignParentRight="true"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_navbar_text.xml:8: Warning: Consider adding android:layout_alignParentStart="true" to better support right-to-left layouts [RtlHardcoded]
+    android:layout_alignParentLeft="true"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_pack_detail_layout_content.xml:29: Warning: Consider adding android:layout_alignParentStart="true" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignParentLeft="true"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_pack_detail_layout_content.xml:52: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignParentRight="true" />
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_pack_detail_layout_content.xml:64: Warning: Consider adding android:paddingEnd="5dip" to better support right-to-left layouts [RtlHardcoded]
+  android:paddingRight="5dip"
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_adjustment_consolidation.xml:17: Warning: Consider adding android:layout_marginEnd="3dip" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_marginRight="3dip"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_adjustment_consolidation.xml:29: Warning: Consider adding android:layout_marginEnd="3dip" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_marginRight="3dip"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_adjustment_consolidation.xml:41: Warning: Consider adding android:layout_marginEnd="3dip" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_marginRight="3dip"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_meme.xml:29: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+            android:layout_alignParentRight="true"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_meme.xml:31: Warning: Consider adding android:layout_marginEnd="10dip" to better support right-to-left layouts [RtlHardcoded]
+            android:layout_marginRight="10dip"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_meme.xml:53: Warning: Consider adding android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+            android:layout_alignParentRight="true"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_panel_meme.xml:55: Warning: Consider adding android:layout_marginEnd="10dip" to better support right-to-left layouts [RtlHardcoded]
+            android:layout_marginRight="10dip"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_progress_medium.xml:21: Warning: Consider adding android:layout_marginStart="5dip" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_marginLeft="5dip"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_progress_medium_inverse.xml:21: Warning: Consider adding android:layout_marginStart="5dip" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_marginLeft="5dip"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_progress_small.xml:21: Warning: Consider adding android:layout_marginStart="5dip" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_marginLeft="5dip"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_thumb_divider_left.xml:16: Warning: Use "start" instead of "left" to ensure correct behavior in right-to-left locales [RtlHardcoded]
+  android:layout_gravity="left" />
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_thumb_divider_right.xml:13: Warning: Use "end" instead of "right" to ensure correct behavior in right-to-left locales [RtlHardcoded]
+        android:layout_gravity="right" />
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_tool_feedback_layout.xml:13: Warning: Consider adding android:layout_marginStart="15dip" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_marginLeft="15dip"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_tool_feedback_layout.xml:14: Warning: Consider adding android:layout_marginEnd="0dip" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_marginRight="0dip"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_tool_feedback_layout.xml:35: Warning: Consider adding android:layout_marginEnd="16dip" to better support right-to-left layouts [RtlHardcoded]
+        android:layout_marginRight="16dip"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/talukder/Git/Android-SDK/Aviary-SDK/src/main/res/layout/aviary_tool_layout.xml:35: Warning: Consider adding android:layout_alignEnd="@+id/aviary_image" to better support right-to-left layouts [RtlHardcoded]
+   android:layout_alignRight="@+id/aviary_image"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RtlHardcoded":
+   Using Gravity#LEFT and Gravity#RIGHT can lead to problems when a layout is
+   rendered in locales where text flows from right to left. Use Gravity#START
+   and Gravity#END instead. Similarly, in XML gravity and layout_gravity
+   attributes, use start rather than left.
+   For XML attributes such as paddingLeft and layout_marginLeft, use
+   paddingStart and layout_marginStart. NOTE: If your minSdkVersion is less
+   than 17, you should add both the older left/right attributes as well as the
+   new start/right attributes. On older platforms, where RTL is not supported
+   and the start/right attributes are unknown and therefore ignored, you need
+   the older left/right attributes. There is a separate lint check which
+   catches that type of error.
+   (Note: For Gravity#LEFT and Gravity#START, you can use these constants even
+   when targeting older platforms, because the start bitmask is a superset of
+   the left bitmask. Therefore, you can use gravity="start" rather than
+   gravity="left|start".)
+
+0 errors, 301 warnings

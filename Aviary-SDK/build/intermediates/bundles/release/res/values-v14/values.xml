@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-v14/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_adjust_flip3d">0</integer>
+</resources>

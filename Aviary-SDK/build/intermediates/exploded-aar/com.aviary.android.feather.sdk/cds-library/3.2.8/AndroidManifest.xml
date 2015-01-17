@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aviary.android.feather.cds"
+    android:versionCode="1"
+    android:versionName="3.2.8" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="20" />
+
+    <application>
+
+        <!--
+			Aviary Cds Service is in charge of sync all the available
+			online DLC contents within the android application.
+			It's required by the Aviary SDK and it will run in a
+			separated process 'aviarycds'
+        -->
+        <service
+            android:name="com.aviary.android.feather.cds.AviaryCdsService"
+            android:exported="false"
+            android:process=":aviarycds" >
+            <intent-filter>
+                <action android:name="aviary.intent.action.CDS_DOWNLOAD_START" />
+                <action android:name="aviary.intent.action.CDS_RESTORE_USER_ITEMS" />
+                <action android:name="aviary.intent.action.CDS_RESTORE_OWNED_PACKS" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.aviary.android.feather.cds.AviaryCdsAssetsDownloaderService"
+            android:exported="false"
+            android:process=":aviarycds" >
+            <intent-filter>
+                <action android:name="aviary.intent.action.CDS_DOWNLOAD_EXTRA_ASSETS" />
+            </intent-filter>
+        </service>
+
+        <!--
+			The AviaryCdsReceiver handles the downloaded contents (throught the
+			android DownloadManager)
+        -->
+        <receiver
+            android:name="com.aviary.android.feather.cds.AviaryCdsReceiver"
+            android:exported="true"
+            android:permission="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS"
+            android:process=":aviarycds" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
