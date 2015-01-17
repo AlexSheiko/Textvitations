@@ -270,9 +270,11 @@ package com.aviary.android.feather.sdk;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -286,7 +288,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.RemoteException;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -294,16 +299,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.vending.billing.IInAppBillingService;
+import com.aviary.android.feather.cds.billing.util.IabHelper;
+import com.aviary.android.feather.cds.billing.util.IabResult;
+import com.aviary.android.feather.cds.billing.util.Inventory;
+import com.aviary.android.feather.cds.billing.util.Purchase;
 import com.aviary.android.feather.common.AviaryIntent;
 import com.aviary.android.feather.common.log.LoggerFactory;
 import com.aviary.android.feather.common.log.LoggerFactory.Logger;
@@ -368,6 +375,17 @@ public class FeatherActivity extends MonitoredActivity
     implements OnToolbarClickListener, DownloadImageAsyncTask.OnImageDownloadListener, FeatherContext, OnBitmapChangeListener,
                OnBottomBarItemClickListener, OnItemClickListener, ToolsLoaderAsyncTask.OnToolsLoadListener,
                AviaryImageViewUndoRedo.OnHistoryListener {
+
+    public static final String TAG = "TextvitationsTag";
+
+    public static final String SKU_EXTRA_TOOLS = "extra_tools";
+
+    // The helper object
+    IabHelper mHelper;
+
+    // Does the user have extra tools?
+    public boolean mHaveExtraTools = false;
+
     private static final int ALERT_CONFIRM_EXIT                 = 0;
     private static final int ALERT_DOWNLOAD_ERROR               = 1;
     // TRACK: remove this!
@@ -542,6 +560,7 @@ public class FeatherActivity extends MonitoredActivity
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+        final String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkGfnRZnnEzmGYHYnKad6i/YsKjNA8e1JFdQGm2yzbgfeC8h6Gk/4CIrRu3fWgbutuUbir00NZS7oU659AEfH7LdHVyhOjFb65/XSF0atmsxVUmtm56CDYppPrOzh8XZ6nGDTGwq+nrW47xwigJas7gXe/BVFqumJ9gIiyjy/nWHlttD55B34xs4Qp9B9g+rgRuK5Il3dlWboan/Du8FsCkP2jZHrSXatipYyVMWSwc/m0Vwyo//sbmYsB00aOhbLho7/+iX8fsIJ6o5sGRZj71YK7MVJnWSzrU3m5llRqLQy4bmjZ46z+/nktlV6wFEnAt8+OmSKJgUfMfmIBJRXpwIDAQAB";
         setContentView(R.layout.aviary_main_view);
 
         onSetResult(RESULT_CANCELED, null);
@@ -577,7 +596,134 @@ public class FeatherActivity extends MonitoredActivity
 
         getTracker().tagEvent("editor: opened");
         DateTimeUtils.tick(t1, "onCreate finished");
+
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        Log.d(TAG, "Starting setup.");
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Log.d(TAG, "Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    Log.d(TAG, "Problem setting up in-app billing: " + result);
+                    return;
+                }
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (mHelper == null) return;
+
+                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                Log.d(TAG, "Setup successful. Querying inventory.");
+                mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });
     }
+
+    IInAppBillingService mService;
+
+    ServiceConnection mServiceConn = new ServiceConnection() {
+        public static final int BILLING_RESPONSE_RESULT_OK = 0;
+        public static final String RESPONSE_CODE = "RESPONSE_CODE";
+        private Context mContext = FeatherActivity.this;
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService = null;
+        }
+
+        @Override
+        public void onServiceConnected(
+                ComponentName name, IBinder service) {
+
+            mService = IInAppBillingService.Stub.asInterface(service);
+            int response = -1;
+            try {
+                response = mService.isBillingSupported(3,
+                        getPackageName(), "inapp");
+            } catch (RemoteException ignored) {
+            }
+
+
+            if (response == BILLING_RESPONSE_RESULT_OK) {
+                // has billing!
+
+                if (!mHelper.subscriptionsSupported()) {
+                    Log.e(TAG, "Subscriptions not supported on your device yet. Sorry!");
+                    return;
+                }
+
+
+                Log.d(TAG, "Launching purchase flow for infinite gas subscription.");
+
+                mHelper.launchPurchaseFlow(FeatherActivity.this,
+                        SKU_EXTRA_TOOLS, IabHelper.ITEM_TYPE_INAPP,
+                        10001, mPurchaseFinishedListener, null);
+
+            } else {
+                // no billing V3...
+                Toast.makeText(mContext,
+                        "Please update Google Play Services to make purchases", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    // Callback for when a purchase is finished
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+
+            // if we were disposed of in the meantime, quit.
+            if (mHelper == null) return;
+
+            if (result.isFailure()) {
+                Log.e(TAG, "Error purchasing: " + result);
+                return;
+            }
+
+            Log.d(TAG, "Purchase successful.");
+
+            if (purchase.getSku().equals(SKU_EXTRA_TOOLS)) {
+                // bought the premium upgrade!
+                Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
+                Toast.makeText(FeatherActivity.this, "Thank you for installing extra tools for image editor!", Toast.LENGTH_SHORT).show();
+                mHaveExtraTools = true;
+                //TODO: If there's manual button hiding needed, implement it here
+                // updateUi();
+            }
+        }
+    };
+
+    // Listener that's called when we finish querying the items and subscriptions we own
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            Log.d(TAG, "Query inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) return;
+
+            // Is it a failure?
+            if (result.isFailure()) {
+                Log.d(TAG, "Failed to query inventory: " + result);
+                return;
+            }
+
+            Log.d(TAG, "Query inventory was successful.");
+
+            /*
+             * Check for items we own. Notice that for each purchase, we check
+             * the developer payload to see if it's correct! See
+             * verifyDeveloperPayload().
+             */
+
+            // Do we have the premium upgrade?
+            Purchase premiumPurchase = inventory.getPurchase(SKU_EXTRA_TOOLS);
+            mHaveExtraTools = (premiumPurchase != null/* && verifyDeveloperPayload(premiumPurchase)*/);
+            Log.d(TAG, "User " + (mHaveExtraTools ? "HAVE extra tools" : "DOESN'T have extra tools"));
+
+            Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+        }
+    };
 
     private void initializeController() {
         mMainController = new AviaryMainController(this, mUIHandler);
@@ -760,40 +906,10 @@ public class FeatherActivity extends MonitoredActivity
     }
 
     protected Dialog createBaseDialog(int message, String buttonText, final OnClickListener button1Listener) {
-        final Dialog dialog = new Dialog(FeatherActivity.this, R.style.AviaryTheme_Dark_Dialog_Custom);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.aviary_feedback_dialog_view);
-        dialog.setCanceledOnTouchOutside(true);
-
-        Window dialogWindow = dialog.getWindow();
-        TextView textVersion = (TextView) dialogWindow.findViewById(R.id.aviary_version);
-        TextView textMessage = (TextView) dialogWindow.findViewById(R.id.aviary_text);
-
-        Button button1 = (Button) dialogWindow.findViewById(R.id.aviary_button1);
-        Button button2 = (Button) dialogWindow.findViewById(R.id.aviary_button2);
-
-        textVersion.setText(getString(R.string.feather_version) + " " + SDKUtils.SDK_VERSION_NAME);
-        textMessage.setText(message);
-
-        button1.setText(buttonText);
-        button1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != button1Listener) {
-                    button1Listener.onClick(v);
-                }
-                dialog.dismiss();
-            }
-        });
-
-        button2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        return dialog;
+        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+        return /*dialog*/ null;
     }
 
     /**
