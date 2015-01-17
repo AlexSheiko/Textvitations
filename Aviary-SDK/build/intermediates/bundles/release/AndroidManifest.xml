@@ -30,8 +30,9 @@
 	        Aviary SDK API KEY
 	        Required
         -->
-        <!-- <meta-data android:name="com.aviary.android.feather.v1.API_KEY" android:value="xxx" /> -->
-
+        <meta-data
+            android:name="com.aviary.android.feather.v1.API_KEY"
+            android:value="6bea1dd566207f91" />
     </application>
 
 </manifest>
