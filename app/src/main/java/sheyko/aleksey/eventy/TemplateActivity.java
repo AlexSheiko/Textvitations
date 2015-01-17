@@ -16,6 +16,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.aviary.android.feather.library.Constants;
+import com.aviary.android.feather.sdk.FeatherActivity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -157,18 +160,14 @@ public class TemplateActivity extends Activity {
             tools = new String[]{"TEXT", "DRAW", "CROP"};
         }
 
-//        TODO: Start Aviary intent
-//        Intent aviaryIntent = new Intent(TemplateActivity.this, FeatherActivity.class);
-//        aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
-//        aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
-//        aviaryIntent.setData(Uri.parse(mImagePath));
-//
-//        aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
-//        aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
-//        startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
+        Intent aviaryIntent = new Intent(TemplateActivity.this, FeatherActivity.class);
+        aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
+        aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
+        aviaryIntent.setData(Uri.parse(mImagePath));
 
-
-
+        aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
+        aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
+        startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
     }
 
     public String getImagePath(Context inContext, Bitmap inImage) {

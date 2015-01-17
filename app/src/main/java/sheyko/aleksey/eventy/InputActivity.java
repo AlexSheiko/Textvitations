@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aviary.android.feather.library.Constants;
+import com.aviary.android.feather.sdk.FeatherActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -152,16 +155,14 @@ public class InputActivity extends Activity {
             tools = new String[]{"TEXT", "DRAW", "CROP"};
         }
 
-//        TODO: Start Aviary intent
-//        Intent aviaryIntent = new Intent(InputActivity.this, FeatherActivity.class);
-//        aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
-//        aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
-//        //Здесь шаредпрефс не нужны, т.к. исходник хранится с вызова из Cat или Temp
-//        aviaryIntent.setData(Uri.parse(mImagePath));
-//        aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
-//        aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
-//        startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
-
+        Intent aviaryIntent = new Intent(InputActivity.this, FeatherActivity.class);
+        aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
+        aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
+        //Здесь шаредпрефс не нужны, т.к. исходник хранится с вызова из Cat или Temp
+        aviaryIntent.setData(Uri.parse(mImagePath));
+        aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
+        aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
+        startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
     }
 
     @Override
