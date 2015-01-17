@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDEDED"
+    tools:context=".MainActivity"
+    android:id="@+id/relativeLayout">
+
+
+
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:onClick="navigateToInputActivity"
+        android:background="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/new_event_layout">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/create_event_image"
+            android:src="@drawable/ic_new_event2"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:clickable="true"
+            android:onClick="navigateToInputActivity" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customized\nInvitation"
+            android:textSize="18sp"
+            android:paddingBottom="16dp"
+            android:textColor="#414141"
+            android:layout_below="@+id/create_event_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:id="@+id/create_event_hint"
+            android:clickable="true"
+            android:onClick="navigateToInputActivity"
+            android:gravity="center_horizontal" />
+
+    </RelativeLayout>
+
+<!--
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:onClick="navigateToInputActivity"
+        android:background="@android:color/white"
+        android:id="@+id/pre_filled_layout"
+        android:layout_below="@+id/new_event_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:id="@+id/pre_filled_invitation_image"
+            android:src="@drawable/ic_pre_filled2"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:clickable="true"
+            android:onClick="navigateToInputActivity" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pre-filled\nInvitation"
+            android:textSize="18sp"
+            android:paddingBottom="16dp"
+            android:textColor="#414141"
+            android:id="@+id/pre_filled_textview"
+            android:clickable="true"
+            android:onClick="navigateToInputActivity"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/pre_filled_invitation_image"
+            android:layout_alignRight="@+id/pre_filled_invitation_image"
+            android:layout_alignEnd="@+id/pre_filled_invitation_image"
+            android:layout_alignLeft="@+id/pre_filled_invitation_image"
+            android:layout_alignStart="@+id/pre_filled_invitation_image" />
+
+    </RelativeLayout>
+-->
+
+</RelativeLayout>

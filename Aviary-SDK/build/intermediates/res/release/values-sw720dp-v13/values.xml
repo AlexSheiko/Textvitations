@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw720dp/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_iap_dialog_cols_effects">3</integer>
+    <integer name="aviary_iap_dialog_cols_stickers">5</integer>
+    <integer name="aviary_iap_dialog_height_weight">65</integer>
+    <integer name="aviary_iap_dialog_margin_top_weight">10</integer>
+    <integer name="aviary_iap_dialog_rows_effects">2</integer>
+    <integer name="aviary_iap_dialog_rows_stickers">3</integer>
+    <integer name="aviary_iap_dialog_width_weight">80</integer>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw720dp/aviary_styles.xml -->
+    <eat-comment/>
+    <style name="AviaryWidget.IAPDialog.TopGrid">
+        <item name="android:background">@drawable/aviary_iap_grid_background_inverted</item>
+    </style>
+</resources>

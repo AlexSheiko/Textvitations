@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- this is the theme main color -->
+	<color name="aviary_store_theme_color">#ff13a6f7</color>
+
+    <color name="aviary_store_list_divider">#ffcccccc</color>
+	<color name="aviary_store_background">#ffe9ecef</color>
+	<color name="aviary_store_featured_transparent_black">#66000000</color>
+
+	<color name="aviary_store_detail_background">#ffdadde0</color>
+
+	<color name="aviary_store_passport_banner_background_normal">#ffcdd1d5</color>
+	<color name="aviary_store_passport_banner_background_pressed">#ffb9bdc0</color>
+
+	<!-- Subscriptions -->
+	<color name="aviary_subscription_divider_light">#ffc5cacf</color>
+	<color name="aviary_subscription_bottombar_primary_color">#fffafafa</color>
+	<color name="aviary_subscription_bottombar_secondary_color">#ffdfe6ea</color>
+	<color name="aviary_subscription_main_primary_color">#fff0f4f5</color>
+	<color name="aviary_subscription_main_secondary_color">#ffd9e0e4</color>
+	<color name="aviary_subscription_light_line_color1">#ffd8dde1</color>
+	<color name="aviary_subscription_light_line_color2">#fff6f8f9</color>
+
+
+	<color name="aviary_supply_passport_banner_background_light">#ff24d7f8</color>
+	<color name="aviary_supply_passport_banner_background">#ff11a6f8</color>
+
+	<color name="aviary_supply_passport_banner_background_pressed_light">#ff1499b2</color>
+	<color name="aviary_supply_passport_banner_background_pressed">#ff0c74ad</color>
+
+</resources>

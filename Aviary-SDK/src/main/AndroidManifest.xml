@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aviary.android.feather.sdk">
+
+	<!--
+		The Aviary SDK doesn't support small screens
+	-->
+	<supports-screens
+		android:smallScreens="false"
+		android:normalScreens="true"
+		android:largeScreens="true"
+		android:xlargeScreens="true" />
+
+	<!-- mandatory -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+	<!-- billing permission -->
+	<!-- mandatory for PCN partners -->
+	<!--<uses-permission android:name="com.android.vending.BILLING" />-->
+
+	<!-- optional permissions -->
+    <!--<uses-permission android:name="android.permission.VIBRATE" />-->
+
+    <application>
+
+	    <!--
+	        Aviary SDK API KEY
+	        Required
+	    -->
+	    <!--<meta-data android:name="com.aviary.android.feather.v1.API_KEY" android:value="xxx" />-->
+
+    </application>
+</manifest>

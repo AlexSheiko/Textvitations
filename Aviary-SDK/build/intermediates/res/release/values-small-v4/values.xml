@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-small/aviary_dimens.xml -->
+    <eat-comment/>
+    <dimen name="aviary_textSizeLarge">20sp</dimen>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-small/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_iap_dialog_height_weight">90</integer>
+    <integer name="aviary_iap_dialog_width_weight">100</integer>
+</resources>

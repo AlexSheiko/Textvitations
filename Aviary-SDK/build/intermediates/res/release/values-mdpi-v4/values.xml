@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-mdpi/aviary_dimens.xml -->
+    <eat-comment/>
+    <dimen name="aviary_optionpanel_button_padding_bottom">9dip</dimen>
+    <dimen name="aviary_optionpanel_button_padding_left">10dip</dimen>
+    <dimen name="aviary_optionpanel_button_padding_right">10dip</dimen>
+    <dimen name="aviary_optionpanel_button_padding_top">8dip</dimen>
+</resources>

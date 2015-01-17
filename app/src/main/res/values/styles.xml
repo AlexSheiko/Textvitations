@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="EventyTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionMenuTextColor">#4f5252</item>
+    </style>
+
+    <style name="WordingField">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+        <item name="android:hint">@string/wording_field_hint</item>
+        <item name="android:maxLines">20</item>
+        <item name="android:maxLength">300</item>
+    </style>
+
+    <style name="WordingField.Land" parent="WordingField">
+        <item name="android:maxLines">25</item>
+        <item name="android:maxLength">350</item>
+    </style>
+
+</resources>

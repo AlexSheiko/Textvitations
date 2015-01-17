@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aviary.android.feather.sdk.widget.IAPDialogDetail xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:weightSum="100">
+
+	<!-- subscription banner -->
+	<LinearLayout
+		android:visibility="gone"
+		android:layout_weight="0"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/aviary_supply_passport_banner_background_selector"
+		android:orientation="horizontal"
+		android:paddingBottom="10dip"
+		android:paddingLeft="8dip"
+		android:paddingRight="8dip"
+		android:paddingTop="4dip"
+		android:id="@+id/aviary_subscription_banner">
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginRight="5dip"
+			android:adjustViewBounds="true"
+			android:scaleType="centerInside"
+			android:src="@drawable/aviary_ic_passport_white" />
+
+		<com.aviary.android.feather.sdk.widget.AviaryTextView
+			android:id="@+id/aviary_banner_text"
+			android:textAppearance="?attr/aviaryTextAppearanceSmall"
+			app:aviary_typeface="?attr/aviaryFontRegular"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/feather_iap_subscription_banner_text" />
+	</LinearLayout>
+
+	<!-- HEAD -->
+	<RelativeLayout
+		android:layout_weight="25"
+		android:id="@+id/aviary_head"
+		android:layout_width="match_parent"
+		android:layout_height="0dip"
+		android:background="@android:color/white"
+		android:clickable="true"
+		android:focusable="true"
+		android:gravity="center"
+		android:paddingRight="15dip"
+		android:paddingLeft="15dip"
+		android:paddingTop="5dip"
+		android:paddingBottom="5dip">
+
+		<!-- Pack title -->
+		<com.aviary.android.feather.sdk.widget.AviaryTextView
+			android:id="@+id/aviary_title"
+			android:textAppearance="?attr/aviaryTextAppearanceLargeInverted"
+			app:aviary_typeface="?attr/aviaryFontRegular"
+			android:textStyle="normal"
+			android:ellipsize="marquee"
+			android:maxLines="1"
+			android:singleLine="true"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<requestFocus />
+		</com.aviary.android.feather.sdk.widget.AviaryTextView>
+
+		<!-- Pack Description scroll container -->
+		<ScrollView
+			android:fillViewport="true"
+			android:layout_below="@+id/aviary_title"
+			android:layout_toLeftOf="@+id/aviary_buy_button"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dip"
+			android:paddingRight="5dip"
+			android:scrollbars="vertical"
+			android:id="@+id/aviary_scrollview">
+
+			<!-- Pack description -->
+			<com.aviary.android.feather.sdk.widget.AviaryTextView
+				android:id="@+id/aviary_description"
+                android:ellipsize="none"
+				android:textAppearance="?attr/aviaryTextAppearanceMediumInverted"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+		</ScrollView>
+
+		<!-- download button layout -->
+
+		<include
+			layout="@layout/aviary_store_buy_button"
+			android:id="@+id/aviary_buy_button"
+			android:layout_height="wrap_content"
+			android:layout_width="@dimen/aviary_store_list_buy_button_width"
+			android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" />
+	</RelativeLayout>
+
+	<!-- CENTER -->
+	<LinearLayout
+		android:id="@+id/aviary_workspace_container"
+		android:layout_width="match_parent"
+		android:layout_height="0dip"
+		android:layout_weight="75"
+		android:clickable="true"
+		android:orientation="vertical">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:background="@android:color/white">
+
+			<com.aviary.android.feather.sdk.widget.AviaryWorkspace
+				android:id="@+id/aviary_workspace"
+				style="?attr/aviaryIAPDialogWorkspaceStyle"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:focusable="true"
+				android:focusableInTouchMode="true" />
+
+			<RelativeLayout
+				style="?attr/aviaryIAPDialogShadowTop"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+
+			<RelativeLayout
+				style="?attr/aviaryIAPDialogShadowBottom"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true" />
+
+			<include
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_centerInParent="true"
+				layout="@layout/aviary_iap_download_error_message"
+				android:visibility="gone" />
+
+			<include
+				android:id="@+id/aviary_progress"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_centerInParent="true"
+				layout="@layout/aviary_progress_medium_inverse"
+				android:visibility="gone" />
+		</RelativeLayout>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0">
+
+			<com.aviary.android.feather.sdk.widget.AviaryWorkspaceIndicator
+				android:id="@+id/aviary_workspace_indicator"
+				style="?attr/aviaryIAPDialogWorkspaceIndicatorStyle"
+				android:layout_width="match_parent"
+				android:layout_centerInParent="true"
+				android:gravity="center" />
+		</RelativeLayout>
+	</LinearLayout>
+
+</com.aviary.android.feather.sdk.widget.IAPDialogDetail>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="aviary_store_detail_title_size">30sp</dimen>
+	<dimen name="aviary_store_detail_description_size">20sp</dimen>
+	<dimen name="aviary_store_list_item_title_size">22sp</dimen>
+	<dimen name="aviary_store_detail_image_right_margin">20dip</dimen>
+	<dimen name="aviary_store_detail_passport_banner_v_margin">20dip</dimen>
+	<dimen name="aviary_store_detail_subscription_size">18sp</dimen>
+
+	<dimen name="aviary_subscription_textarea_height">200dip</dimen>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp-land/aviary_config.xml -->
+    <eat-comment/>
+    <fraction name="aviary_overlay_stickers_text_width">20%p</fraction>
+    <integer name="aviary_adjust_item_weight">20</integer>
+    <integer name="aviary_color_splash_item_weight">8</integer>
+    <integer name="aviary_enhance_item_weight">8</integer>
+    <integer name="aviary_iap_dialog_cols_effects">4</integer>
+    <integer name="aviary_iap_dialog_cols_stickers">6</integer>
+    <integer name="aviary_iap_dialog_height_weight">75</integer>
+    <integer name="aviary_iap_dialog_margin_top_weight">0</integer>
+    <integer name="aviary_iap_dialog_rows_effects">2</integer>
+    <integer name="aviary_iap_dialog_rows_stickers">3</integer>
+    <integer name="aviary_iap_dialog_width_weight">70</integer>
+    <integer name="aviary_seekbar_weight">70</integer>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp-land/aviary_store_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_store_detail_cols_effects">4</integer>
+    <integer name="aviary_store_detail_cols_frames">5</integer>
+    <integer name="aviary_store_detail_cols_stickers">5</integer>
+    <integer name="aviary_store_featured_cell_weight">341</integer>
+    <integer name="aviary_store_featured_cell_weightSum">1849</integer>
+    <integer name="aviary_store_featured_cols">5</integer>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp-land/aviary_config.xml -->
+    <eat-comment/>
+    <integer name="aviary_wheel_weight">70</integer>
+    <string name="aviary_overlay_stickers_text_position">center</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/values-sw600dp-land/aviary_styles.xml -->
+    <eat-comment/>
+    <style name="AviaryWidget.IAPDialog.TopGrid">
+        <item name="android:background">@null</item>
+    </style>
+</resources>

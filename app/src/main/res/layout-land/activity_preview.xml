@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    tools:context="sheyko.aleksey.eventy.PreviewActivity"
+    android:id="@+id/relativeLayout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imagePreview"
+            android:clickable="true"
+            android:src="@drawable/party_template_1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/locationIndicator"/>
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="4dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:drawableLeft="@drawable/ic_action_place_light"
+            android:textColor="#95a5a6"
+            android:id="@+id/locationIndicator"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:text="@string/save_button_label_land"
+                android:id="@+id/saveButton"
+                android:textColor="@android:color/white"
+                android:background="#F1693C"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_action_save"
+                android:drawablePadding="8dp"
+                android:layout_gravity="center"
+                android:paddingRight="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textSize="18sp"
+                android:textColor="#0F92A1"
+                android:id="@+id/create_event_hint"
+                android:drawablePadding="2dp"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/arrow_back"
+                android:onClick="goBackToEdit"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

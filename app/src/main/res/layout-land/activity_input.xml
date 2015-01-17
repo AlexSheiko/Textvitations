@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:background="@android:color/white"
+    tools:context="sheyko.aleksey.eventy.InputActivity"
+    android:baselineAligned="false">
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_weight="1"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imagePreview"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/party_template_1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:paddingRight="10dp"
+            android:text="@string/pick_location_hint"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_action_place"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="#ecf0f1"
+            android:onClick="pickLocation"
+            android:clickable="true"
+            android:id="@+id/locationButton"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="16dp"
+            android:text="@string/compose_button_label"
+            android:id="@+id/composeButton"
+            android:textColor="@android:color/white"
+            android:background="#F1693C"
+            android:textSize="18sp"
+            android:gravity="center_vertical|center_horizontal"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="composeInvitation"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+</LinearLayout>

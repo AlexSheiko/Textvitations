@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Textvitations</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="title_activity_preview">Preview</string>
+    <string name="wording_field_hint">Your wording</string>
+    <string name="pick_image_label">Pick from gallery</string>
+    <string name="compose_button_label">Compose invitation</string>
+    <string name="template_preview_description">Invitation preview</string>
+    <string name="save_button_label">Save picture</string>
+    <string name="save_button_label_land">Save</string>
+    <string name="edit_button_label">Edit</string>
+    <string name="customized_invitation_button_label">Customized invitations</string>
+    <string name="pre_filled_button_label">Pre-filled invitation</string>
+    <string name="title_activity_categories">Category</string>
+    <string name="title_activity_template">Template</string>
+    <string name="activity_category_title">Choose template</string>
+    <string name="activity_input_title">Customize invitation</string>
+    <string name="preference_file_key">sheyko.aleksey.eventy.PREFERENCE_FILE_KEY</string>
+    <string name="pick_location_hint">Specify the location</string>
+
+    <integer name="colorGridColumnWidth">65</integer>
+
+    <string name="title_activity_map">Pick location</string>
+    <string name="set_location_hint">Set location</string>
+    <string name="enter_location_hint">Enter location</string>
+    <string name="find_label">Find</string>
+    <string name="Cancel">Cancel</string>
+
+    <string name="facebook_app_id">783940298332314</string>
+
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_location_hint"
+        android:id="@+id/confirmLocationButton"
+        android:background="#e67e22"
+        android:textColor="@android:color/white"
+        android:paddingTop="8dp"
+        android:visibility="invisible"
+        android:paddingBottom="8dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:onClick="confirmLocation"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+
+        <EditText
+            android:imeOptions="actionSend"
+            android:selectAllOnFocus="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="0dp"
+            android:hint="@string/enter_location_hint"
+            android:textSize="20sp"
+            android:inputType="textNoSuggestions|textCapSentences"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:id="@+id/locationField"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_action_search"
+            android:text="@string/find_label"
+            android:alpha="1"
+            android:onClick="searchForAddress"
+            android:id="@+id/findButton"/>
+    </LinearLayout>
+
+</RelativeLayout>
