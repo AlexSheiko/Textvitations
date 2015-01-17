@@ -15,198 +15,240 @@ import android.widget.ViewSwitcher.ViewFactory;
 import com.aviary.android.feather.sdk.R;
 
 public class AviaryNavBarViewFlipper extends ViewFlipper implements ViewFactory {
-    TextSwitcher mTextSwitcher;
 
-    Button       mButton2, mButton1;
-    OnToolbarClickListener mListener;
-    ProgressBar            mProgress1, mProgress2;
-    boolean   mClickable;
-    ViewState mStatus;
-    private boolean mButtonSizeChanged;
-    public AviaryNavBarViewFlipper(Context context) {
-        super(context);
-    }
+	public static interface OnToolbarClickListener {
+		void onDoneClick();
 
-    public AviaryNavBarViewFlipper(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+		void onApplyClick();
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
+		void onRestoreClick();
+	};
 
-        if (!mButtonSizeChanged) {
-            int button1Size = mButton1.getMeasuredWidth();
-            int button2Size = mButton2.getMeasuredWidth();
+	private static class ViewState {
+		static enum Status {
+			Open, Close, Restore
+		};
 
-            int maxSize = Math.max(button1Size, button2Size);
+		void setCurrent( Status newState ) {
+			previous = current;
+			current = newState;
+		}
 
-            if (button1Size != maxSize) {
-                mButton1.setWidth(maxSize);
-            }
+		Status current;
+		Status previous;
+	}
 
-            if (button2Size != maxSize) {
-                mButton2.setWidth(maxSize);
-            }
+	TextSwitcher mTextSwitcher;
+	Button mButton2, mButton1, mButton3;
+	OnToolbarClickListener mListener;
+	ProgressBar mProgress1, mProgress2;
 
-            mButtonSizeChanged = true;
-        }
-    }
+	boolean mClickable;
+	ViewState mStatus;
 
-    public void open() {
-        if (!opened()) {
-            mStatus.setCurrent(ViewState.Status.Open);
-            setDisplayedChild(1);
-        }
-    }
+	public AviaryNavBarViewFlipper ( Context context ) {
+		super( context );
+	}
 
-    public void close() {
-        if (!closed()) {
-            mStatus.setCurrent(ViewState.Status.Close);
-            setDisplayedChild(0);
-        }
-    }
+	public AviaryNavBarViewFlipper ( Context context, AttributeSet attrs ) {
+		super( context, attrs );
+	}
 
-    public boolean closed() {
-        return mStatus.current == ViewState.Status.Close;
-    }    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+	private boolean mButtonSizeChanged;
 
-        mStatus = new ViewState();
-        mStatus.current = ViewState.Status.Close;
-        mStatus.previous = ViewState.Status.Close;
+	@Override
+	protected void onLayout( boolean changed, int left, int top, int right, int bottom ) {
+		super.onLayout( changed, left, top, right, bottom );
 
-        mTextSwitcher = (TextSwitcher) findViewById(R.id.navbar_text2);
+		if ( !mButtonSizeChanged ) {
+			int button1Size = mButton1.getMeasuredWidth();
+			int button2Size = mButton2.getMeasuredWidth();
 
-        // done
-        mButton1 = (Button) findViewById(R.id.navbar_button1);
-        mProgress1 = (ProgressBar) findViewById(R.id.navbar_progress1);
+			int maxSize = Math.max( button1Size, button2Size );
 
-        // apply
-        mButton2 = (Button) findViewById(R.id.navbar_button2);
-        mProgress2 = (ProgressBar) findViewById(R.id.navbar_progress2);
+			if ( button1Size != maxSize ) {
+				mButton1.setWidth( maxSize );
+			}
 
-        mTextSwitcher.setFactory(this);
+			if ( button2Size != maxSize ) {
+				mButton2.setWidth( maxSize );
+			}
 
-        mButton2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null && isClickable() && opened()) {
-                    mListener.onApplyClick();
-                }
-            }
-        });
+			mButtonSizeChanged = true;
+		}
+	}
 
-        mButton1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null && isClickable() && !opened()) {
-                    mListener.onDoneClick();
-                }
-            }
-        });
-    }
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
 
-    public void setOnToolbarClickListener(OnToolbarClickListener listener) {
-        mListener = listener;
-    }
+		mStatus = new ViewState();
+		mStatus.current = ViewState.Status.Close;
+		mStatus.previous = ViewState.Status.Close;
 
-    public void setApplyEnabled(boolean enabled) {
-        mButton2.setEnabled(enabled);
-    }
+		mTextSwitcher = (TextSwitcher) findViewById( R.id.navbar_text2 );
 
-    public void setApplyVisible(boolean visible) {
-        mButton2.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }    public boolean opened() {
-        return mStatus.current == ViewState.Status.Open;
-    }
+		// done
+		mButton1 = (Button) findViewById( R.id.navbar_button1 );
+		mProgress1 = (ProgressBar) findViewById( R.id.navbar_progress1 );
 
-    public boolean getApplyProgressVisible() {
-        return mProgress2.getVisibility() == View.VISIBLE;
-    }
+		// apply
+		mButton2 = (Button) findViewById( R.id.navbar_button2 );
+		mProgress2 = (ProgressBar) findViewById( R.id.navbar_progress2 );
 
-    public void setApplyProgressVisible(boolean visible) {
-        mProgress2.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }    @Override
-    public void setClickable(boolean clickable) {
-        mClickable = clickable;
-    }
+		// restore
+		mButton3 = (Button) findViewById( R.id.navbar_button3 );
 
-    public void setDoneEnabled(boolean enabled) {
-        mButton1.setEnabled(enabled);
-    }    @Override
-    @ExportedProperty
-    public boolean isClickable() {
-        return mClickable;
-    }
+		mTextSwitcher.setFactory( this );
 
-    public boolean getDoneProgressVisible() {
-        return mProgress1.getVisibility() == View.VISIBLE;
-    }
+		mButton3.setOnClickListener( new OnClickListener() {
 
-    public void setDoneProgressVisible(boolean visible) {
-        mProgress1.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }
+			@Override
+			public void onClick( View v ) {
+				if ( null != mListener && isClickable() && restored() ) {
+					mListener.onRestoreClick();
+				}
+			}
+		} );
 
-    public void setTitle(CharSequence text) {
-        setTitle(text, true);
-    }
+		mButton2.setOnClickListener( new OnClickListener() {
 
-    public void setTitle(CharSequence text, boolean animate) {
-        if (!animate) {
-            Animation inAnimation = mTextSwitcher.getInAnimation();
-            Animation outAnimation = mTextSwitcher.getOutAnimation();
-            mTextSwitcher.setInAnimation(null);
-            mTextSwitcher.setOutAnimation(null);
-            mTextSwitcher.setText(text);
-            mTextSwitcher.setInAnimation(inAnimation);
-            mTextSwitcher.setOutAnimation(outAnimation);
-        } else {
-            mTextSwitcher.setText(text);
-        }
-    }
+			@Override
+			public void onClick( View v ) {
+				if ( mListener != null && isClickable() && opened() ) {
+					mListener.onApplyClick();
+				}
+			}
+		} );
 
-    public void setTitle(int resourceId) {
-        setTitle(resourceId, true);
-    }
+		mButton1.setOnClickListener( new OnClickListener() {
 
-    public void setTitle(int resourceId, boolean animate) {
-        setTitle(getContext().getResources().getString(resourceId), animate);
-    }
+			@Override
+			public void onClick( View v ) {
+				if ( mListener != null && isClickable() && !opened() ) {
+					mListener.onDoneClick();
+				}
+			}
+		} );
+	}
 
-    @Override
-    public View makeView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.aviary_navbar_text, null);
+	public void open() {
+		if ( !opened() ) {
+			mStatus.setCurrent( ViewState.Status.Open );
+			setDisplayedChild( 1 );
+		}
+	}
 
-        return view;
-    }
+	public void close() {
+		if ( !closed() ) {
+			mStatus.setCurrent( ViewState.Status.Close );
+			setDisplayedChild( 0 );
+		}
+	}
 
-    public interface OnToolbarClickListener {
-        void onDoneClick();
+	public void toggleRestore( boolean enabled ) {
+		if ( enabled ) {
+			if ( !restored() ) {
+				mStatus.setCurrent( ViewState.Status.Restore );
+				setDisplayedChild( 2 );
+			}
+		} else {
+			if ( restored() ) {
+				ViewState.Status oldState = mStatus.previous;
+				if ( oldState == ViewState.Status.Close ) {
+					close();
+				} else {
+					open();
+				}
+			}
+		}
+	}
 
-        void onApplyClick();
-    }
+	public boolean opened() {
+		return mStatus.current == ViewState.Status.Open;
+	}
 
-    private static class ViewState {
-        Status current;
+	public boolean closed() {
+		return mStatus.current == ViewState.Status.Close;
+	}
 
-        Status previous;
+	public boolean restored() {
+		return mStatus.current == ViewState.Status.Restore;
+	}
 
-        void setCurrent(Status newState) {
-            previous = current;
-            current = newState;
-        }
-        static enum Status {
-            Open, Close
-        }
-    }
+	@Override
+	public void setClickable( boolean clickable ) {
+		mClickable = clickable;
+	}
 
+	@Override
+	@ExportedProperty
+	public boolean isClickable() {
+		return mClickable;
+	}
 
+	public void setOnToolbarClickListener( OnToolbarClickListener listener ) {
+		mListener = listener;
+	}
 
+	public void setApplyEnabled( boolean enabled ) {
+		mButton2.setEnabled( enabled );
+	}
 
+	public void setApplyVisible( boolean visible ) {
+		mButton2.setVisibility( visible ? View.VISIBLE : View.INVISIBLE );
+	}
 
+	public void setApplyProgressVisible( boolean visible ) {
+		mProgress2.setVisibility( visible ? View.VISIBLE : View.INVISIBLE );
+	}
 
+	public boolean getApplyProgressVisible() {
+		return mProgress2.getVisibility() == View.VISIBLE;
+	}
 
+	public void setDoneEnabled( boolean enabled ) {
+		mButton1.setEnabled( enabled );
+	}
 
+	public void setDoneProgressVisible( boolean visible ) {
+		mProgress1.setVisibility( visible ? View.VISIBLE : View.INVISIBLE );
+	}
+
+	public boolean getDoneProgressVisible() {
+		return mProgress1.getVisibility() == View.VISIBLE;
+	}
+
+	public void setTitle( CharSequence text ) {
+		setTitle( text, true );
+	}
+
+	public void setTitle( CharSequence text, boolean animate ) {
+		if ( !animate ) {
+			Animation inAnimation = mTextSwitcher.getInAnimation();
+			Animation outAnimation = mTextSwitcher.getOutAnimation();
+			mTextSwitcher.setInAnimation( null );
+			mTextSwitcher.setOutAnimation( null );
+			mTextSwitcher.setText( text );
+			mTextSwitcher.setInAnimation( inAnimation );
+			mTextSwitcher.setOutAnimation( outAnimation );
+		} else {
+			mTextSwitcher.setText( text );
+		}
+	}
+
+	public void setTitle( int resourceId ) {
+		setTitle( resourceId, true );
+	}
+
+	public void setTitle( int resourceId, boolean animate ) {
+		setTitle( getContext().getResources().getString( resourceId ), animate );
+	}
+
+	@Override
+	public View makeView() {
+		View view = LayoutInflater.from( getContext() ).inflate( R.layout.aviary_navbar_text, null );
+
+		return view;
+	}
 }

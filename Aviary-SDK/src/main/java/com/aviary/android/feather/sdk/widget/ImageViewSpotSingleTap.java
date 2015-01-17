@@ -9,11 +9,14 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.aviary.android.feather.library.graphics.Point2D;
 import com.aviary.android.feather.sdk.R;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -23,325 +26,398 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import it.sephiroth.android.library.imagezoom.graphics.IBitmapDrawable;
 
 public class ImageViewSpotSingleTap extends ImageViewTouch implements Animator.AnimatorListener {
-    public static final float DEFAULT_TEXT_SIZE = 50f;
-    public static final double BRUSH_SIZE_ANIMATION_SCALE = 1.3;
-    protected float     mCurrentScale   = 1;
-    protected Matrix    mInvertedMatrix = new Matrix();
-    protected TouchMode mTouchMode      = TouchMode.DRAW;
-    protected float     mX              = 0, mY = 0;
-    protected float mStartX, mStartY;
-    AnimatorSet mAnimator;
-    boolean mDrawFadeCircle = true;
-    boolean mCanceled       = false;
-    RectF   mTextRect       = new RectF();
-    Rect    mTextBounds     = new Rect();
-    private float mBrushSize     = 10;
-    private float radius         = 0;
-    private Paint mShapePaint    = new Paint();
-    private Paint mTextPaint     = new Paint();
-    private Paint mTextRectPaint = new Paint();
-    private OnTapListener mTapListener;
-    private String mToolTip    = "";
-    private float  mTextSize   = DEFAULT_TEXT_SIZE;
-    private float  xTextOffset = 150;
-    private float  yTextOffset = 150;
-    private float  textPadding = 20;
 
-    public ImageViewSpotSingleTap(Context context, AttributeSet set) {
-        this(context, set, 0);
-    }
+	public static enum TouchMode {
+		// mode for pan and zoom
+		IMAGE,
+		// mode for drawing
+		DRAW
+	}
 
-    public ImageViewSpotSingleTap(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        onCreate(context);
-    }
+	public static interface OnTapListener {
 
-    private void onCreate(Context context) {
-        mToolTip = context.getString(R.string.feather_blemish_tool_tip);
-        mTextSize = context.getResources().getDimensionPixelSize(R.dimen.aviary_textSizeMedium);
-        textPadding = mTextSize / 2;
-        yTextOffset = mTextSize * 3;
-        xTextOffset = yTextOffset;
+		void onTap ( float points[], float radius );
+	}
 
-        mAnimator = new AnimatorSet();
-        mAnimator.addListener(this);
+	AnimatorSet mAnimator;
+	private float mBrushSize = 10;
+	private float radius = 0;
 
-        mShapePaint.setAntiAlias(true);
-        mShapePaint.setStyle(Paint.Style.STROKE);
-        mShapePaint.setColor(Color.WHITE);
-        mShapePaint.setStrokeWidth(6);
+	protected float mCurrentScale = 1;
+	protected Matrix mInvertedMatrix = new Matrix();
 
-        mTextPaint.setColor(Color.WHITE);
-        mTextPaint.setTextSize(mTextSize);
-        mTextPaint.getTextBounds(mToolTip, 0, mToolTip.length(), mTextBounds);
+	private Paint mShapePaint = new Paint();
+	private Paint mTextPaint = new Paint();
+	private Paint mTextRectPaint = new Paint();
 
-        mTextRectPaint.setARGB(150, 0, 0, 0);
+	protected TouchMode mTouchMode = TouchMode.DRAW;
 
-        setLongClickable(false);
-    }
+	protected float mX = 0, mY = 0;
 
-    public float getRadius() {
-        return radius;
-    }
+	protected float mStartX, mStartY;
 
-    public void setRadius(float value) {
-        this.radius = value;
-        invalidate();
-    }
+	private OnTapListener mTapListener;
 
-    @Override
-    public void onAnimationStart(final Animator animation) {
-        invalidate();
-    }
+	boolean mDrawFadeCircle = true;
+	boolean mCanceled = false;
 
-    @Override
-    public void onAnimationEnd(final Animator animation) {
-        invalidate();
-    }
+	RectF mTextRect = new RectF();
+	Rect mTextBounds = new Rect();
 
-    @Override
-    public void onAnimationCancel(final Animator animation) {
+	private String mToolTip = "";
 
-    }
+	private float mTextSize = 50f;
+	private float X_TEXT_OFFSET = 150;
+	private float Y_TEXT_OFFSET = 150;
+	private float TEXT_PADDING = 20;
 
-    @Override
-    public void onAnimationRepeat(final Animator animation) {
-        invalidate();
-    }
+	public ImageViewSpotSingleTap ( Context context, AttributeSet set ) {
+		this( context, set, 0 );
+	}
 
-    @Override
-    @SuppressWarnings("checkstyle:magicnumber")
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+	public ImageViewSpotSingleTap ( Context context, AttributeSet attrs, int defStyle ) {
+		super( context, attrs, defStyle );
+		onCreate( context );
+	}
 
-        if (mDrawFadeCircle) {
-            if (radius > 0) {
-                canvas.drawCircle(mX, mY, radius, mShapePaint);
-            }
-        }
+	public void setRadius ( float value ) {
+		this.radius = value;
+		invalidate();
+	}
 
-        if (mCanceled) {
-            mTextRect.set(mX - textPadding - xTextOffset,
-                          mY - mTextBounds.height() * 1.25f - textPadding - yTextOffset,
-                          mX + mTextBounds.width() + textPadding - xTextOffset,
-                          mY + mTextBounds.height() * 0.5f + textPadding - yTextOffset);
+	public float getRadius () {
+		return radius;
+	}
 
-            canvas.drawRoundRect(mTextRect, 10, 10, mTextRectPaint);
-            canvas.drawText(mToolTip, mX - xTextOffset, mY - yTextOffset, mTextPaint);
-        }
+	@Override
+	public void onAnimationStart ( final Animator animation ) {
+		invalidate();
+	}
 
-    }
+	@Override
+	public void onAnimationEnd ( final Animator animation ) {
+		invalidate();
+	}
 
-    public void setOnTapListener(OnTapListener listener) {
-        mTapListener = listener;
-    }
+	@Override
+	public void onAnimationCancel ( final Animator animation ) {
 
-    @Override
-    protected void init(Context context, AttributeSet attrs, int defStyle) {
-        super.init(context, attrs, defStyle);
-    }
+	}
 
-    @Override
-    protected ScaleGestureDetector.OnScaleGestureListener getScaleListener() {
-        return new TapScaleListener();
-    }
+	@Override
+	public void onAnimationRepeat ( final Animator animation ) {
+//		Log.i( LOG_TAG, "onAnimationRepeat" );
+		invalidate();
+	}
 
-    @Override
-    protected void onLayoutChanged(int left, int top, int right, int bottom) {
-        super.onLayoutChanged(left, top, right, bottom);
+	private void startAnimation () {
 
-        if (null != getDrawable()) {
-            onDrawModeChanged();
-        }
-    }
+		radius = 0;
+		mShapePaint.setAlpha( 255 );
 
-    @Override
-    public boolean onSingleTapConfirmed(final MotionEvent e) {
-        if (mTouchMode == TouchMode.DRAW) {
-            mDrawFadeCircle = true;
-            startAnimation();
-            if (null != mTapListener) {
-                float[] mappedPoints = new float[2];
-                mappedPoints[0] = e.getX();
-                mappedPoints[1] = e.getY();
-                mInvertedMatrix.mapPoints(mappedPoints);
-                mTapListener.onTap(mappedPoints, mBrushSize / mCurrentScale);
-            }
-            return true;
-        }
-        return super.onSingleTapConfirmed(e);
-    }
+		Animator set1 = ObjectAnimator.ofFloat( this, "radius", 0, mBrushSize );
+		set1.setDuration( 200 );
 
-    private void startAnimation() {
+		AnimatorSet set2 = new AnimatorSet();
+		set2.setInterpolator( new DecelerateInterpolator( 1f ) );
+		set2.setDuration( 200 );
+		set2.playTogether( ObjectAnimator.ofFloat( this, "radius", mBrushSize, (int) ( mBrushSize * 1.3 ) ), ObjectAnimator.ofInt( mShapePaint, "alpha", 255, 0 ) );
 
-        radius = 0;
-        mShapePaint.setAlpha(255);
+		mAnimator.playSequentially( set1, set2 );
 
-        Animator set1 = ObjectAnimator.ofFloat(this, "radius", 0, mBrushSize);
-        set1.setDuration(200);
+		mAnimator.setInterpolator( new AccelerateInterpolator( 1f ) );
+		mAnimator.start();
+	}
 
-        AnimatorSet set2 = new AnimatorSet();
-        set2.setInterpolator(new DecelerateInterpolator(1f));
-        set2.setDuration(200);
-        set2.playTogether(ObjectAnimator.ofFloat(this, "radius", mBrushSize, (int) (mBrushSize * BRUSH_SIZE_ANIMATION_SCALE)),
-                          ObjectAnimator.ofInt(mShapePaint, "alpha", 255, 0));
+	private void onCreate ( Context context ) {
+//		Log.i( LOG_TAG, "onCreate" );
 
-        mAnimator.playSequentially(set1, set2);
+		mToolTip = context.getString( R.string.feather_blemish_tool_tip );
+		mTextSize = context.getResources()
+				.getDimensionPixelSize( R.dimen.aviary_textSizeMedium );
+		TEXT_PADDING = mTextSize / 2;
+		X_TEXT_OFFSET = Y_TEXT_OFFSET = mTextSize * 3;
 
-        mAnimator.setInterpolator(new AccelerateInterpolator(1f));
-        mAnimator.start();
-    }
+		mAnimator = new AnimatorSet();
+		mAnimator.addListener( this );
 
-    @Override
-    public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
-        if (mTouchMode == TouchMode.DRAW) {
-            mX = e2.getX();
-            mY = e2.getY();
-            mCanceled = true;
-            postInvalidate();
-            return false;
-        }
+		mShapePaint.setAntiAlias( true );
+		mShapePaint.setStyle( Paint.Style.STROKE );
+		mShapePaint.setColor( Color.WHITE );
+		mShapePaint.setStrokeWidth( 6 );
 
-        return super.onScroll(e1, e2, distanceX, distanceY);
-    }
+		mTextPaint.setColor( Color.WHITE );
+		mTextPaint.setTextSize( mTextSize );
+		mTextPaint.getTextBounds( mToolTip, 0, mToolTip.length(), mTextBounds );
 
-    @Override
-    public boolean onFling(final MotionEvent e1, final MotionEvent e2, final float velocityX, final float velocityY) {
-        if (mTouchMode == TouchMode.DRAW) {
-            return false;
-        }
+		mTextRectPaint.setARGB( 150, 0, 0, 0 );
 
-        return super.onFling(e1, e2, velocityX, velocityY);
-    }
+		setLongClickable( false );
+	}
 
-    @Override
-    public boolean onDown(final MotionEvent e) {
-        if (mTouchMode == TouchMode.DRAW) {
-            mX = e.getX();
-            mStartX = mX;
-            mY = e.getY();
-            mStartY = mY;
-            mDrawFadeCircle = false;
-        }
+	@Override
+	protected void onDraw ( Canvas canvas ) {
+		super.onDraw( canvas );
 
-        return super.onDown(e);
-    }
+		if( mDrawFadeCircle ) {
+			if( radius > 0 ) {
+				canvas.drawCircle( mX, mY, radius, mShapePaint );
+			}
+		}
 
-    @Override
-    public boolean onUp(final MotionEvent e) {
-        mCanceled = false;
-        postInvalidate();
+		if( mCanceled ) {
+			mTextRect.set( mX - TEXT_PADDING - X_TEXT_OFFSET, mY - mTextBounds.height() * 1.25f - TEXT_PADDING - Y_TEXT_OFFSET, mX + mTextBounds.width() + TEXT_PADDING - X_TEXT_OFFSET,
+			               mY + mTextBounds.height() * 0.5f + TEXT_PADDING - Y_TEXT_OFFSET );
 
-        return super.onUp(e);
-    }
+			canvas.drawRoundRect( mTextRect, 10, 10, mTextRectPaint );
+			canvas.drawText( mToolTip, mX - X_TEXT_OFFSET, mY - Y_TEXT_OFFSET, mTextPaint );
+		}
 
-    @Override
-    public boolean onSingleTapUp(final MotionEvent e) {
-        if (mTouchMode == TouchMode.DRAW) {
-            return false;
-        }
+	}
 
-        return super.onSingleTapUp(e);
-    }
+	public void setOnTapListener ( OnTapListener listener ) {
+		mTapListener = listener;
+	}
 
-    public TouchMode getDrawMode() {
-        return mTouchMode;
-    }
+	@Override
+	protected void init ( Context context, AttributeSet attrs, int defStyle ) {
+		super.init( context, attrs, defStyle );
+	}
 
-    public void setDrawMode(TouchMode mode) {
-        if (mode != mTouchMode) {
-            mTouchMode = mode;
-            onDrawModeChanged();
-        }
-    }
+	public TouchMode getDrawMode () {
+		return mTouchMode;
+	}
 
-    protected void onDrawModeChanged() {
-        if (mTouchMode == TouchMode.DRAW) {
-            Matrix m1 = new Matrix(getImageMatrix());
-            mInvertedMatrix.reset();
+	public void setDrawMode ( TouchMode mode ) {
+		if( mode != mTouchMode ) {
+			mTouchMode = mode;
+			onDrawModeChanged();
+		}
+	}
 
-            float[] v1 = getMatrixValues(m1);
-            m1.invert(m1);
-            float[] v2 = getMatrixValues(m1);
+	@Override
+	protected void onDrawableChanged ( Drawable drawable ) {
+		super.onDrawableChanged( drawable );
 
-            mInvertedMatrix.postTranslate(-v1[Matrix.MTRANS_X], -v1[Matrix.MTRANS_Y]);
-            mInvertedMatrix.postScale(v2[Matrix.MSCALE_X], v2[Matrix.MSCALE_Y]);
+		if( drawable != null && ( drawable instanceof IBitmapDrawable ) ) {
+			onDrawModeChanged();
+		}
+	}
 
-            mCurrentScale = getScale() * getBaseScale();
-        }
+	@Override
+	protected void onLayoutChanged ( int left, int top, int right, int bottom ) {
+		super.onLayoutChanged( left, top, right, bottom );
 
-        setDoubleTapEnabled(mTouchMode == TouchMode.IMAGE);
-        setScaleEnabled(mTouchMode == TouchMode.IMAGE);
-    }
+		if( null != getDrawable() ) {
+			onDrawModeChanged();
+		}
+	}
 
-    public static float[] getMatrixValues(Matrix m) {
-        float[] values = new float[9];
-        m.getValues(values);
-        return values;
-    }
+	protected void onDrawModeChanged () {
+		if( mTouchMode == TouchMode.DRAW ) {
+			Log.i( LOG_TAG, "onDrawModeChanged" );
 
-    @Override
-    protected void onDrawableChanged(Drawable drawable) {
-        super.onDrawableChanged(drawable);
+			Matrix m1 = new Matrix( getImageMatrix() );
+			mInvertedMatrix.reset();
 
-        if (drawable != null && (drawable instanceof IBitmapDrawable)) {
-            onDrawModeChanged();
-        }
-    }
+			float[] v1 = getMatrixValues( m1 );
+			m1.invert( m1 );
+			float[] v2 = getMatrixValues( m1 );
 
-    public RectF getImageRect() {
-        if (getDrawable() != null) {
-            return new RectF(0, 0, getDrawable().getIntrinsicWidth(), getDrawable().getIntrinsicHeight());
-        } else {
-            return null;
-        }
-    }
+			mInvertedMatrix.postTranslate( - v1[Matrix.MTRANS_X], - v1[Matrix.MTRANS_Y] );
+			mInvertedMatrix.postScale( v2[Matrix.MSCALE_X], v2[Matrix.MSCALE_Y] );
 
-    public void setBrushSize(float value) {
-        mBrushSize = value;
-    }
+			mCurrentScale = getScale() * getBaseScale();
+		}
 
-    public static enum TouchMode {
-        // mode for pan and zoom
-        IMAGE,
-        // mode for drawing
-        DRAW
-    }
+		setDoubleTapEnabled( mTouchMode == TouchMode.IMAGE );
+		setScaleEnabled( mTouchMode == TouchMode.IMAGE );
+	}
 
-    public interface OnTapListener {
-        void onTap(float[] points, float radius);
-    }
+	public RectF getImageRect () {
+		if( getDrawable() != null ) {
+			return new RectF( 0, 0, getDrawable().getIntrinsicWidth(), getDrawable().getIntrinsicHeight() );
+		} else {
+			return null;
+		}
+	}
 
-    class TapScaleListener extends ScaleListener {
-        @Override
-        public boolean onScaleBegin(final ScaleGestureDetector detector) {
-            if (mTouchMode == TouchMode.DRAW) {
-                mX = detector.getFocusX();
-                mY = detector.getFocusY();
-                mStartX = mX;
-                mStartY = mY;
-                mCanceled = true;
-                postInvalidate();
-                return true;
-            }
-            return super.onScaleBegin(detector);
-        }
+	public static float[] getMatrixValues ( Matrix m ) {
+		float[] values = new float[9];
+		m.getValues( values );
+		return values;
+	}
 
-        @Override
-        public void onScaleEnd(final ScaleGestureDetector detector) {
-            mCanceled = false;
-            super.onScaleEnd(detector);
-        }
+	public void setBrushSize ( float value ) {
+		Log.i( LOG_TAG, "setBrushSize: " + value );
+		mBrushSize = value;
+	}
 
-        @Override
-        public boolean onScale(final ScaleGestureDetector detector) {
-            if (mTouchMode == TouchMode.DRAW) {
-                mX = detector.getFocusX();
-                mY = detector.getFocusY();
-                postInvalidate();
-                return true;
-            }
-            return super.onScale(detector);
-        }
-    }
+	@Override
+	public boolean onDown ( final MotionEvent e ) {
+//		Log.i( LOG_TAG, "onDown" );
+
+		if( mTouchMode == TouchMode.DRAW ) {
+			mStartX = mX = e.getX();
+			mStartY = mY = e.getY();
+			mDrawFadeCircle = false;
+		}
+
+		return super.onDown( e );
+	}
+
+	@Override
+	public boolean onUp ( final MotionEvent e ) {
+//		Log.i( LOG_TAG, "onUp" );
+		mCanceled = false;
+		postInvalidate();
+
+		return super.onUp( e );
+	}
+
+	@Override
+	public boolean onSingleTapUp ( final MotionEvent e ) {
+//		Log.i( LOG_TAG, "onSingleTapUp" );
+		if( mTouchMode == TouchMode.DRAW ) {
+			return false;
+		}
+
+		return super.onSingleTapUp( e );
+	}
+
+	@Override
+	public boolean onSingleTapConfirmed ( final MotionEvent e ) {
+//		Log.i( LOG_TAG, "onSingleTapConfirmed" );
+		if( mTouchMode == TouchMode.DRAW ) {
+			mDrawFadeCircle = true;
+			startAnimation();
+			if( null != mTapListener ) {
+				float mappedPoints[] = new float[2];
+				mappedPoints[0] = e.getX();
+				mappedPoints[1] = e.getY();
+				mInvertedMatrix.mapPoints( mappedPoints );
+				mTapListener.onTap( mappedPoints, mBrushSize / mCurrentScale );
+			}
+			return true;
+		}
+		return super.onSingleTapConfirmed( e );
+	}
+
+	@Override
+	public boolean onScroll ( final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY ) {
+//		Log.i( LOG_TAG, "onScroll" );
+		if( mTouchMode == TouchMode.DRAW ) {
+			mX = e2.getX();
+			mY = e2.getY();
+			mCanceled = true;
+			postInvalidate();
+			return false;
+		}
+
+		return super.onScroll( e1, e2, distanceX, distanceY );
+	}
+
+	@Override
+	public boolean onFling ( final MotionEvent e1, final MotionEvent e2, final float velocityX, final float velocityY ) {
+//		Log.i( LOG_TAG, "onFling" );
+		if( mTouchMode == TouchMode.DRAW ) {
+			return false;
+		}
+
+		return super.onFling( e1, e2, velocityX, velocityY );
+	}
+
+	@Override
+	protected ScaleGestureDetector.OnScaleGestureListener getScaleListener () {
+		return new TapScaleListener();
+	}
+
+	class TapScaleListener extends ScaleListener {
+
+		@Override
+		public boolean onScaleBegin ( final ScaleGestureDetector detector ) {
+//			Log.i( LOG_TAG, "onScaleBegin" );
+			if( mTouchMode == TouchMode.DRAW ) {
+				mStartX = mX = detector.getFocusX();
+				mStartY = mY = detector.getFocusY();
+				mCanceled = true;
+				postInvalidate();
+				return true;
+			}
+			return super.onScaleBegin( detector );
+		}
+
+		@Override
+		public boolean onScale ( final ScaleGestureDetector detector ) {
+//			Log.i( LOG_TAG, "onScale" );
+			if( mTouchMode == TouchMode.DRAW ) {
+				mX = detector.getFocusX();
+				mY = detector.getFocusY();
+				postInvalidate();
+				return true;
+			}
+			return super.onScale( detector );
+		}
+
+		@Override
+		public void onScaleEnd ( final ScaleGestureDetector detector ) {
+//			Log.i( LOG_TAG, "onScaleEnd" );
+			mCanceled = false;
+			super.onScaleEnd( detector );
+		}
+	}
+
+	/*
+
+	@Override
+	public boolean onTouchEvent ( MotionEvent event ) {
+
+		if( mTouchMode == TouchMode.DRAW && event.getPointerCount() == 1 ) {
+			float x = event.getX();
+			float y = event.getY();
+
+			switch( event.getAction() ) {
+				case MotionEvent.ACTION_DOWN:
+					mX = x;
+					mY = y;
+					mStartX = x;
+					mStartY = y;
+					mDrawFadeCircle = false;
+					break;
+				case MotionEvent.ACTION_MOVE:
+					mX = x;
+					mY = y;
+					if( Point2D.distance( mStartX, mStartY, x, y ) > 50 ) {
+						mCanceled = true;
+					}
+					invalidate();
+					break;
+				case MotionEvent.ACTION_UP:
+					invalidate();
+					if( ! mCanceled ) {
+						mDrawFadeCircle = true;
+						startAnimation();
+						if( null != mTapListener ) {
+							float mappedPoints[] = new float[2];
+							mappedPoints[0] = x;
+							mappedPoints[1] = y;
+							mInvertedMatrix.mapPoints( mappedPoints );
+							mTapListener.onTap( mappedPoints, mBrushSize / mCurrentScale );
+						}
+					}
+					mCanceled = false;
+					break;
+			}
+			return true;
+		} else {
+			if( mTouchMode == TouchMode.IMAGE ) {
+				return super.onTouchEvent( event );
+			} else {
+				return false;
+			}
+		}
+
+	}
+	*/
+
 }
