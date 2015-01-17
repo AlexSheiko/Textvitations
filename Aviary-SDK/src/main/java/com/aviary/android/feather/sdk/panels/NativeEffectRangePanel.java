@@ -4,283 +4,342 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import com.aviary.android.feather.common.utils.SystemUtils;
+import com.aviary.android.feather.common.utils.ApiHelper;
 import com.aviary.android.feather.common.utils.os.AviaryAsyncTask;
+import com.aviary.android.feather.headless.filters.IFilter;
 import com.aviary.android.feather.headless.filters.INativeRangeFilter;
-import com.aviary.android.feather.headless.moa.Moa;
 import com.aviary.android.feather.headless.moa.MoaActionList;
 import com.aviary.android.feather.headless.moa.MoaResult;
 import com.aviary.android.feather.library.Constants;
 import com.aviary.android.feather.library.content.ToolEntry;
 import com.aviary.android.feather.library.filters.ToolLoaderFactory;
+import com.aviary.android.feather.library.graphics.drawable.FakeBitmapDrawable;
 import com.aviary.android.feather.library.services.IAviaryController;
 import com.aviary.android.feather.library.utils.BitmapUtils;
 import com.aviary.android.feather.library.vo.EditToolResultVO;
 import com.aviary.android.feather.library.vo.ToolActionVO;
 import com.aviary.android.feather.sdk.R;
 
-import org.json.JSONException;
-
 public class NativeEffectRangePanel extends SliderEffectPanel {
+    static final int PREVIEW_FAKE_RATIO = 3;
+    private ApplyFilterTask mCurrentTask;
+    private boolean enableFastPreview = ApiHelper.AT_LEAST_14;
+    private       MoaActionList       mActions;
+    private final ToolActionVO<Float> mToolAction;
+    volatile boolean mIsRendering = false;
+    /* temporary drawable */
+    private FakeBitmapDrawable mPreviewSmallDrawable;
+    /* temporary bitmap */
+    private Bitmap             mPreviewSmallBitmap;
 
-	ApplyFilterTask mCurrentTask;
-	volatile boolean mIsRendering = false;
-	boolean enableFastPreview;
+    public NativeEffectRangePanel(
+        IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools type, String resourcesBaseName) {
+        super(context, entry, type, resourcesBaseName);
+        mFilter = ToolLoaderFactory.get(type);
+        mToolAction = new ToolActionVO<Float>();
+    }
 
-	final ToolActionVO<Float> mToolAction;
-	MoaActionList mActions;
+    @Override
+    public void onCreate(Bitmap bitmap, Bundle options) {
+        super.onCreate(bitmap, options);
+    }
 
-	public NativeEffectRangePanel ( IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools type, String resourcesBaseName ) {
-		super( context, entry, type, resourcesBaseName );
-		mFilter = ToolLoaderFactory.get(type);
-		mToolAction = new ToolActionVO<Float>();
-	}
+    @Override
+    public void onBitmapReplaced(Bitmap bitmap) {
+        super.onBitmapReplaced(bitmap);
 
-	@Override
-	public void onCreate( Bitmap bitmap, Bundle options ) {
-		super.onCreate( bitmap, options );
-	}
+        if (isActive()) {
+            applyFilter(0, false, false);
+            setValue(50);
+        }
+    }
 
-	@Override
-	public void onBitmapReplaced( Bitmap bitmap ) {
-		super.onBitmapReplaced( bitmap );
+    @Override
+    public void onActivate() {
+        super.onActivate();
 
-		if (isActive()) {
-			applyFilter(0, false);
-			setValue(50);
-		}
-	}
+        mPreview = BitmapUtils.copy(mBitmap, Bitmap.Config.ARGB_8888);
 
-	@Override
-	public void onActivate() {
-		super.onActivate();
-		mPreview = BitmapUtils.copy( mBitmap, Bitmap.Config.ARGB_8888 );
-		onPreviewChanged(mPreview, true, true);
-		setIsChanged(false);
+        if (enableFastPreview) {
+            mPreviewSmallBitmap = acquireBitmap(PREVIEW_FAKE_RATIO);
+        }
 
-		if( hasOptions() ) {
-			final Bundle options = getOptions();
-			if( options.containsKey(Constants.QuickLaunch.NUMERIC_VALUE)) {
-				int value = options.getInt(Constants.QuickLaunch.NUMERIC_VALUE, 0);
-				setValue(value);
-			}
-		}
-	}
+        mPreviewSmallDrawable = new FakeBitmapDrawable(mPreview, mPreview.getWidth(), mPreview.getHeight());
+        onPreviewChanged(mPreviewSmallDrawable, false, true);
+        setIsChanged(false);
 
-	@Override
-	public boolean isRendering() {
-		return mIsRendering;
-	}
+        if (hasOptions()) {
+            final Bundle options = getOptions();
+            if (options.containsKey(Constants.QuickLaunch.NUMERIC_VALUE)) {
+                int value = options.getInt(Constants.QuickLaunch.NUMERIC_VALUE, 0);
+                setValue(value);
+            }
+        }
+    }
 
-	@Override
-	protected void onSliderStart( int value ) {
-		if ( enableFastPreview ) {
-			onProgressStart();
-		}
-	}
+    @Override
+    public boolean isRendering() {
+        return mIsRendering;
+    }
 
-	@Override
-	protected void onSliderEnd( int value ) {
-		mLogger.info( "onProgressEnd: " + value );
+    @Override
+    protected void onSliderStart(int value) {
+        if (enableFastPreview) {
+            onProgressStart();
+        }
+    }
 
-		value = ( value - 50 ) * 2;
-		applyFilter( value, !enableFastPreview );
+    @Override
+    protected void onSliderEnd(int value) {
+        mLogger.info("onSliderEnd: " + value);
 
-		if ( enableFastPreview ) {
-			onProgressEnd();
-		}
-	}
+        if (enableFastPreview) {
+            killCurrentTask(false);
+            onProgressEnd();
+        }
 
-	@Override
-	protected void onSliderChanged( int value, boolean fromUser ) {
-		mLogger.info( "onProgressChanged: " + value + ", fromUser: " + fromUser );
+        value = (value - 50) * 2;
+        applyFilter(value, !enableFastPreview, false);
+    }
 
-		if ( enableFastPreview || !fromUser ) {
-			value = ( value - 50 ) * 2;
-			applyFilter( value, !fromUser );
-		}
-	}
+    @Override
+    protected void onSliderChanged(int value, boolean fromUser) {
+        mLogger.info("onSliderChanged: " + value + ", fromUser: " + fromUser);
 
-	@Override
-	public void onDeactivate() {
-		onProgressEnd();
-		super.onDeactivate();
-	}
+        if (enableFastPreview || !fromUser) {
+            value = (value - 50) * 2;
+            if (null == mCurrentTask) {
+                applyFilter(value, !fromUser, true);
+            }
+        }
+    }
 
-	@Override
-	protected void onGenerateResult() {
-		mLogger.info( "onGenerateResult: " + mIsRendering );
+    @Override
+    public void onDeactivate() {
+        onProgressEnd();
+        super.onDeactivate();
+    }
 
-		if ( mIsRendering ) {
-			GenerateResultTask task = new GenerateResultTask();
-			task.execute();
-		} else {
-			onComplete( mPreview );
-		}
-	}
+    @Override
+    protected void onDispose() {
+        super.onDispose();
 
-	@Override
-	protected void onComplete(final Bitmap bitmap, final EditToolResultVO editResult) {
-		editResult.setToolAction(mToolAction);
-		editResult.setActionList(mActions);
-		super.onComplete(bitmap, editResult);
-	}
+        if (null != mPreviewSmallBitmap && !mPreviewSmallBitmap.isRecycled()) {
+            mPreviewSmallBitmap.recycle();
+            mPreviewSmallBitmap = null;
+        }
+    }
 
-	@Override
-	public boolean onBackPressed() {
-		mLogger.info( "onBackPressed" );
-		killCurrentTask();
-		return super.onBackPressed();
-	}
+    @Override
+    protected void onGenerateResult() {
+        mLogger.info("onGenerateResult: " + mIsRendering);
 
-	@Override
-	public void onCancelled() {
-		killCurrentTask();
-		mIsRendering = false;
-		super.onCancelled();
-	}
+        if (mIsRendering) {
+            GenerateResultTask task = new GenerateResultTask();
+            task.execute();
+        } else {
+            onComplete(mPreview);
+        }
+    }
 
-	boolean killCurrentTask() {
-		if ( mCurrentTask != null ) {
-			if( mCurrentTask.cancel( true ) ) {
-				mIsRendering = false;
-				onProgressEnd();
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    protected void onComplete(final Bitmap bitmap, final EditToolResultVO editResult) {
+        editResult.setToolAction(mToolAction);
+        editResult.setActionList(mActions);
+        super.onComplete(bitmap, editResult);
+    }
 
-	protected void applyFilter( float value, boolean showProgress ) {
-		mLogger.info( "applyFilter: " + value );
+    @Override
+    public boolean onBackPressed() {
+        killCurrentTask(true);
+        return super.onBackPressed();
+    }
 
-		killCurrentTask();
+    @Override
+    public void onCancelled() {
+        killCurrentTask(true);
+        mIsRendering = false;
+        super.onCancelled();
+    }
 
-		if ( value == 0 ) {
-			BitmapUtils.copy(mBitmap, mPreview);
-			onPreviewChanged(mPreview, false, true);
-			mIsRendering = false;
-			setIsChanged(false);
-		} else {
-			mIsRendering = true;
-			mCurrentTask = new ApplyFilterTask( value, showProgress );
-			mCurrentTask.execute( mBitmap );
-			setIsChanged(true);
-		}
-	}
+    boolean killCurrentTask(boolean endProgress) {
+        if (mCurrentTask != null) {
+            if (mCurrentTask.cancel(true)) {
+                mIsRendering = false;
+                if (endProgress) {
+                    onProgressEnd();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 
-	class ApplyFilterTask extends AviaryAsyncTask<Bitmap, Void, Bitmap> {
+    protected void applyFilter(float value, boolean showProgress, boolean isPreview) {
+        mLogger.info("applyFilter: " + value);
 
-		MoaResult mResult;
-		boolean mShowProgress;
+        if (value == 0) {
+            killCurrentTask(!enableFastPreview);
+            BitmapUtils.copy(mBitmap, mPreview);
+            mPreviewSmallDrawable.updateBitmap(mPreview, mPreview.getWidth(), mPreview.getHeight());
+            onPreviewUpdated();
+            mIsRendering = false;
+            setIsChanged(false);
+        } else {
+            if (!enableFastPreview) {
+                killCurrentTask(!enableFastPreview);
+            }
+            mIsRendering = true;
+            mCurrentTask = new ApplyFilterTask(value, showProgress, isPreview);
+            mCurrentTask.execute(mBitmap);
+            setIsChanged(true);
+        }
+    }
 
-		public ApplyFilterTask ( float value, boolean showProgress ) {
-			mShowProgress = showProgress;
-			if( null != mFilter ) {
-				((INativeRangeFilter) mFilter).setValue(value);
-			}
-		}
+    private Bitmap acquireBitmap(final int ratio) {
+        Bitmap bitmap;
+        bitmap = Bitmap.createBitmap(mBitmap.getWidth() / ratio, mBitmap.getHeight() / ratio, mBitmap.getConfig());
+        BitmapUtils.copy(mBitmap, bitmap);
+        return bitmap;
+    }
 
-		@Override
-		protected void PreExecute() {
-			mLogger.info( "PreExecute" );
-			if( null != mFilter ) {
-				try {
-					mResult = ( (INativeRangeFilter) mFilter ).prepare( mBitmap, mPreview, 1, 1 );
-				} catch( JSONException e ) {
-					e.printStackTrace();
-				}
+    class ApplyFilterTask extends AviaryAsyncTask<Bitmap, Void, Bitmap> {
+        MoaResult mResult;
+        boolean   mShowProgress;
+        IFilter   filter;
+        Bitmap    mCurrentBitmap;
+        boolean   isPreview;
 
-				if( mShowProgress ) {
-					onProgressStart();
-				}
-			}
-		}
+        public ApplyFilterTask(float value, boolean showProgress, boolean isPreview) {
+            this.isPreview = isPreview;
+            this.mShowProgress = showProgress;
+            if (null != mFilter) {
+                filter = ToolLoaderFactory.get(getName());
+                ((INativeRangeFilter) filter).setValue(value);
+            }
+        }
 
-		@Override
-		protected void onCancelled() {
-			super.onCancelled();
-			mLogger.info( "onCancelled" );
-			if ( mResult != null ) {
-				mResult.cancel();
-			}
-		}
+        @Override
+        protected void doPreExecute() {
+            if (null != filter) {
+                if (mShowProgress) {
+                    onProgressStart();
+                }
+            }
+        }
 
-		@Override
-		protected Bitmap doInBackground( Bitmap... arg0 ) {
-			if ( isCancelled() || null == mFilter ) return null;
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (mResult != null) {
+                mResult.cancel();
+            }
 
-			try {
-				mResult.execute();
-				mToolAction.setValue(((INativeRangeFilter) mFilter).getValue().getValue());
-				mActions = ((INativeRangeFilter) mFilter).getActions();
+            if (null != mCurrentBitmap) {
+                if (!mCurrentBitmap.isRecycled()) {
+                    mCurrentBitmap.recycle();
+                }
+            }
+        }
 
-			} catch ( Exception exception ) {
-				exception.printStackTrace();
-				return null;
-			}
+        @Override
+        protected Bitmap doInBackground(Bitmap... arg0) {
+            if (isCancelled() || null == filter) {
+                return null;
+            }
 
-			if ( isCancelled() ) return null;
-			return mPreview;
-		}
+            try {
+                if (isPreview && null != mPreviewSmallBitmap) {
+                    mCurrentBitmap = Bitmap.createBitmap(mPreviewSmallBitmap.getWidth(),
+                                                         mPreviewSmallBitmap.getHeight(),
+                                                         mPreviewSmallBitmap.getConfig());
+                    mResult = ((INativeRangeFilter) filter).prepare(mPreviewSmallBitmap, mCurrentBitmap, 1, 1);
+                } else {
+                    mResult = ((INativeRangeFilter) filter).prepare(mBitmap, mPreview, 1, 1);
+                }
+                mResult.execute();
 
-		@Override
-		protected void PostExecute( Bitmap result ) {
+                if (isCancelled()) {
+                    mLogger.warn("isCancelled... return null");
+                    return null;
+                }
 
-			if ( !isActive() ) return;
+                mToolAction.setValue(((INativeRangeFilter) filter).getValue().getValue());
+                mActions = ((INativeRangeFilter) filter).getActions();
+            } catch (Throwable t) {
+                t.printStackTrace();
+                return null;
+            }
 
-			mLogger.info( "PostExecute" );
+            if (isCancelled()) {
+                return null;
+            }
+            return mResult.outputBitmap;
+        }
 
-			if ( mShowProgress ) {
-				onProgressEnd();
-			}
+        @Override
+        protected void doPostExecute(Bitmap result) {
+            mLogger.info("onPostExecute, isPreview: %b, result: %s", isPreview, result);
+            if (!isActive()) {
+                return;
+            }
 
-			if ( result != null ) {
-				if ( SystemUtils.isHoneyComb() ) {
-					Moa.notifyPixelsChanged( mPreview );
-				}
-				onPreviewUpdated();
-				// onPreviewChanged( mPreview, true );
-			} else {
-				BitmapUtils.copy( mBitmap, mPreview );
-				onPreviewChanged( mPreview, false, true );
-				setIsChanged( false );
-			}
-			mIsRendering = false;
-			mCurrentTask = null;
-		}
-	}
+            if (mShowProgress) {
+                onProgressEnd();
+            }
 
-	class GenerateResultTask extends AviaryAsyncTask<Void, Void, Void> {
+            if (result != null && !isCancelled()) {
+                mLogger.log("result size: %dx%d", result.getWidth(), result.getHeight());
 
-		ProgressDialog mProgress = new ProgressDialog( getContext().getBaseContext() );
+                mPreviewSmallDrawable.updateBitmap(result, mBitmap.getWidth(), mBitmap.getHeight());
+                onPreviewUpdated();
+                if (!isPreview) {
+                    setIsChanged(true);
+                }
+            } else {
+                mLogger.warn("result == null || isCancelled");
+            }
 
-		@Override
-		protected void PreExecute() {
-			mProgress.setTitle( getContext().getBaseContext().getString( R.string.feather_loading_title ) );
-			mProgress.setMessage( getContext().getBaseContext().getString( R.string.feather_effect_loading_message ) );
-			mProgress.setIndeterminate( true );
-			mProgress.setCancelable( false );
-			mProgress.show();
-		}
+            if (!isPreview) {
+                mIsRendering = false;
+            }
+            mCurrentTask = null;
+        }
+    }
 
-		@Override
-		protected Void doInBackground( Void... params ) {
-			mLogger.info( "GenerateResultTask::doInBackground", mIsRendering );
+    class GenerateResultTask extends AviaryAsyncTask<Void, Void, Void> {
+        ProgressDialog mProgress = new ProgressDialog(getContext().getBaseContext());
 
-			while ( mIsRendering ) {
-				// mLogger.log( "waiting...." );
-			}
-			return null;
-		}
+        @Override
+        protected void doPreExecute() {
+            mProgress.setTitle(getContext().getBaseContext().getString(R.string.feather_loading_title));
+            mProgress.setMessage(getContext().getBaseContext().getString(R.string.feather_effect_loading_message));
+            mProgress.setIndeterminate(true);
+            mProgress.setCancelable(false);
+            mProgress.show();
+        }
 
-		@Override
-		protected void PostExecute( Void result ) {
-			mLogger.info( "GenerateResultTask::PostExecute" );
+        @Override
+        protected Void doInBackground(Void... params) {
+            mLogger.info("GenerateResultTask::doInBackground", mIsRendering);
 
-			if ( getContext().getBaseActivity().isFinishing() ) return;
-			if ( mProgress.isShowing() ) mProgress.dismiss();
-			onComplete( mPreview );
-		}
-	}
+            while (mIsRendering) {
+                // mLogger.log( "waiting...." );
+            }
+            return null;
+        }
+
+        @Override
+        protected void doPostExecute(Void result) {
+            mLogger.info("GenerateResultTask::doPostExecute");
+
+            if (getContext().getBaseActivity().isFinishing()) {
+                return;
+            }
+            if (mProgress.isShowing()) {
+                mProgress.dismiss();
+            }
+            onComplete(mPreview);
+        }
+    }
 }

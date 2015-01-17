@@ -1,7 +1,5 @@
 package com.aviary.android.feather.sdk.widget;
 
-import it.sephiroth.android.library.imagezoom.ImageViewTouch;
-import it.sephiroth.android.library.imagezoom.graphics.IBitmapDrawable;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -13,267 +11,271 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
+import it.sephiroth.android.library.imagezoom.graphics.IBitmapDrawable;
+
 public class ImageViewSpotDraw extends ImageViewTouch {
+    protected static final float  TOUCH_TOLERANCE = 2;
+    protected float mBrushSize = 30;
+    protected Paint mPaint;
+    protected float mCurrentScale = 1;
+    protected Path  tmpPath       = new Path();
+    protected Canvas mCanvas;
+    protected TouchMode mTouchMode = TouchMode.DRAW;
+    protected float mX, mY;
+    protected float mStartX, mStartY;
+    protected              Matrix mIdentityMatrix = new Matrix();
+    protected              Matrix mInvertedMatrix = new Matrix();
+    private OnDrawListener mDrawListener;
+    private double mRestiction = 0;
+    private boolean mMoved = false;
+    public ImageViewSpotDraw(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public static enum TouchMode {
-		// mode for pan and zoom
-		IMAGE,
-		// mode for drawing
-		DRAW
-	};
+    public ImageViewSpotDraw(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	public static interface OnDrawListener {
-		void onDrawStart( float points[], float radius );
+    public void setOnDrawStartListener(OnDrawListener listener) {
+        mDrawListener = listener;
+    }
 
-		void onDrawing( float points[], float radius );
+    @Override
+    protected void init(Context context, AttributeSet attrs, int defStyle) {
+        super.init(context, attrs, defStyle);
+        tmpPath = new Path();
+    }
 
-		void onDrawEnd();
-	};
+    @Override
+    protected void onLayoutChanged(int left, int top, int right, int bottom) {
+        super.onLayoutChanged(left, top, right, bottom);
 
-	protected float mBrushSize = 30;
-	protected Paint mPaint;
-	protected float mCurrentScale = 1;
-	protected Path tmpPath = new Path();
-	
-	protected Canvas mCanvas;
-	protected TouchMode mTouchMode = TouchMode.DRAW;
-	protected float mX, mY;
-	protected float mStartX, mStartY;
-	protected Matrix mIdentityMatrix = new Matrix();
-	protected Matrix mInvertedMatrix = new Matrix();
-	protected static final float TOUCH_TOLERANCE = 2;
-	private OnDrawListener mDrawListener;
-	private double mRestiction = 0;
+        if (null != getDrawable()) {
+            onDrawModeChanged();
+        }
+    }
 
-	public ImageViewSpotDraw ( Context context, AttributeSet attrs ) {
-		this( context, attrs, 0 );
-	}
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (mTouchMode == TouchMode.DRAW && event.getPointerCount() == 1) {
+            float x = event.getX();
+            float y = event.getY();
 
-	public ImageViewSpotDraw ( Context context, AttributeSet attrs, int defStyle ) {
-		super( context, attrs, defStyle );
-	}
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    onTouchStart(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    onTouchMove(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    onTouchUp();
+                    invalidate();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        } else {
+            if (mTouchMode == TouchMode.IMAGE) {
+                return super.onTouchEvent(event);
+            } else {
+                return false;
+            }
+        }
+    }
 
-	public void setOnDrawStartListener( OnDrawListener listener ) {
-		mDrawListener = listener;
-	}
+    private void onTouchStart(float x, float y) {
 
-	@Override
-	protected void init( Context context, AttributeSet attrs, int defStyle ) {
-		super.init( context, attrs, defStyle );
-		tmpPath = new Path();
-	}
+        mMoved = false;
 
-	public void setDrawLimit( double value ) {
-		mRestiction = value;
-	}
+        tmpPath.reset();
 
-	public void setBrushSize( float value ) {
-		mBrushSize = value;
+        if (null != mPaint) {
+            tmpPath.moveTo(x, y);
+        }
 
-		if ( mPaint != null ) {
-			mPaint.setStrokeWidth( mBrushSize );
-		}
-	}
+        mX = x;
+        mY = y;
+        mStartX = x;
+        mStartY = y;
 
-	public TouchMode getDrawMode() {
-		return mTouchMode;
-	}
+        if (mDrawListener != null) {
+            float[] mappedPoints = new float[2];
+            mappedPoints[0] = x;
+            mappedPoints[1] = y;
+            mInvertedMatrix.mapPoints(mappedPoints);
+            mDrawListener.onDrawStart(mappedPoints, mBrushSize / mCurrentScale);
+        }
+    }
 
-	public void setDrawMode( TouchMode mode ) {
-		if ( mode != mTouchMode ) {
-			mTouchMode = mode;
-			onDrawModeChanged();
-		}
-	}
+    private void onTouchMove(float x, float y) {
 
-	protected void onDrawModeChanged() {
-		if ( mTouchMode == TouchMode.DRAW ) {
-			Log.i( LOG_TAG, "onDrawModeChanged" );
+        float dx = Math.abs(x - mX);
+        float dy = Math.abs(y - mY);
 
-			Matrix m1 = new Matrix( getImageMatrix() );
-			mInvertedMatrix.reset();
+        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
 
-			float[] v1 = getMatrixValues( m1 );
-			m1.invert( m1 );
-			float[] v2 = getMatrixValues( m1 );
+            if (!mMoved && null != mPaint) {
+                tmpPath.setLastPoint(mX, mY);
+            }
 
-			mInvertedMatrix.postTranslate( -v1[Matrix.MTRANS_X], -v1[Matrix.MTRANS_Y] );
-			mInvertedMatrix.postScale( v2[Matrix.MSCALE_X], v2[Matrix.MSCALE_Y] );
-			mCanvas.setMatrix( mInvertedMatrix );
+            mMoved = true;
 
-			mCurrentScale = getScale() * getBaseScale();
+            if (mRestiction > 0) {
+                double r = Math.sqrt(Math.pow(x - mStartX, 2) + Math.pow(y - mStartY, 2));
+                double theta = Math.atan2(y - mStartY, x - mStartX);
 
-			if( null != mPaint ) {
-				mPaint.setStrokeWidth( mBrushSize );
-			}
-		}
-	}
+                final float w = getWidth();
+                final float h = getHeight();
 
-	public Paint getPaint() {
-		return mPaint;
-	}
+                double scale = (mRestiction / mCurrentScale) / (double) (w + h) / (mBrushSize / mCurrentScale);
+                double rNew = Math.log(r * scale + 1) / scale;
 
-	public void setPaint( Paint paint ) {
-		mPaint.set( paint );
-	}
+                x = (float) (mStartX + rNew * Math.cos(theta));
+                y = (float) (mStartY + rNew * Math.sin(theta));
+            }
 
-	public void setPaintEnabled( boolean enabled ) {
-		if( enabled ) {
-			mPaint = new Paint( Paint.ANTI_ALIAS_FLAG );
-			mPaint.setFilterBitmap( false );
-			mPaint.setDither( true );
-			mPaint.setColor( 0x66FFFFCC );
-			mPaint.setStyle( Paint.Style.STROKE );
-			mPaint.setStrokeCap( Paint.Cap.ROUND );
-		}
-	}
+            mX = x;
+            mY = y;
 
-	@Override
-	protected void onDraw( Canvas canvas ) {
-		super.onDraw( canvas );
+            if (null != mPaint) {
+                tmpPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
+                // tmpPath.addCircle( mX, mY, 2, Direction.CW );
+            }
+        }
 
-		if ( null != mPaint ) {
-			canvas.drawPath( tmpPath, mPaint );
-		}
-		
-	}
+        if (mDrawListener != null) {
+            float[] mappedPoints = new float[2];
+            mappedPoints[0] = x;
+            mappedPoints[1] = y;
+            mInvertedMatrix.mapPoints(mappedPoints);
+            mDrawListener.onDrawing(mappedPoints, mBrushSize / mCurrentScale);
+        }
+    }
 
-	public RectF getImageRect() {
-		if ( getDrawable() != null ) {
-			return new RectF( 0, 0, getDrawable().getIntrinsicWidth(), getDrawable().getIntrinsicHeight() );
-		} else {
-			return null;
-		}
-	}
+    private void onTouchUp() {
 
-	@Override
-	protected void onDrawableChanged( Drawable drawable ) {
-		super.onDrawableChanged( drawable );
+        if (mDrawListener != null) {
+            mDrawListener.onDrawEnd();
+        }
+    }
 
-		if ( drawable != null && ( drawable instanceof IBitmapDrawable ) ) {
-			mCanvas = new Canvas();
-			mCanvas.drawColor( 0 );
-			onDrawModeChanged();
-		}
-	}
+    public void setDrawLimit(double value) {
+        mRestiction = value;
+    }
 
-	@Override
-	protected void onLayoutChanged( int left, int top, int right, int bottom ) {
-		super.onLayoutChanged( left, top, right, bottom );
+    public void setBrushSize(float value) {
+        mBrushSize = value;
 
-		if ( null != getDrawable() ) {
-			onDrawModeChanged();
-		}
-	}
+        if (mPaint != null) {
+            mPaint.setStrokeWidth(mBrushSize);
+        }
+    }
 
-	private boolean mMoved = false;
+    public TouchMode getDrawMode() {
+        return mTouchMode;
+    }
 
-	private void touch_start( float x, float y ) {
+    public void setDrawMode(TouchMode mode) {
+        if (mode != mTouchMode) {
+            mTouchMode = mode;
+            onDrawModeChanged();
+        }
+    }
 
-		mMoved = false;
+    protected void onDrawModeChanged() {
+        if (mTouchMode == TouchMode.DRAW) {
+            Log.i(TAG, "onDrawModeChanged");
 
-		tmpPath.reset();
-		
-		if( null != mPaint ) {
-			tmpPath.moveTo( x, y );
-		}
+            Matrix m1 = new Matrix(getImageMatrix());
+            mInvertedMatrix.reset();
 
-		mX = x;
-		mY = y;
-		mStartX = x;
-		mStartY = y;
+            float[] v1 = getMatrixValues(m1);
+            m1.invert(m1);
+            float[] v2 = getMatrixValues(m1);
 
-		if ( mDrawListener != null ) {
-			float mappedPoints[] = new float[2];
-			mappedPoints[0] = x;
-			mappedPoints[1] = y;
-			mInvertedMatrix.mapPoints( mappedPoints );
-			mDrawListener.onDrawStart( mappedPoints, mBrushSize / mCurrentScale );
-		}
-	}
+            mInvertedMatrix.postTranslate(-v1[Matrix.MTRANS_X], -v1[Matrix.MTRANS_Y]);
+            mInvertedMatrix.postScale(v2[Matrix.MSCALE_X], v2[Matrix.MSCALE_Y]);
+            mCanvas.setMatrix(mInvertedMatrix);
 
-	private void touch_move( float x, float y ) {
+            mCurrentScale = getScale() * getBaseScale();
 
-		float dx = Math.abs( x - mX );
-		float dy = Math.abs( y - mY );
+            if (null != mPaint) {
+                mPaint.setStrokeWidth(mBrushSize);
+            }
+        }
+    }
 
-		if ( dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE ) {
+    public static float[] getMatrixValues(Matrix m) {
+        float[] values = new float[9];
+        m.getValues(values);
+        return values;
+    }
 
-			if ( !mMoved && null != mPaint ) {
-				tmpPath.setLastPoint( mX, mY );
-			}
+    public Paint getPaint() {
+        return mPaint;
+    }
 
-			mMoved = true;
+    public void setPaint(Paint paint) {
+        mPaint.set(paint);
+    }
 
-			if ( mRestiction > 0 ) {
-				double r = Math.sqrt( Math.pow( x - mStartX, 2 ) + Math.pow( y - mStartY, 2 ) );
-				double theta = Math.atan2( y - mStartY, x - mStartX );
+    public void setPaintEnabled(boolean enabled) {
+        if (enabled) {
+            mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mPaint.setFilterBitmap(false);
+            mPaint.setDither(true);
+            mPaint.setColor(0x66FFFFCC);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeCap(Paint.Cap.ROUND);
+        }
+    }
 
-				final float w = getWidth();
-				final float h = getHeight();
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
-				double scale = ( mRestiction / mCurrentScale ) / (double) ( w + h ) / ( mBrushSize / mCurrentScale );
-				double rNew = Math.log( r * scale + 1 ) / scale;
+        if (null != mPaint) {
+            canvas.drawPath(tmpPath, mPaint);
+        }
 
-				x = (float) ( mStartX + rNew * Math.cos( theta ) );
-				y = (float) ( mStartY + rNew * Math.sin( theta ) );
-			}
-			
-			mX = x;
-			mY = y;
+    }
 
-			if( null != mPaint ) {
-				tmpPath.quadTo( mX, mY, ( x + mX ) / 2, ( y + mY ) / 2 );
-				// tmpPath.addCircle( mX, mY, 2, Direction.CW );
-			}
-		}
+    public RectF getImageRect() {
+        if (getDrawable() != null) {
+            return new RectF(0, 0, getDrawable().getIntrinsicWidth(), getDrawable().getIntrinsicHeight());
+        } else {
+            return null;
+        }
+    }
 
-		if ( mDrawListener != null ) {
-			float mappedPoints[] = new float[2];
-			mappedPoints[0] = x;
-			mappedPoints[1] = y;
-			mInvertedMatrix.mapPoints( mappedPoints );
-			mDrawListener.onDrawing( mappedPoints, mBrushSize / mCurrentScale );
-		}
-	}
+    @Override
+    protected void onDrawableChanged(Drawable drawable) {
+        super.onDrawableChanged(drawable);
 
-	private void touch_up() {
+        if (drawable != null && (drawable instanceof IBitmapDrawable)) {
+            mCanvas = new Canvas();
+            mCanvas.drawColor(0);
+            onDrawModeChanged();
+        }
+    }
 
-		if ( mDrawListener != null ) {
-			mDrawListener.onDrawEnd();
-		}
-	}
+    public static enum TouchMode {
+        // mode for pan and zoom
+        IMAGE,
+        // mode for drawing
+        DRAW
+    }
 
-	public static float[] getMatrixValues( Matrix m ) {
-		float[] values = new float[9];
-		m.getValues( values );
-		return values;
-	}
+    public interface OnDrawListener {
+        void onDrawStart(float[] points, float radius);
 
-	@Override
-	public boolean onTouchEvent( MotionEvent event ) {
-		if ( mTouchMode == TouchMode.DRAW && event.getPointerCount() == 1 ) {
-			float x = event.getX();
-			float y = event.getY();
+        void onDrawing(float[] points, float radius);
 
-			switch ( event.getAction() ) {
-				case MotionEvent.ACTION_DOWN:
-					touch_start( x, y );
-					invalidate();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					touch_move( x, y );
-					invalidate();
-					break;
-				case MotionEvent.ACTION_UP:
-					touch_up();
-					invalidate();
-					break;
-			}
-			return true;
-		} else {
-			if ( mTouchMode == TouchMode.IMAGE ) return super.onTouchEvent( event );
-			else return false;
-		}
-	}
+        void onDrawEnd();
+    }
 }

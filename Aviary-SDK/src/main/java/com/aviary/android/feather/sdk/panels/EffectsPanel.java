@@ -6,233 +6,307 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.aviary.android.feather.cds.AviaryCds.PackType;
 import com.aviary.android.feather.cds.TrayColumns;
+import com.aviary.android.feather.common.log.LoggerFactory;
+import com.aviary.android.feather.common.utils.ApiHelper;
 import com.aviary.android.feather.common.utils.SystemUtils;
 import com.aviary.android.feather.headless.filters.INativeFilter;
+import com.aviary.android.feather.headless.filters.NativeFilter;
 import com.aviary.android.feather.headless.filters.NativeFilterProxy;
 import com.aviary.android.feather.headless.filters.impl.EffectFilter;
 import com.aviary.android.feather.headless.moa.MoaAction;
 import com.aviary.android.feather.headless.moa.MoaActionFactory;
 import com.aviary.android.feather.headless.moa.MoaActionList;
 import com.aviary.android.feather.headless.moa.MoaResult;
-import com.aviary.android.feather.library.Constants;
 import com.aviary.android.feather.library.content.ToolEntry;
 import com.aviary.android.feather.library.filters.ToolLoaderFactory;
 import com.aviary.android.feather.library.services.IAviaryController;
 import com.aviary.android.feather.sdk.BuildConfig;
 import com.aviary.android.feather.sdk.R;
-import it.sephiroth.android.library.picasso.Generator;
 
 import java.io.IOException;
 
+import it.sephiroth.android.library.picasso.Picasso;
+import it.sephiroth.android.library.picasso.Request;
+import it.sephiroth.android.library.picasso.RequestHandler;
+
 public class EffectsPanel extends BordersPanel {
+    public static final double DEFAULT_THUMBNAIL_RESIZE_RATIO  = 1.4;
+    public static final double THUMBNAIL_RESIZE_RATIO_SLOW_CPU = 2.0;
+    /** thumbnail for effects */
+    protected Bitmap         mThumbBitmap;
+    private   int            mThumbPadding;
+    private   int            mThumbRoundedCorners;
+    private   int            mThumbStrokeColor;
+    private   int            mThumbStrokeWidth;
+    /* thumbnail resize factor */
+    private   double         mFactor;
+    private   RequestHandler mRequestHandler;
 
-	private int mThumbPadding;
-	private int mThumbRoundedCorners;
-	private int mThumbStrokeColor;
-	private int mThumbStrokeWidth;
-	private double mFactor;
+    public EffectsPanel(IAviaryController context, ToolEntry entry) {
+        super(context, entry, PackType.EFFECT);
+    }
 
-	public EffectsPanel ( IAviaryController context, ToolEntry entry ) {
-		super( context, entry, PackType.EFFECT );
-	}
+    @Override
+    protected boolean getIntensitySliderEnabled() {
+        return ApiHelper.EFFECT_INTENSITY_AVAILABLE;
+    }
 
-	@Override
-	public void onCreate( Bitmap bitmap, Bundle options ) {
-		super.onCreate( bitmap, options );
+    @Override
+    protected boolean getIntensityIsManaged() {
+        return false;
+    }
 
-		mLogger.info( "FastPreview enabled: " + mEnableFastPreview );
+    @Override
+    public void onCreate(Bitmap bitmap, Bundle options) {
+        super.onCreate(bitmap, options);
 
-		mThumbPadding = mConfigService.getDimensionPixelSize( R.dimen.aviary_effect_thumb_padding );
-		mThumbRoundedCorners = mConfigService.getDimensionPixelSize( R.dimen.aviary_effect_thumb_radius );
-		mThumbStrokeWidth = mConfigService.getDimensionPixelSize( R.dimen.aviary_effect_thumb_stroke );
-		mThumbStrokeColor = mConfigService.getColor( R.color.aviary_effect_thumb_stroke_color );
-		
-		mFactor = 1.4;
-		
-		int cpuSpeed = SystemUtils.getCpuMhz();
-		if( cpuSpeed > 0 ) {
-			if( cpuSpeed < Constants.MHZ_CPU_FAST ){
-				mFactor = 2.0;
-			}
-		}
-		
-		mLogger.log( "thumbnails scale factor: " + mFactor + " with cpu: " + cpuSpeed );
-		
-	}
-	
-	@Override
-	protected Bitmap generateThumbnail( Bitmap input, int width, int height ) {
-		return ThumbnailUtils.extractThumbnail( input, (int)((double)width/mFactor), (int)((double)height/mFactor) );
-	}
+        mLogger.info("FastPreview enabled: " + mEnableFastPreview);
 
-	@Override
-	protected void onDispose() {
-		super.onDispose();
-	}
+        mThumbPadding = mConfigService.getDimensionPixelSize(R.dimen.aviary_effect_thumb_padding);
+        mThumbRoundedCorners = mConfigService.getDimensionPixelSize(R.dimen.aviary_effect_thumb_radius);
+        mThumbStrokeWidth = mConfigService.getDimensionPixelSize(R.dimen.aviary_effect_thumb_stroke);
+        mThumbStrokeColor = mConfigService.getColor(R.color.aviary_effect_thumb_stroke_color);
 
-	@Override
-	protected void onProgressEnd() {
-		if ( !mEnableFastPreview ) {
-			super.onProgressModalEnd();
-		} else {
-			super.onProgressEnd();
-		}
-	}
+        mFactor = DEFAULT_THUMBNAIL_RESIZE_RATIO;
 
-	@Override
-	protected void onProgressStart() {
-		if ( !mEnableFastPreview ) {
-			super.onProgressModalStart();
-		} else {
-			super.onProgressStart();
-		}
-	}
+        int cpuSpeed = SystemUtils.CpuInfo.getCpuMhz();
+        if (cpuSpeed > 0) {
+            if (cpuSpeed < SystemUtils.CpuInfo.MHZ_CPU_FAST) {
+                mFactor = THUMBNAIL_RESIZE_RATIO_SLOW_CPU;
+            }
+            mLogger.log("thumbnails scale factor: " + mFactor + " with cpu: " + cpuSpeed);
+        }
+    }
 
-	@Override
-	protected ListAdapter createListAdapter( Context context, Cursor cursor ) {
-		return new EffectsListAdapter( context, R.layout.aviary_frame_item, R.layout.aviary_effect_item_more, R.layout.aviary_effect_item_external,
-				R.layout.aviary_frame_item_divider, cursor );
-	}
+    @Override
+    protected void onAddCustomRequestHandlers() {
+        super.onAddCustomRequestHandlers();
 
-	@Override
-	protected RenderTask createRenderTask( int position ) {
-		return new EffectsRenderTask( position );
-	}
+        mThumbBitmap = generateThumbnail(mBitmap, mThumbSize, mThumbSize);
+        mRequestHandler = new EffectsRequestHandler(mThumbBitmap,
+                                                    mFactor,
+                                                    mThumbSize,
+                                                    mThumbPadding,
+                                                    mThumbRoundedCorners,
+                                                    mThumbStrokeColor,
+                                                    mThumbStrokeWidth);
+        try {
+            mPicassoLibrary.addRequestHandler(mRequestHandler);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	protected INativeFilter loadNativeFilter( final TrayColumns.TrayCursorWrapper item, int position, boolean hires ) {
-		EffectFilter filter = (EffectFilter) ToolLoaderFactory.get(ToolLoaderFactory.Tools.EFFECTS);
-		if ( null != item ) {
-			filter.setMoaLiteEffect( item.getPath() + "/" + item.getIdentifier() + ".json" );
-			filter.setPreviewSize( mPreview.getWidth(), mPreview.getHeight() );
+    @Override
+    protected void onRemoveCustomRequestHandlers() {
+        super.onRemoveCustomRequestHandlers();
 
-		}
-		return filter;
-	}
+        if (null != mRequestHandler) {
+            mPicassoLibrary.removeRequestHandler(mRequestHandler);
+        }
+        mRequestHandler = null;
+    }
 
-	@Override
-	protected CharSequence[] getOptionalEffectsLabels() {
-		return super.getOptionalEffectsLabels();
-	}
+    @Override
+    protected void onPostActivate() {
+        super.onPostActivate();
+    }
 
-	protected class EffectsRenderTask extends RenderTask {
+    @Override
+    protected void onDispose() {
+        super.onDispose();
+        if (mThumbBitmap != null && !mThumbBitmap.isRecycled()) {
+            mThumbBitmap.recycle();
+        }
+        mThumbBitmap = null;
+    }
 
-		// private Object mOpenGlCompleted = new Object();
-		// FutureListener<Boolean> mOpenGlBackgroundListener = new
-		// FutureListener<Boolean>() {
-		//
-		// @Override
-		// public void onFutureDone( Future<Boolean> arg0 ) {
-		// mLogger.info( "mOpenGlBackgroundListener::onFutureDone" );
-		// synchronized ( mOpenGlCompleted ) {
-		// mOpenGlCompleted.notify();
-		// }
-		// }
-		// };
+    @Override
+    protected ListAdapter createListAdapter(Context context, Cursor cursor) {
+        return new EffectsListAdapter(context,
+                                      R.layout.aviary_frame_item,
+                                      R.layout.aviary_effect_item_more,
+                                      R.layout.aviary_effect_item_external,
+                                      R.layout.aviary_frame_item_divider,
+                                      cursor);
+    }
 
-		public EffectsRenderTask ( int position ) {
-			super( position );
-		}
+    @Override
+    protected boolean isContentTutorialNeeded() {
+        return false;
+    }
 
-	}
+    @Override
+    protected RenderTask createRenderTask(int position, float intensity) {
+        return new EffectsRenderTask(position, intensity);
+    }
 
-	class EffectsListAdapter extends ListAdapter {
+    @Override
+    protected NativeFilter loadNativeFilter(
+        final TrayColumns.TrayCursorWrapper item, int position, boolean hires, float intensity) {
+        if (null != item && position > -1) {
+            EffectFilter filter = (EffectFilter) ToolLoaderFactory.get(ToolLoaderFactory.Tools.EFFECTS);
+            filter.setMoaLiteEffect(item.getPath() + "/" + item.getIdentifier() + ".json");
+            filter.setPreviewSize(mPreview.getWidth(), mPreview.getHeight());
+            filter.setIntensity(intensity);
+            return filter;
+        }
+        return null;
+    }
 
-		public EffectsListAdapter ( Context context, int mainResId, int moreResId, int externalResId, int dividerResId, Cursor cursor ) {
-			super( context, mainResId, moreResId, externalResId, dividerResId, cursor );
-		}
+    @Override
+    protected CharSequence[] getOptionalEffectsLabels() {
+        return super.getOptionalEffectsLabels();
+    }
 
-		@Override
-		protected Generator createContentCallable( long id, int position, String identifier, String path ) {
-			if ( null != identifier ) {
-				return new FilterThumbnailCallable( mThumbBitmap );
-			}
-			return null;
-		}
-	}
+    private Bitmap generateThumbnail(Bitmap input, int width, int height) {
+        return ThumbnailUtils.extractThumbnail(input, (int) ((double) width / mFactor), (int) ((double) height / mFactor));
+    }
 
-	class FilterThumbnailCallable implements Generator {
+    @Override
+    protected void onProgressStart() {
+        if (!mEnableFastPreview) {
+            super.onProgressModalStart();
+        } else {
+            super.onProgressStart();
+        }
+    }
 
-		INativeFilter mFilter;
-		Bitmap srcBitmap;
+    @Override
+    protected void onProgressEnd() {
+        if (!mEnableFastPreview) {
+            super.onProgressModalEnd();
+        } else {
+            super.onProgressEnd();
+        }
+    }
 
-		public FilterThumbnailCallable ( Bitmap bitmap ) {
-			srcBitmap = bitmap;
-		}
-		
-		private INativeFilter loadFilter( CharSequence effectFileName ) {
-			EffectFilter filter = (EffectFilter) ToolLoaderFactory.get(ToolLoaderFactory.Tools.EFFECTS);
-			filter.setMoaLiteEffect( (String) effectFileName );
-			filter.setPreviewSize( srcBitmap.getWidth(), srcBitmap.getHeight() );
+    /**
+     * Custom request handler for effect's thumbnail
+     */
+    static class EffectsRequestHandler extends RequestHandler {
+        /** scheme used to generate effects */
+        static final String FILTER_SCHEME = "aviary_effect";
+        private final double mFactor;
+        private final int    mThumbSize;
+        private final int    mThumbPadding;
+        private final int    mThumbRoundedCorners;
+        private final int    mThumbStrokeColor;
+        private final int    mThumbStrokeWidth;
+        private       Bitmap srcBitmap;
 
-			if( BuildConfig.DEBUG ) {
-				mLogger.log( "loadFilter: " + effectFileName );
-			}
+        public EffectsRequestHandler(
+            Bitmap bitmap, final double mFactor, final int mThumbSize, final int mThumbPadding, final int mThumbRoundedCorners,
+            final int mThumbStrokeColor, final int mThumbStrokeWidth) {
+            srcBitmap = bitmap;
+            this.mFactor = mFactor;
+            this.mThumbSize = mThumbSize;
+            this.mThumbPadding = mThumbPadding;
+            this.mThumbRoundedCorners = mThumbRoundedCorners;
+            this.mThumbStrokeColor = mThumbStrokeColor;
+            this.mThumbStrokeWidth = mThumbStrokeWidth;
+        }
 
-			return filter;
-		}
-		
-		@Override
-		public Bitmap decode( Uri uri ) throws IOException {
-			try {
-				return call( uri.getPath() );
-			} catch( Throwable t ) {
-				throw new IOException( t );
-			}
-		}
+        @Override
+        public boolean canHandleRequest(final Request request) {
+            if (null != request.uri) {
+                final String scheme = request.uri.getScheme();
+                return null != scheme && FILTER_SCHEME.equals(scheme);
+            }
+            return false;
+        }
 
-		public Bitmap call( String filename ) throws Exception {
+        @Override
+        public Result load(final Request request) throws IOException {
+            if (null != request.uri) {
+                Bitmap bitmap = decode(request.uri);
+                return new Result(bitmap, Picasso.LoadedFrom.NETWORK);
+            }
+            return null;
+        }
 
-			boolean is_valid = true;
-			if ( null == mFilter ) {
-				try {
-					mFilter = loadFilter( filename );
-				} catch ( Throwable t ) {
-					t.printStackTrace();
-					is_valid = false;
-				}
-			}
-			
-			MoaActionList actionList = actionsForRoundedThumbnail( is_valid, mFilter );
+        public Bitmap decode(Uri uri) throws IOException {
+            try {
+                return call(uri.getPath());
+            } catch (Throwable t) {
+                t.printStackTrace();
+                throw new IOException(t);
+            }
+        }
 
-			MoaResult moaresult = NativeFilterProxy.prepareActions( actionList, srcBitmap, null, 1, 1 );
-			moaresult.execute();
-			Bitmap result = moaresult.outputBitmap;
-			return result;
-		}
+        public Bitmap call(String filename) throws Exception {
+            boolean isValid = true;
+            INativeFilter filter = null;
+            try {
+                filter = loadFilter(filename);
+            } catch (Throwable t) {
+                t.printStackTrace();
+                isValid = false;
+            }
 
-		MoaActionList actionsForRoundedThumbnail( final boolean isValid, INativeFilter filter ) {
+            MoaActionList actionList = actionsForRoundedThumbnail(isValid, filter);
+            MoaResult moaresult = NativeFilterProxy.prepareActions(actionList, srcBitmap, null, 1, 1);
+            moaresult.execute();
+            Bitmap result = moaresult.outputBitmap;
+            return result;
+        }
 
-			MoaActionList actions = MoaActionFactory.actionList();
-			MoaAction action;
-			
-			if ( null != filter ) {
-				actions.addAll( filter.getActions() );
-			}
-			
-			if( mFactor != 1 ) {
-				action = MoaActionFactory.action( "resize" );
-				action.setValue( "size", mThumbSize );
-				action.setValue( "force", true );
-				actions.add( action );
-			}
-			
-			action = MoaActionFactory.action( "ext-roundedborders" );
-			action.setValue( "padding", mThumbPadding );
-			action.setValue( "roundPx", mThumbRoundedCorners );
-			action.setValue( "strokeColor", mThumbStrokeColor );
-			action.setValue( "strokeWeight", mThumbStrokeWidth );
+        private INativeFilter loadFilter(CharSequence effectFileName) {
+            EffectFilter filter = (EffectFilter) ToolLoaderFactory.get(ToolLoaderFactory.Tools.EFFECTS);
+            filter.setMoaLiteEffect((String) effectFileName);
+            filter.setPreviewSize(srcBitmap.getWidth(), srcBitmap.getHeight());
 
-			if ( !isValid ) {
-				action.setValue( "overlaycolor", 0x99000000 );
-			}
-			actions.add( action );
-			
-			
-			return actions;
-		}
-	}
+            if (BuildConfig.DEBUG) {
+                Log.d(LoggerFactory.BASE_LOG_TAG, "loadFilter: " + effectFileName);
+            }
+
+            return filter;
+        }
+
+        MoaActionList actionsForRoundedThumbnail(final boolean isValid, INativeFilter filter) {
+            MoaActionList actions = MoaActionFactory.actionList();
+            MoaAction action;
+
+            if (null != filter) {
+                actions.addAll(filter.getActions());
+            }
+
+            if (mFactor != 1) {
+                action = MoaActionFactory.action("resize");
+                action.setValue("size", mThumbSize);
+                action.setValue("force", true);
+                actions.add(action);
+            }
+
+            action = MoaActionFactory.action("ext-roundedborders");
+            action.setValue("padding", mThumbPadding);
+            action.setValue("roundPx", mThumbRoundedCorners);
+            action.setValue("strokeColor", mThumbStrokeColor);
+            action.setValue("strokeWeight", mThumbStrokeWidth);
+
+            if (!isValid) {
+                action.setValue("overlaycolor", 0x99000000);
+            }
+            actions.add(action);
+
+            return actions;
+        }
+    }
+
+    protected class EffectsRenderTask extends RenderTask {
+        public EffectsRenderTask(int position, float intensity) {
+            super(position, intensity);
+        }
+    }
+
+    class EffectsListAdapter extends ListAdapter {
+        public EffectsListAdapter(
+            Context context, int mainResId, int moreResId, int externalResId, int dividerResId, Cursor cursor) {
+            super(context, mainResId, moreResId, externalResId, dividerResId, cursor);
+        }
+    }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Checkable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.aviary.android.feather.sdk.R;
@@ -18,213 +19,210 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 public class EffectThumbLayout extends RelativeLayout implements Checkable {
+    static final String LOG_TAG = "EffectThumbLayout";
+    private static final boolean      IS_HONEYCOMB = Build.VERSION.SDK_INT > 10;
+    private static final Interpolator INTERPOLATOR = new DecelerateInterpolator(1.0f);
+    public long id = -1;
+    private boolean mChecked;
+    private boolean mOpened;
+    private int     mThumbAnimationDuration;
+    private int mTranslationHeight = 0;
+    private ImageView mHiddenView;
+    private Animator.AnimatorListener mCloseListener = new Animator.AnimatorListener() {
+        @Override
+        public void onAnimationStart(final Animator animator) {
+            if (null != mHiddenView) {
+                mHiddenView.setVisibility(View.INVISIBLE);
+            }
+        }
 
-	public long id = - 1;
+        @Override
+        public void onAnimationEnd(final Animator animator) {
+        }
 
-	private boolean mChecked;
-	private boolean mOpened;
+        @Override
+        public void onAnimationCancel(final Animator animator) {
+        }
 
-	private int mThumbAnimationDuration;
-	private int mTranslationHeight = 0;
-	private View mHiddenView;
-	private View mImageView;
-	private static final boolean IS_HONEYCOMB = Build.VERSION.SDK_INT > 10;
-	private static final Interpolator INTERPOLATOR = new DecelerateInterpolator( 1.0f );
-	private ObjectAnimator mAnimator;
+        @Override
+        public void onAnimationRepeat(final Animator animator) {
+        }
+    };
+    private Animator.AnimatorListener mOpenListener  = new Animator.AnimatorListener() {
+        @Override
+        public void onAnimationStart(final Animator animator) {
+        }
 
-	static final String LOG_TAG = "EffectThumbLayout";
+        @Override
+        public void onAnimationEnd(final Animator animator) {
+            if (null != mHiddenView) {
+                mHiddenView.setVisibility(View.VISIBLE);
+                ObjectAnimator.ofInt(mHiddenView, "alpha", 0, 255).start();
+            }
+        }
 
-	public EffectThumbLayout ( Context context, AttributeSet attrs ) {
-		super( context, attrs );
-		init( context, attrs, 0 );
-	}
+        @Override
+        public void onAnimationCancel(final Animator animator) {
+        }
 
-	private void init ( Context context, AttributeSet attrs, int defStyle ) {
-		Resources.Theme theme = context.getTheme();
-		TypedArray array = theme.obtainStyledAttributes( attrs, R.styleable.AviaryEffectThumbLayout, defStyle, 0 );
-		mThumbAnimationDuration = array.getInteger( R.styleable.AviaryEffectThumbLayout_aviary_animationDuration, 200 );
-	}
+        @Override
+        public void onAnimationRepeat(final Animator animator) {
+        }
+    };
+    private View           mImageView;
+    private ObjectAnimator mAnimator;
 
-	private ObjectAnimator getAnimator () {
-		if( null == mAnimator ) {
-			mAnimator = ObjectAnimator.ofFloat( mImageView, "translationY", 0, 0 );
-			mAnimator.setDuration( mThumbAnimationDuration );
-			mAnimator.setInterpolator( INTERPOLATOR );
-		}
-		return mAnimator;
-	}
+    public EffectThumbLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs, 0);
+    }
 
-	private void cancelAnimation () {
-		ObjectAnimator animator = getAnimator();
-		if( null != animator ) {
-			animator.removeAllListeners();
-			animator.cancel();
-		}
-	}
+    private void init(Context context, AttributeSet attrs, int defStyle) {
+        Resources.Theme theme = context.getTheme();
+        TypedArray array = theme.obtainStyledAttributes(attrs, R.styleable.AviaryEffectThumbLayout, defStyle, 0);
+        mThumbAnimationDuration = array.getInteger(R.styleable.AviaryEffectThumbLayout_aviary_animationDuration, 200);
+    }
 
-	@Override
-	public boolean isChecked () {
-		return mChecked;
-	}
+    private ObjectAnimator getAnimator() {
+        if (null == mAnimator) {
+            mAnimator = ObjectAnimator.ofFloat(mImageView, "translationY", 0, 0);
+            mAnimator.setDuration(mThumbAnimationDuration);
+            mAnimator.setInterpolator(INTERPOLATOR);
+        }
+        return mAnimator;
+    }
 
-	@Override
-	public void setChecked ( boolean checked ) {
-		if( mChecked != checked ) {
-			mChecked = checked;
-		}
-	}
+    @Override
+    public boolean isChecked() {
+        return mChecked;
+    }
 
-	@Override
-	public void toggle () {
-	}
+    private void cancelAnimation() {
+        ObjectAnimator animator = getAnimator();
+        if (null != animator) {
+            animator.removeAllListeners();
+            animator.cancel();
+        }
+    }
 
-	@Override
-	public void setSelected ( boolean selected ) {
-		super.setSelected( selected );
-	}
+    @Override
+    public void setChecked(boolean checked) {
+        if (mChecked != checked) {
+            mChecked = checked;
+        }
+    }
 
-	public void open () {
-		if( IS_HONEYCOMB ) {
-			if( ! mOpened ) {
-				mOpened = true;
-				animateView( mThumbAnimationDuration, false );
-			}
-		} else {
-			setIsOpened( true );
-		}
-	}
+    @Override
+    public void setSelected(boolean selected) {
+        super.setSelected(selected);
+    }    @Override
+    public void toggle() {
+    }
 
-	public void close () {
-		if( IS_HONEYCOMB ) {
-			if( mOpened ) {
-				mOpened = false;
-				animateView( mThumbAnimationDuration, true );
-			}
-		} else {
-			setIsOpened( false );
-		}
-	}
+    public void open() {
+        if (IS_HONEYCOMB) {
+            if (!mOpened) {
+                mOpened = true;
+                animateView(mThumbAnimationDuration, false);
+            }
+        } else {
+            setIsOpened(true);
+        }
+    }
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public void setIsOpened ( final boolean value ) {
+    public void close() {
+        if (IS_HONEYCOMB) {
+            if (mOpened) {
+                mOpened = false;
+                animateView(mThumbAnimationDuration, true);
+            }
+        } else {
+            setIsOpened(false);
+        }
+    }
 
-		if( value != mOpened ) {
+    @TargetApi (Build.VERSION_CODES.HONEYCOMB)
+    public void setIsOpened(final boolean value) {
 
-			Log.i( LOG_TAG, "setIsOpened(" + id + "): " + value );
-			if( null == mHiddenView || null == mImageView || null == getHandler() ) {
-				return;
-			}
+        if (value != mOpened) {
 
-			mTranslationHeight = mHiddenView.getHeight() + mHiddenView.getPaddingBottom() + mHiddenView.getPaddingTop();
+            Log.i(LOG_TAG, "setIsOpened(" + id + "): " + value);
+            if (null == mHiddenView || null == mImageView || null == getHandler()) {
+                return;
+            }
 
-			if( ! ( mTranslationHeight > 0 ) ) {
-				post( new Runnable() {
-					@Override
-					public void run () {
-						setIsOpened( value );
-					}
-				} );
-				return;
-			}
+            mTranslationHeight = mHiddenView.getHeight() + mHiddenView.getPaddingBottom() + mHiddenView.getPaddingTop() + 4;
 
-			mOpened = value;
-			mHiddenView.setVisibility( mOpened ? View.VISIBLE : View.INVISIBLE );
+            if (!(mTranslationHeight > 0)) {
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setIsOpened(value);
+                    }
+                });
+                return;
+            }
 
-			if( IS_HONEYCOMB ) {
-				cancelAnimation();
-				mImageView.setTranslationY( value ? - mTranslationHeight : 0 );
-			} else {
-				LayoutParams params = (LayoutParams) mImageView.getLayoutParams();
-				params.bottomMargin = value ? mTranslationHeight : 0;
-				mImageView.setLayoutParams( params );
-			}
-		}
-	}
+            mOpened = value;
+            mHiddenView.setVisibility(mOpened ? View.VISIBLE : View.INVISIBLE);
 
-	@Override
-	protected void onDetachedFromWindow () {
-		super.onDetachedFromWindow();
-	}
+            if (IS_HONEYCOMB) {
+                cancelAnimation();
+                mImageView.setTranslationY(value ? -mTranslationHeight : 0);
+            } else {
+                LayoutParams params = (LayoutParams) mImageView.getLayoutParams();
+                params.bottomMargin = value ? mTranslationHeight : 0;
+                mImageView.setLayoutParams(params);
+            }
+        }
+    }
 
-	@Override
-	protected void onAttachedToWindow () {
-		super.onAttachedToWindow();
-		mOpened = isChecked();
-		mHiddenView = findViewById( R.id.aviary_hidden );
-		mImageView = findViewById( R.id.aviary_image );
-		setIsOpened( mOpened );
-	}
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mOpened = isChecked();
+        mHiddenView = (ImageView) findViewById(R.id.aviary_hidden);
+        mImageView = findViewById(R.id.aviary_image);
+        setIsOpened(mOpened);
+    }
 
-	private Animator.AnimatorListener mCloseListener = new Animator.AnimatorListener() {
-		@Override
-		public void onAnimationStart ( final Animator animator ) {
-		}
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
 
-		@Override
-		public void onAnimationEnd ( final Animator animator ) {
-			if( null != mHiddenView ) {
-				mHiddenView.setVisibility( View.INVISIBLE );
-			}
-		}
+    protected void animateView(final int durationMs, final boolean isClosing) {
 
-		@Override
-		public void onAnimationCancel ( final Animator animator ) {
-		}
+        if (null == mHiddenView || null == mImageView || null == getHandler()) {
+            return;
+        }
 
-		@Override
-		public void onAnimationRepeat ( final Animator animator ) {
-		}
-	};
+        mTranslationHeight = mHiddenView.getMeasuredHeight() + mHiddenView.getPaddingTop() + mHiddenView.getPaddingBottom() + 4;
+        final float startY = isClosing ? -mTranslationHeight : 0;
+        final float endY = isClosing ? 0 : -mTranslationHeight;
 
-	private Animator.AnimatorListener mOpenListener = new Animator.AnimatorListener() {
-		@Override
-		public void onAnimationStart ( final Animator animator ) {
-			if( null != mHiddenView ) {
-				mHiddenView.setVisibility( View.VISIBLE );
-			}
-		}
+        if (!(mTranslationHeight > 0)) {
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    animateView(durationMs, isClosing);
+                }
+            });
+            return;
+        }
 
-		@Override
-		public void onAnimationEnd ( final Animator animator ) {
-		}
+        cancelAnimation();
 
-		@Override
-		public void onAnimationCancel ( final Animator animator ) {
-		}
+        ObjectAnimator animator = getAnimator();
+        animator.setFloatValues(startY, endY);
+        animator.addListener(isClosing ? mCloseListener : mOpenListener);
+        animator.start();
+    }
 
-		@Override
-		public void onAnimationRepeat ( final Animator animator ) {
-		}
-	};
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	protected void animateView ( final int durationMs, final boolean isClosing ) {
 
-		if( null == mHiddenView || null == mImageView || null == getHandler() ) {
-			return;
-		}
 
-		mTranslationHeight = mHiddenView.getMeasuredHeight() + mHiddenView.getPaddingTop() + mHiddenView.getPaddingBottom();
-		final float startY = isClosing ? - mTranslationHeight : 0;
-		final float endY = isClosing ? 0 : - mTranslationHeight;
 
-		if( ! ( mTranslationHeight > 0 ) ) {
-			post( new Runnable() {
-				@Override
-				public void run () {
-					animateView( durationMs, isClosing );
-				}
-			} );
-			return;
-		}
-
-		cancelAnimation();
-
-		ObjectAnimator animator = getAnimator();
-		animator.setFloatValues( startY, endY );
-		animator.addListener( isClosing ? mCloseListener : mOpenListener );
-		animator.start();
-	}
 
 }
 

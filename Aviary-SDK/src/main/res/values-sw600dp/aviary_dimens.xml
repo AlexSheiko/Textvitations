@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Large screen dimensions -->
-
 <resources>
-    
-    <dimen name="aviary_textSizeSmall">14sp</dimen>
-    <dimen name="aviary_textSizeMedium">16sp</dimen>
+	<dimen name="aviary_textSizeSmall">14sp</dimen>
+	<dimen name="aviary_textSizeMedium">16sp</dimen>
 	<dimen name="aviary_textSizeMediumBigger">18sp</dimen>
-    <dimen name="aviary_textSizeLarge">24sp</dimen>	
-    
+	<dimen name="aviary_textSizeLarge">24sp</dimen>
+
 	<dimen name="aviary_focus_button_padding_left">28dip</dimen>
-    <dimen name="aviary_focus_button_padding_right">28dip</dimen>
-    
-	<dimen name="aviary_iap_list_item_padding_left">10dip</dimen>    
-	<dimen name="aviary_iap_list_item_padding_right">10dip</dimen>   
+	<dimen name="aviary_focus_button_padding_right">28dip</dimen>
+
+	<dimen name="aviary_iap_list_item_padding_left">10dip</dimen>
+	<dimen name="aviary_iap_list_item_padding_right">10dip</dimen>
 	<dimen name="aviary_iap_list_item_padding_top">5dip</dimen>
 	<dimen name="aviary_iap_list_item_padding_bottom">5dip</dimen>
+
+	<dimen name="aviary_store_detail_title_size">30sp</dimen>
+	<dimen name="aviary_store_detail_description_size">20sp</dimen>
+	<dimen name="aviary_store_list_item_title_size">22sp</dimen>
+	<dimen name="aviary_store_detail_image_right_margin">20dip</dimen>
+	<dimen name="aviary_store_detail_passport_banner_v_margin">20dip</dimen>
+	<dimen name="aviary_store_detail_subscription_size">18sp</dimen>
+
+	<dimen name="aviary_subscription_textarea_height">200dip</dimen>
+
+	<!-- iap dialog detail, detail image view height (sdk) -->
+	<dimen name="aviary_store_detail_image_height_iap2">283dip</dimen>
+
+	<dimen name="aviary_iap_list_padding_top">10dip</dimen>
+
 </resources>

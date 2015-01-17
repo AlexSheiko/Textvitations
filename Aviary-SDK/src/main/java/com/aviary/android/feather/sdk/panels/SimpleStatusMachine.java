@@ -1,41 +1,41 @@
 package com.aviary.android.feather.sdk.panels;
 
 public class SimpleStatusMachine {
+    public static final int INVALID_STATUS = -1;
+    private             int currentStatus  = INVALID_STATUS;
+    private             int previousStatus = INVALID_STATUS;
+    private OnStatusChangeListener mStatusListener;
 
-	public static int INVALID_STATUS = -1;
+    public void setOnStatusChangeListener(OnStatusChangeListener listener) {
+        mStatusListener = listener;
+    }
 
-	private int currentStatus = INVALID_STATUS;
-	private int previousStatus = INVALID_STATUS;
+    public void setStatus(int newStatus) {
+        if (newStatus != currentStatus) {
+            previousStatus = currentStatus;
+            currentStatus = newStatus;
 
-	private OnStatusChangeListener mStatusListener;
+            if (null != mStatusListener) {
+                mStatusListener.onStatusChanged(previousStatus, currentStatus);
+            }
+        } else {
+            if (null != mStatusListener) {
+                mStatusListener.onStatusUpdated(newStatus);
+            }
+        }
+    }
 
-	public void setOnStatusChangeListener( OnStatusChangeListener listener ) {
-		mStatusListener = listener;
-	}
+    public int getCurrentStatus() {
+        return currentStatus;
+    }
 
-	public void setStatus( int newStatus ) {
-		if ( newStatus != currentStatus ) {
-			previousStatus = currentStatus;
-			currentStatus = newStatus;
+    public int getPreviousStatus() {
+        return previousStatus;
+    }
 
-			if ( null != mStatusListener ) {
-				mStatusListener.OnStatusChanged( previousStatus, currentStatus );
-			}
-		} else {
-			if ( null != mStatusListener ) {
-				mStatusListener.OnStatusUpdated( newStatus );
-			}
-		}
-	}
+    public interface OnStatusChangeListener {
+        void onStatusChanged(int oldStatus, int newStatus);
 
-	public int getCurrentStatus() {
-		return currentStatus;
-	}
-
-	public static interface OnStatusChangeListener {
-
-		public void OnStatusChanged( int oldStatus, int newStatus );
-
-		public void OnStatusUpdated( int status );
-	}
+        void onStatusUpdated(int status);
+    }
 }

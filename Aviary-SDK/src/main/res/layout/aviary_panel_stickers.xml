@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:autoStart="false"
-    android:inAnimation="@android:anim/fade_in"
-    android:outAnimation="@android:anim/fade_out" >
+    android:inAnimation="@anim/abc_fade_in"
+    android:outAnimation="@anim/abc_fade_out" >
 
     <!-- loader -->
 
@@ -25,6 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="always"
+	    android:listSelector="@android:color/transparent"
+	    listSelector="@android:color/transparent"
         android:gravity="center_vertical" />
 
     <!-- stickers list view -->
@@ -35,5 +37,44 @@
         android:layout_height="match_parent"
         android:overScrollMode="always"
         android:gravity="center_vertical" />
+
+	<!-- sticker opacity view -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="horizontal"
+		android:gravity="center"
+		android:weightSum="100">
+
+		<ImageView
+			android:id="@+id/aviary_button_cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0"
+			android:src="@drawable/aviary_sticker_opacity_dismiss"/>
+
+		<SeekBar
+			android:id="@+id/aviary_seekbar"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="@integer/aviary_sticker_opactiy_slider_weight"
+			android:layout_gravity="center"
+			android:minHeight="18dip"
+			android:maxHeight="18dip"
+			android:layout_marginLeft="10dip"
+			android:layout_marginRight="10dip"
+			android:paddingLeft="14dip"
+			android:paddingRight="14dip"
+			android:thumb="@drawable/aviary_seekbar_thumb"
+			android:progressDrawable="@drawable/adjust_seekbar_progress" />
+
+		<ImageView
+			android:id="@+id/aviary_button_confirm"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0"
+			android:src="@drawable/aviary_sticker_opacity_confirm"/>
+
+	</LinearLayout>
 
 </ViewFlipper>

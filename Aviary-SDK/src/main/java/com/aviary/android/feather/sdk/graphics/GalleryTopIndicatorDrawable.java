@@ -19,143 +19,139 @@ import com.aviary.android.feather.sdk.R;
 
 /**
  * Drawable used to draw the gallery top indicator
- * 
+ *
  * @author alessandro
  */
 public class GalleryTopIndicatorDrawable extends Drawable {
+    static final String LOG_TAG              = "gallery-top-indicator";
+    static final int    DIRECTION_TOP_DOWN   = 1;
+    static final int    DIRECTION_BOTTOM_TOP = 2;
+    int mShadowColor, mFillColor, mStrokeColor1, mStrokeColor2;
+    float mIndicatorSize;
+    int   mStrokeWidth;
+    int   mShadowDy;
+    int   mDirection;
+    int   mOffsetY;
+    int   mMinHeight;
+    Matrix mMatrix = new Matrix();
+    final Rect destRect = new Rect();
+    final Paint paint;
 
-	static final String LOG_TAG = "gallery-top-indicator";
+    public GalleryTopIndicatorDrawable(Context context) {
+        this(context, R.attr.aviaryOptionPanelTopIndicatorStyle, 0);
+    }
 
-	static final int DIRECTION_TOP_DOWN = 1;
-	static final int DIRECTION_BOTTOM_TOP = 2;
+    public GalleryTopIndicatorDrawable(Context context, int defStyle) {
+        this(context, defStyle, 0);
+    }
 
-	int mShadowColor, mFillColor, mStrokeColor1, mStrokeColor2;
-	float mIndicatorSize;
-	int mStrokeWidth;
-	int mShadowDy;
-	int mDirection;
-	int mOffsetY;
-	int mMinHeight;
-	Matrix mMatrix = new Matrix();
+    public GalleryTopIndicatorDrawable(Context context, int defStyle, int defStyleRes) {
+        Theme theme = context.getTheme();
+        TypedArray array = theme.obtainStyledAttributes(null, R.styleable.AviaryGalleryTopIndicator, defStyle, defStyleRes);
 
-	final Rect destRect = new Rect();
-	final Paint paint;
+        Log.d(LOG_TAG, "defaultStyle: " + defStyle);
 
-	public GalleryTopIndicatorDrawable ( Context context ) {
-		this( context, R.attr.aviaryOptionPanelTopIndicatorStyle, 0 );
-	}
+        mShadowColor = array.getColor(R.styleable.AviaryGalleryTopIndicator_android_shadowColor, 0);
+        mShadowDy = (int) array.getFloat(R.styleable.AviaryGalleryTopIndicator_android_shadowDy, 0f);
+        mFillColor = array.getColor(R.styleable.AviaryGalleryTopIndicator_aviary_color1, Color.WHITE);
+        mStrokeColor1 = array.getColor(R.styleable.AviaryGalleryTopIndicator_aviary_strokeColor, Color.WHITE);
+        mStrokeColor2 = array.getColor(R.styleable.AviaryGalleryTopIndicator_aviary_strokeColor2, Color.WHITE);
+        mIndicatorSize = array.getFloat(R.styleable.AviaryGalleryTopIndicator_aviary_indicatorSize, 1f);
+        mStrokeWidth = array.getDimensionPixelSize(R.styleable.AviaryGalleryTopIndicator_aviary_strokeWidth, 2);
+        mDirection = array.getInteger(R.styleable.AviaryGalleryTopIndicator_aviary_direction, 1);
+        mOffsetY = array.getDimensionPixelSize(R.styleable.AviaryGalleryTopIndicator_aviary_offsety, 0);
+        mMinHeight = array.getDimensionPixelSize(R.styleable.AviaryGalleryTopIndicator_android_minHeight, 0);
 
-	public GalleryTopIndicatorDrawable ( Context context, int defStyle ) {
-		this( context, defStyle, 0 );
-	}
+        Log.i(LOG_TAG, "strokeWidth: " + mStrokeWidth);
+        Log.i(LOG_TAG, "direction: " + mDirection);
+        Log.i(LOG_TAG, "offset: " + mOffsetY);
 
-	public GalleryTopIndicatorDrawable ( Context context, int defStyle, int defStyleRes ) {
-		Theme theme = context.getTheme();
-		TypedArray array = theme.obtainStyledAttributes( null, R.styleable.AviaryGalleryTopIndicator, defStyle, defStyleRes );
+        array.recycle();
 
-		Log.d( LOG_TAG, "defaultStyle: " + defStyle );
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    }
 
-		mShadowColor = array.getColor( R.styleable.AviaryGalleryTopIndicator_android_shadowColor, 0 );
-		mShadowDy = (int) array.getFloat( R.styleable.AviaryGalleryTopIndicator_android_shadowDy, 0f );
-		mFillColor = array.getColor( R.styleable.AviaryGalleryTopIndicator_aviary_color1, Color.WHITE );
-		mStrokeColor1 = array.getColor( R.styleable.AviaryGalleryTopIndicator_aviary_strokeColor, Color.WHITE );
-		mStrokeColor2 = array.getColor( R.styleable.AviaryGalleryTopIndicator_aviary_strokeColor2, Color.WHITE );
-		mIndicatorSize = array.getFloat( R.styleable.AviaryGalleryTopIndicator_aviary_indicatorSize, 1f );
-		mStrokeWidth = array.getDimensionPixelSize( R.styleable.AviaryGalleryTopIndicator_aviary_strokeWidth, 2 );
-		mDirection = array.getInteger( R.styleable.AviaryGalleryTopIndicator_aviary_direction, 1 );
-		mOffsetY = array.getDimensionPixelSize( R.styleable.AviaryGalleryTopIndicator_aviary_offsety, 0 );
-		mMinHeight = array.getDimensionPixelSize( R.styleable.AviaryGalleryTopIndicator_android_minHeight, 0 );
+    @Override
+    public int getMinimumHeight() {
+        return mMinHeight;
+    }
 
-		Log.i( LOG_TAG, "strokeWidth: " + mStrokeWidth );
-		Log.i( LOG_TAG, "direction: " + mDirection );
-		Log.i( LOG_TAG, "offset: " + mOffsetY );
+    @Override
+    public int getIntrinsicHeight() {
+        return mMinHeight;
+    }
 
-		array.recycle();
+    @Override
+    public void draw(Canvas canvas) {
+        copyBounds(destRect);
 
-		paint = new Paint( Paint.ANTI_ALIAS_FLAG );
-	}
+        int halfHeight = destRect.height() / 2;
+        int halfWidth = destRect.width() / 2;
+        int triangleSize = (int) (halfHeight * mIndicatorSize);
 
-	@Override
-	public int getMinimumHeight() {
-		return mMinHeight;
-	}
+        int top = destRect.top + mStrokeWidth / 2;
+        int left = destRect.left - mStrokeWidth;
+        int right = destRect.right + mStrokeWidth;
 
-	@Override
-	public int getIntrinsicHeight() {
-		return mMinHeight;
-	}
+        Path path = new Path();
+        path.moveTo(left, top);
+        path.lineTo(right, top);
+        path.lineTo(right, top + halfHeight);
 
-	@Override
-	public void draw( Canvas canvas ) {
-		copyBounds( destRect );
+        path.lineTo(left + halfWidth + triangleSize, top + halfHeight);
+        path.lineTo(left + halfWidth, top + halfHeight + triangleSize);
+        path.lineTo(left + halfWidth - triangleSize, top + halfHeight);
 
-		int halfHeight = destRect.height() / 2;
-		int halfWidth = destRect.width() / 2;
-		int triangleSize = (int) ( halfHeight * mIndicatorSize );
+        path.lineTo(left, top + halfHeight);
+        path.lineTo(left, top);
 
-		int top = destRect.top + mStrokeWidth / 2;
-		int left = destRect.left - mStrokeWidth;
-		int right = destRect.right + mStrokeWidth;
+        if (mDirection == DIRECTION_BOTTOM_TOP) {
+            mMatrix.reset();
+            mMatrix.setScale(1, -1, 0, destRect.height() / 2);
+            mMatrix.postTranslate(0, mOffsetY);
+            canvas.save(Canvas.MATRIX_SAVE_FLAG);
+            canvas.concat(mMatrix);
+        }
 
-		Path path = new Path();
-		path.moveTo( left, top );
-		path.lineTo( right, top );
-		path.lineTo( right, top + halfHeight );
+        paint.setStyle(Style.FILL);
 
-		path.lineTo( left + halfWidth + triangleSize, top + halfHeight );
-		path.lineTo( left + halfWidth, top + halfHeight + triangleSize );
-		path.lineTo( left + halfWidth - triangleSize, top + halfHeight );
+        if (mShadowDy > 0) {
+            path.offset(0, mShadowDy);
+            paint.setColor(mShadowColor);
+            canvas.drawPath(path, paint);
+            path.offset(0, -mShadowDy);
+        }
 
-		path.lineTo( left, top + halfHeight );
-		path.lineTo( left, top );
+        paint.setColor(mFillColor);
+        canvas.drawPath(path, paint);
 
-		if ( mDirection == DIRECTION_BOTTOM_TOP ) {
-			mMatrix.reset();
-			mMatrix.setScale( 1, -1, 0, destRect.height() / 2 );
-			mMatrix.postTranslate( 0, mOffsetY );
-			canvas.save( Canvas.MATRIX_SAVE_FLAG );
-			canvas.concat( mMatrix );
-		}
+        paint.setStyle(Style.STROKE);
+        paint.setColor(mStrokeColor1);
+        paint.setStrokeWidth(mStrokeWidth);
+        canvas.drawPath(path, paint);
 
-		paint.setStyle( Style.FILL );
+        paint.setStyle(Style.STROKE);
+        paint.setColor(mStrokeColor2);
 
-		if ( mShadowDy > 0 ) {
-			path.offset( 0, mShadowDy );
-			paint.setColor( mShadowColor );
-			canvas.drawPath( path, paint );
-			path.offset( 0, -mShadowDy );
-		}
+        if (mDirection == DIRECTION_TOP_DOWN) {
+            canvas.drawLine(left + mStrokeWidth, top + mStrokeWidth, right - mStrokeWidth, top + mStrokeWidth, paint);
+        } else {
+            top = top + halfHeight - mStrokeWidth;
+            canvas.drawLine(left, top, left + halfWidth - triangleSize, top, paint);
+            canvas.drawLine(left + halfWidth + triangleSize, top, right, top, paint);
+            canvas.restore();
+        }
+    }
 
-		paint.setColor( mFillColor );
-		canvas.drawPath( path, paint );
+    @Override
+    public int getOpacity() {
+        return PixelFormat.TRANSLUCENT;
+    }
 
-		paint.setStyle( Style.STROKE );
-		paint.setColor( mStrokeColor1 );
-		paint.setStrokeWidth( mStrokeWidth );
-		canvas.drawPath( path, paint );
+    @Override
+    public void setAlpha(int alpha) {}
 
-		paint.setStyle( Style.STROKE );
-		paint.setColor( mStrokeColor2 );
-
-		if ( mDirection == DIRECTION_TOP_DOWN ) {
-			canvas.drawLine( left + mStrokeWidth, top + mStrokeWidth, right - mStrokeWidth, top + mStrokeWidth, paint );
-		} else {
-			top = top + halfHeight - mStrokeWidth;
-			canvas.drawLine( left, top, left + halfWidth - triangleSize, top, paint );
-			canvas.drawLine( left + halfWidth + triangleSize, top, right, top, paint );
-			canvas.restore();
-		}
-	}
-
-	@Override
-	public int getOpacity() {
-		return PixelFormat.TRANSLUCENT;
-	}
-
-	@Override
-	public void setAlpha( int alpha ) {}
-
-	@Override
-	public void setColorFilter( ColorFilter cf ) {}
+    @Override
+    public void setColorFilter(ColorFilter cf) {}
 
 }

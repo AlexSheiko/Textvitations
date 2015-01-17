@@ -17,163 +17,154 @@ import com.aviary.android.feather.sdk.R;
 import com.aviary.android.feather.sdk.utils.TypefaceUtils;
 
 public class PluginDividerDrawable extends Drawable {
+    public static final String LOG_TAG   = "Drawable";
+    private             float  mTextSize = 10;
+    private int         mStrokeWidth;
+    private int         mStrokeColor;
+    private int         mFillColor;
+    private float       mTextDivider;
+    private FontMetrics mMetrics;
+    private String      mLabel;
+    private Paint       mTextPaint;
+    private Paint       mTextStrokePaint;
+    private Rect        mBounds;
+    private int         mWidth;
+    private int         mHeight;
+    static final float DEFAULT_TEXT_DIVIDER_PERC = 0.9f;
 
-	public static final String LOG_TAG = "Drawable";
+    public PluginDividerDrawable(Context context, int styleid, final String string) {
 
-	private float mTextSize = 10;
+        Typeface font = Typeface.DEFAULT;
 
-	private int mStrokeWidth;
-	private int mStrokeColor;
-	private int mFillColor;
-	private float mTextDivider;
+        Theme theme = context.getTheme();
+        TypedArray array = theme.obtainStyledAttributes(null,
+                                                        R.styleable.AviaryPluginDividerDrawable,
+                                                        R.attr.aviaryEffectThumbDividerTextStyle,
+                                                        -1);
 
-	private FontMetrics mMetrics;
-	private String mLabel;
-	private Paint mTextPaint;
-	private Paint mTextStrokePaint;
+        mFillColor = array.getColor(R.styleable.AviaryPluginDividerDrawable_android_textColor, 0);
+        mStrokeWidth = array.getDimensionPixelSize(R.styleable.AviaryPluginDividerDrawable_aviary_strokeWidth, 0);
+        mStrokeColor = array.getColor(R.styleable.AviaryPluginDividerDrawable_aviary_strokeColor, 0);
+        mTextDivider = array.getFloat(R.styleable.AviaryPluginDividerDrawable_aviary_textPerc, DEFAULT_TEXT_DIVIDER_PERC);
 
-	private Rect mBounds;
-	private int mWidth;
-	private int mHeight;
+        String fontname = array.getString(R.styleable.AviaryPluginDividerDrawable_aviary_typeface);
 
-	public PluginDividerDrawable ( Context context, int styleid, final String string ) {
+        try {
+            font = TypefaceUtils.createFromAsset(context.getAssets(), fontname);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
 
-		Typeface font = Typeface.DEFAULT;
+        array.recycle();
 
-		Theme theme = context.getTheme();
-		TypedArray array = theme.obtainStyledAttributes( null, R.styleable.AviaryPluginDividerDrawable, R.attr.aviaryEffectThumbDividerTextStyle, -1 );
+        mLabel = string;
 
-		mFillColor = array.getColor( R.styleable.AviaryPluginDividerDrawable_android_textColor, 0 );
-		mStrokeWidth = array.getDimensionPixelSize( R.styleable.AviaryPluginDividerDrawable_aviary_strokeWidth, 0 );
-		mStrokeColor = array.getColor( R.styleable.AviaryPluginDividerDrawable_aviary_strokeColor, 0 );
-		mTextDivider = array.getFloat( R.styleable.AviaryPluginDividerDrawable_aviary_textPerc, 0.9f );
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.SUBPIXEL_TEXT_FLAG | Paint.DEV_KERN_TEXT_FLAG);
+        mTextPaint.setColor(mFillColor);
+        mTextPaint.setStyle(Style.FILL);
 
-		String fontname = array.getString( R.styleable.AviaryPluginDividerDrawable_aviary_typeface );
+        if (null != font) {
+            mTextPaint.setTypeface(font);
+        }
 
-		try {
-			font = TypefaceUtils.createFromAsset( context.getAssets(), fontname );
-		} catch ( Throwable t ) {
-			t.printStackTrace();
-		}
+        mTextStrokePaint = new Paint(mTextPaint);
+        mTextStrokePaint.setColor(mStrokeColor);
+        mTextStrokePaint.setStyle(Style.STROKE);
+        mTextStrokePaint.setStrokeWidth(mStrokeWidth);
 
-		array.recycle();
+        mBounds = new Rect();
+        mMetrics = new FontMetrics();
+    }
 
-		mLabel = string;
+    public void setTitle(final String value) {
+        mLabel = value;
+        onBoundsChange(getBounds());
+        invalidateSelf();
+    }
 
-		mTextPaint = new Paint( Paint.ANTI_ALIAS_FLAG | Paint.SUBPIXEL_TEXT_FLAG | Paint.DEV_KERN_TEXT_FLAG );
-		mTextPaint.setColor( mFillColor );
-		mTextPaint.setStyle( Style.FILL );
+    public final String getTitle() {
+        return mLabel;
+    }
 
-		if ( null != font ) {
-			mTextPaint.setTypeface( font );
-		}
+    @Override
+    public int getOpacity() {
+        return PixelFormat.TRANSLUCENT;
+    }
 
-		mTextStrokePaint = new Paint( mTextPaint );
-		mTextStrokePaint.setColor( mStrokeColor );
-		mTextStrokePaint.setStyle( Style.STROKE );
-		mTextStrokePaint.setStrokeWidth( mStrokeWidth );
+    @Override
+    public void setAlpha(int alpha) {}
 
-		mBounds = new Rect();
-		mMetrics = new FontMetrics();
-	}
+    @Override
+    public void setColorFilter(ColorFilter cf) {}
 
-	public void setTitle( final String value ) {
-		mLabel = value;
-		onBoundsChange( getBounds() );
-		invalidateSelf();
-	}
+    @Override
+    public void clearColorFilter() {}
 
-	public final String getTitle() {
-		return mLabel;
-	}
+    @Override
+    public int getIntrinsicHeight() {
+        return super.getIntrinsicHeight();
+    }
 
-	@Override
-	public int getOpacity() {
-		return PixelFormat.TRANSLUCENT;
-	}
+    @Override
+    public int getIntrinsicWidth() {
+        return super.getIntrinsicWidth();
+    }
 
-	@Override
-	public void setAlpha( int alpha ) {}
+    @Override
+    public int getMinimumHeight() {
+        return super.getMinimumHeight();
+    }
 
-	@Override
-	public void setColorFilter( ColorFilter cf ) {}
+    @Override
+    public int getMinimumWidth() {
+        return super.getMinimumWidth();
+    }
 
-	@Override
-	public void clearColorFilter() {}
+    @Override
+    protected void onBoundsChange(Rect bounds) {
+        super.onBoundsChange(bounds);
 
-	@Override
-	public int getIntrinsicHeight() {
-		return super.getIntrinsicHeight();
-	}
+        mWidth = bounds.width();
+        mHeight = bounds.height();
 
-	@Override
-	public int getIntrinsicWidth() {
-		return super.getIntrinsicWidth();
-	}
+        onTextBoundsChanged();
+    }
 
-	@Override
-	public int getMinimumHeight() {
-		return super.getMinimumHeight();
-	}
+    private int mTextY = 0;
+    private int mMaxHeight;
 
-	@Override
-	public int getMinimumWidth() {
-		return super.getMinimumWidth();
-	}
+    protected final void onTextBoundsChanged() {
+        mTextSize = mWidth * mTextDivider;
 
-	@Override
-	protected void onBoundsChange( Rect bounds ) {
-		super.onBoundsChange( bounds );
+        mTextPaint.setTextSize(mTextSize);
+        mTextStrokePaint.setTextSize(mTextSize);
+        mTextPaint.getTextBounds(mLabel, 0, mLabel.length(), mBounds);
+        mTextPaint.getFontMetrics(mMetrics);
 
-		mWidth = bounds.width();
-		mHeight = bounds.height();
+        // CHECKSTYLE.OFF: MagicNumber
+        mTextY = (int) (((mWidth / 2.0f) + mTextSize / 2.0f) - mMetrics.bottom / 2.0f);
+        mMaxHeight = (int) ((double) mHeight * 0.9);
+        // CHECKSTYLE.ON: MagicNumber
+    }
 
-		onTextBoundsChanged();
-	}
+    @Override
+    public void draw(Canvas canvas) {
 
-	private int mTextY = 0;
-	private int mMaxHeight;
+        int saveCount = canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.rotate(-90);
+        canvas.translate(-mHeight + (mHeight - mBounds.width()) / 2, mTextY);
 
-	protected final void onTextBoundsChanged() {
-		mTextSize = mWidth * mTextDivider;
+        if (mBounds.width() > mMaxHeight) {
+            float diff = (float) mMaxHeight / mBounds.width();
+            canvas.scale(diff, diff, mBounds.centerX(), mBounds.centerY());
+        }
 
-		mTextPaint.setTextSize( mTextSize );
-		mTextStrokePaint.setTextSize( mTextSize );
-		mTextPaint.getTextBounds( mLabel, 0, mLabel.length(), mBounds );
-		mTextPaint.getFontMetrics( mMetrics );
+        if (mStrokeWidth > 0) {
+            canvas.drawText(mLabel, 0, 0, mTextStrokePaint);
+        }
+        canvas.drawText(mLabel, 0, 0, mTextPaint);
+        canvas.restoreToCount(saveCount);
 
-		mTextY = (int) ( ( ( mWidth / 2.0f ) + mTextSize / 2.0f ) - mMetrics.bottom / 2.0f );
-
-		/*
-		 * if ( mBounds.width() >= ( mHeight * 0.95 ) ) {
-		 * if ( mLabel.length() > 4 ) {
-		 * mLabel = mLabel.substring( 0, mLabel.length() - 4 ) + "..";
-		 * onTextBoundsChanged();
-		 * }
-		 * }
-		 */
-
-		mMaxHeight = (int) ( (double) mHeight * 0.9 );
-	}
-
-	@Override
-	public void draw( Canvas canvas ) {
-
-		int saveCount = canvas.save( Canvas.MATRIX_SAVE_FLAG );
-		canvas.rotate( -90 );
-		canvas.translate( -mHeight + ( mHeight - mBounds.width() ) / 2, mTextY );
-
-		if ( mBounds.width() > mMaxHeight ) {
-			float diff = (float) mMaxHeight / mBounds.width();
-			canvas.scale( diff, diff, mBounds.centerX(), mBounds.centerY() );
-		}
-
-		if ( mStrokeWidth > 0 ) {
-			canvas.drawText( mLabel, 0, 0, mTextStrokePaint );
-		}
-		canvas.drawText( mLabel, 0, 0, mTextPaint );
-		canvas.restoreToCount( saveCount );
-
-	}
+    }
 
 }

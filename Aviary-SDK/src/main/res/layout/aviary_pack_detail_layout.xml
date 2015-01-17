@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	tools:showIn="@layout/aviary_iap_dialog_detail">
+
+
+	<!-- Pack Description scroll container -->
+	<ScrollView
+		android:id="@+id/aviary_scrollview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true"
+		android:scrollbars="vertical">
+
+		<LinearLayout
+			android:id="@+id/aviary_content"
+			style="@style/InternalStoreDetailLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:orientation="vertical">
+
+			<!-- Image Detail View -->
+			<include
+				android:id="@+id/aviary_banner"
+				layout="@layout/aviary_detail_banner"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/aviary_store_detail_image_height_iap2" />
+
+			<!-- Previews -->
+			<include layout="@layout/aviary_pack_detail_layout_previews" />
+
+			<!-- Content -->
+			<include
+				android:id="@+id/aviary_head"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="5dip"
+				android:paddingLeft="15dip"
+				android:paddingRight="15dip"
+				android:paddingTop="10dip"
+				layout="@layout/aviary_pack_detail_layout_content" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<!-- ERROR -->
+	<include
+		layout="@layout/aviary_iap_download_error_message"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone" />
+</merge>

@@ -1,6 +1,5 @@
 package com.aviary.android.feather.sdk.graphics;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
@@ -14,169 +13,180 @@ import com.aviary.android.feather.sdk.utils.UIUtils;
 import it.sephiroth.android.library.imagezoom.graphics.FastBitmapDrawable;
 
 public class GlowBitmapDrawable extends FastBitmapDrawable {
+    @SuppressWarnings ("unused")
+    private static final String LOG_TAG  = "glow-drawable";
+    private              Rect   mDstRect = new Rect();
+    private Bitmap  mPressedBitmap;
+    private Bitmap  mCheckedBitmap;
+    private Bitmap  mSelectedBitmap;
+    private Bitmap  mCurrent;
+    private boolean mPressed;
+    private boolean mChecked;
+    private boolean mSelected;
+    private int     mHighlightColorPressed;
+    private int     mHighlightColorChecked;
+    private int     mHighlightColorSelected;
+    private int     mBlurValue;
+    private int     mGlowMode, mHighlightMode;
 
-	@SuppressWarnings ( "unused" )
-	private static final String LOG_TAG = "glow-drawable";
+    public GlowBitmapDrawable(
+        Bitmap bitmap, int colorPressed, int colorChecked, int colorSelected, int blurSize, int highlightMode, int glowMode) {
+        super(bitmap);
+        init(colorPressed, colorChecked, colorSelected, blurSize, highlightMode, glowMode);
+    }
 
-	private Rect mDstRect = new Rect();
+    private void init(int colorPressed, int colorChecked, int colorSelected, int blurSize, int highlightMode, int glowMode) {
+        mHighlightColorChecked = colorChecked;
+        mHighlightColorPressed = colorPressed;
+        mHighlightColorSelected = colorSelected;
+        mBlurValue = blurSize;
+        mGlowMode = glowMode;
+        mHighlightMode = highlightMode;
 
-	private Bitmap mPressedBitmap;
-	private Bitmap mCheckedBitmap;
-	private Bitmap mSelectedBitmap;
+        mCurrent = getBitmap();
+        recycleBitmaps();
+    }
 
-	private Bitmap mCurrent;
+    public void setBitmap(Bitmap bitmap) {
+        super.setBitmap(bitmap);
+        mCurrent = bitmap;
+        recycleBitmaps();
+    }
 
-	private boolean mPressed;
-	private boolean mChecked;
-	private boolean mSelected;
+    private void recycleBitmaps() {
+        if (null != mCheckedBitmap) {
+            mCheckedBitmap.recycle();
+            mCheckedBitmap = null;
+        }
 
-	private int mHighlightColorPressed;
-	private int mHighlightColorChecked;
-	private int mHighlightColorSelected;
+        if (null != mPressedBitmap) {
+            mPressedBitmap.recycle();
+            mPressedBitmap = null;
+        }
 
-	private int mBlurValue;
-	private int mGlowMode, mHighlightMode;
+        if (null != mSelectedBitmap) {
+            mSelectedBitmap.recycle();
+            mSelectedBitmap = null;
+        }
+    }
 
-	public GlowBitmapDrawable ( Resources res, Bitmap bitmap, int color_pressed, int color_checked, int color_selected, int blur_size, int highlightMode,
-			int glowMode ) {
-		super( bitmap );
-		init( color_pressed, color_checked, color_selected, blur_size, highlightMode, glowMode );
-	}
+    public void updateConfig(
+        int colorPressed, int colorChecked, int colorSelected, int blurSize, int highlightMode, int glowMode) {
+        init(colorPressed, colorChecked, colorSelected, blurSize, highlightMode, glowMode);
+        setState(getState());
+    }
 
-	private void init( int color_pressed, int color_checked, int color_selected, int blur_size, int highlightMode, int glowMode ) {
-		mHighlightColorChecked = color_checked;
-		mHighlightColorPressed = color_pressed;
-		mHighlightColorSelected = color_selected;
-		mBlurValue = blur_size;
-		mGlowMode = glowMode;
-		mHighlightMode = highlightMode;
+    public static Bitmap generateBlurBitmap(Bitmap src, int blurValue, int color, Mode mode, boolean glow, Paint paint) {
+        int width = src.getWidth();
+        int height = src.getHeight();
 
-		mCurrent = getBitmap();
-		recycleBitmaps();
-	}
+        Bitmap.Config config = src.getConfig();
+        if (null == config) {
+            config = Bitmap.Config.ARGB_8888;
+        }
 
-	public void setBitmap( Bitmap bitmap ) {
-		super.setBitmap( bitmap );
-		mCurrent = bitmap;
-		recycleBitmaps();
-	}
+        Bitmap dest = Bitmap.createBitmap(width, height, config);
 
-	private void recycleBitmaps() {
-		if ( null != mCheckedBitmap ) {
-			mCheckedBitmap.recycle();
-			mCheckedBitmap = null;
-		}
+        Canvas canvas = new Canvas(dest);
+        Bitmap alpha = src.extractAlpha();
+        canvas.drawBitmap(src, 0, 0, paint);
 
-		if ( null != mPressedBitmap ) {
-			mPressedBitmap.recycle();
-			mPressedBitmap = null;
-		}
+        Paint paintBlur = new Paint();
+        paintBlur.setXfermode(new PorterDuffXfermode(mode));
+        paintBlur.setColor(color);
+        canvas.drawBitmap(alpha, 0, 0, paintBlur);
 
-		if ( null != mSelectedBitmap ) {
-			mSelectedBitmap.recycle();
-			mSelectedBitmap = null;
-		}
-	}
+        if (glow) {
+            BlurMaskFilter maskFilter = new BlurMaskFilter(blurValue, BlurMaskFilter.Blur.NORMAL);
+            paintBlur.setMaskFilter(maskFilter);
+            paintBlur.setAlpha(100);
+            canvas.drawBitmap(alpha, 0, 0, paintBlur);
+        }
 
-	public void updateConfig( int color_pressed, int color_checked, int color_selected, int blur_size, int highlightMode, int glowMode ) {
-		init( color_pressed, color_checked, color_selected, blur_size, highlightMode, glowMode );
-		setState( getState() );
-	}
+        return dest;
+    }
 
-	public static Bitmap generateBlurBitmap( Bitmap src, int blurValue, int color, Mode mode, boolean glow, Paint paint ) {
-		int width = src.getWidth();
-		int height = src.getHeight();
+    @Override
+    public boolean isStateful() {
+        return true;
+    }
 
-		Bitmap.Config config = src.getConfig();
-		if( null == config ) config = Bitmap.Config.ARGB_8888;
+    @Override
+    public void draw(Canvas canvas) {
+        copyBounds(mDstRect);
+        canvas.drawBitmap(mCurrent, null, mDstRect, getPaint());
+    }
 
-		Bitmap dest = Bitmap.createBitmap( width, height, config );
+    @Override
+    //CHECKSTYLE.OFF: CyclomaticComplexity
+    @SuppressWarnings("checkstyle:cyclomaticcomplexity")
+    protected boolean onStateChange(int[] state) {
+        boolean checked = mChecked;
+        boolean pressed = mPressed;
+        boolean selected = mSelected;
 
-		Canvas canvas = new Canvas( dest );
-		Bitmap alpha = src.extractAlpha();
-		canvas.drawBitmap( src, 0, 0, paint );
+        mChecked = false;
+        mPressed = false;
+        mSelected = false;
 
-		Paint paintBlur = new Paint();
-		paintBlur.setXfermode( new PorterDuffXfermode( mode ) );
-		paintBlur.setColor( color );
-		canvas.drawBitmap( alpha, 0, 0, paintBlur );
+        for (int i = 0; i < state.length; i++) {
+            switch (state[i]) {
+                case android.R.attr.state_pressed:
+                    mPressed = true;
+                    continue;
 
-		if ( glow ) {
-			BlurMaskFilter maskFilter = new BlurMaskFilter( blurValue, BlurMaskFilter.Blur.NORMAL );
-			paintBlur.setMaskFilter( maskFilter );
-			paintBlur.setAlpha( 100 );
-			canvas.drawBitmap( alpha, 0, 0, paintBlur );
-		}
+                case android.R.attr.state_checked:
+                    mChecked = true;
+                    continue;
 
-		return dest;
-	}
+                case android.R.attr.state_selected:
+                    mSelected = true;
+                    continue;
 
-	@Override
-	public boolean isStateful() {
-		return true;
-	}
+                default:
+                    break;
+            }
+        }
 
-	@Override
-	public void draw( Canvas canvas ) {
-		copyBounds( mDstRect );
-		canvas.drawBitmap( mCurrent, null, mDstRect, getPaint() );
-	}
+        if (mPressed && UIUtils.checkBits(mHighlightMode, UIUtils.HIGHLIGHT_MODE_PRESSED)) {
+            if (mPressedBitmap == null) {
+                mPressedBitmap = generateBlurBitmap(getBitmap(),
+                                                    mBlurValue,
+                                                    mHighlightColorPressed,
+                                                    Mode.DARKEN,
+                                                    UIUtils.checkBits(mGlowMode, UIUtils.GLOW_MODE_PRESSED),
+                                                    getPaint());
+            }
+            mCurrent = mPressedBitmap;
 
-	@Override
-	protected boolean onStateChange( int[] state ) {
+        } else if (mChecked && UIUtils.checkBits(mHighlightMode, UIUtils.HIGHLIGHT_MODE_CHECKED)) {
+            if (mCheckedBitmap == null) {
+                mCheckedBitmap = generateBlurBitmap(getBitmap(),
+                                                    mBlurValue,
+                                                    mHighlightColorChecked,
+                                                    Mode.DARKEN,
+                                                    UIUtils.checkBits(mGlowMode, UIUtils.GLOW_MODE_CHECKED),
+                                                    getPaint());
+            }
+            mCurrent = mCheckedBitmap;
 
-		boolean checked = mChecked;
-		boolean pressed = mPressed;
-		boolean selected = mSelected;
+        } else if (mSelected && UIUtils.checkBits(mHighlightMode, UIUtils.HIGHLIGHT_MODE_SELECTED)) {
+            if (mSelectedBitmap == null) {
+                mSelectedBitmap = generateBlurBitmap(getBitmap(),
+                                                     mBlurValue,
+                                                     mHighlightColorSelected,
+                                                     Mode.DARKEN,
+                                                     UIUtils.checkBits(mGlowMode, UIUtils.GLOW_MODE_SELECTED),
+                                                     getPaint());
+            }
+            mCurrent = mSelectedBitmap;
 
-		mChecked = false;
-		mPressed = false;
-		mSelected = false;
+        } else {
+            mCurrent = getBitmap();
+        }
 
-		for ( int i = 0; i < state.length; i++ ) {
-			if ( state[i] == android.R.attr.state_pressed ) {
-				mPressed = true;
-				continue;
-			}
-
-			if ( state[i] == android.R.attr.state_checked ) {
-				mChecked = true;
-				continue;
-			}
-
-			if ( state[i] == android.R.attr.state_selected ) {
-				mSelected = true;
-				continue;
-			}
-		}
-
-		if ( mPressed && UIUtils.checkBits( mHighlightMode, UIUtils.HIGHLIGHT_MODE_PRESSED ) ) {
-			if ( mPressedBitmap == null ) {
-				mPressedBitmap = generateBlurBitmap( getBitmap(), mBlurValue, mHighlightColorPressed, Mode.DARKEN,
-						UIUtils.checkBits( mGlowMode, UIUtils.GLOW_MODE_PRESSED ), getPaint() );
-			}
-			mCurrent = mPressedBitmap;
-
-		} else if ( mChecked && UIUtils.checkBits( mHighlightMode, UIUtils.HIGHLIGHT_MODE_CHECKED ) ) {
-			if ( mCheckedBitmap == null ) {
-				mCheckedBitmap = generateBlurBitmap( getBitmap(), mBlurValue, mHighlightColorChecked, Mode.DARKEN,
-						UIUtils.checkBits( mGlowMode, UIUtils.GLOW_MODE_CHECKED ), getPaint() );
-			}
-			mCurrent = mCheckedBitmap;
-
-		} else if ( mSelected && UIUtils.checkBits( mHighlightMode, UIUtils.HIGHLIGHT_MODE_SELECTED ) ) {
-			if ( mSelectedBitmap == null ) {
-				mSelectedBitmap = generateBlurBitmap( getBitmap(), mBlurValue, mHighlightColorSelected, Mode.DARKEN,
-						UIUtils.checkBits( mGlowMode, UIUtils.GLOW_MODE_SELECTED ), getPaint() );
-			}
-			mCurrent = mSelectedBitmap;
-
-		} else {
-			mCurrent = getBitmap();
-		}
-
-		return checked != mChecked || pressed != mPressed || selected != mSelected;
-
-	}
+        return (checked != mChecked) || (pressed != mPressed) || (selected != mSelected);
+    }
+    //CHECKSTYLE.ON: CyclomaticComplexity
 
 }
