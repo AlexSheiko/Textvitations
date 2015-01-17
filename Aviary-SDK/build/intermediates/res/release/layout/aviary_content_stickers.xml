@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.aviary.android.feather.sdk.widget.ImageViewDrawableOverlay
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/aviary_overlay"
-    style="?attr/aviaryImageViewDrawableOverlaySticker"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="matrix" />
-<!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/layout/aviary_content_stickers.xml -->

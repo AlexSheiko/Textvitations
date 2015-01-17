@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<com.aviary.android.feather.sdk.widget.AviaryButton xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	style="@style/AviaryWidget.Button.Overlay"
-	android:text="@string/feather_close" /><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/layout/aviary_overlay_close_button.xml -->
