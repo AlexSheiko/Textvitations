@@ -14,7 +14,7 @@
 
     <com.aviary.android.feather.sdk.widget.ImageViewDrawableOverlay
         android:id="@+id/aviary_image"
-        style="@style/AviaryWidget.TextImageView"
+        style="?attr/aviaryImageViewDrawableOverlayText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="matrix" />

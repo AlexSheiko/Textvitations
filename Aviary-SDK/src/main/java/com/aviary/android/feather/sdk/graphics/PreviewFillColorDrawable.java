@@ -19,158 +19,158 @@ import android.graphics.drawable.Drawable;
 import com.aviary.android.feather.sdk.R;
 
 public class PreviewFillColorDrawable extends Drawable {
-    final int   mStrokeWidth;
-    final int   mStrokeColor;
-    final Paint mPaint;
-    float mRadius;
-    final Rect mDstRect = new Rect();
-    final Matrix mGradientMatrix;
-    boolean mRadiusFixed = false;
-    LinearGradient mGradient;
-    int            mColor;
-    int            mLightenColor;
-    private boolean mChecked;
-    private boolean mPressed;
 
-    public PreviewFillColorDrawable(Context context) {
-        super();
+	final int mStrokeWidth;
+	final int mStrokeColor;
+	final Paint mPaint;
+	float mRadius;
+	final Rect mDstRect = new Rect();
+	final Matrix mGradientMatrix;
+	boolean mRadiusFixed = false;
 
-        Theme theme = context.getTheme();
-        TypedArray a =
-            theme.obtainStyledAttributes(null, R.styleable.AviaryPreviewFillDrawable, R.attr.aviaryPreviewFillDrawableStyle, 0);
+	LinearGradient mGradient;
+	int mColor;
+	int mLightenColor;
 
-        mStrokeWidth = a.getDimensionPixelSize(R.styleable.AviaryPreviewFillDrawable_aviary_strokeWidth, 20);
-        mStrokeColor = a.getColor(R.styleable.AviaryPreviewFillDrawable_aviary_strokeColor, Color.BLACK);
-        mRadius = (float) a.getInteger(R.styleable.AviaryPreviewFillDrawable_aviary_radius, 50) / 100;
-        a.recycle();
+	private boolean mChecked;
+	private boolean mPressed;
 
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG);
-        mPaint.setStyle(Paint.Style.FILL);
+	public PreviewFillColorDrawable ( Context context ) {
+		super();
 
-        mGradient = new LinearGradient(0, 0, 0, 1, new int[]{Color.WHITE, Color.BLACK}, new float[]{0.5f, 1}, TileMode.CLAMP);
-        mGradientMatrix = new Matrix();
-    }
+		Theme theme = context.getTheme();
+		TypedArray a = theme.obtainStyledAttributes( null, R.styleable.AviaryPreviewFillDrawable, R.attr.aviaryPreviewFillDrawableStyle, 0 );
 
-    public int getColor() {
-        return mColor;
-    }
+		mStrokeWidth = a.getDimensionPixelSize( R.styleable.AviaryPreviewFillDrawable_aviary_strokeWidth, 20 );
+		mStrokeColor = a.getColor( R.styleable.AviaryPreviewFillDrawable_aviary_strokeColor, Color.BLACK );
+		mRadius = a.getInteger( R.styleable.AviaryPreviewFillDrawable_aviary_radius, 50 ) / 100.0f;
+		a.recycle();
 
-    public float getRadius() {
-        return mRadius;
-    }
+		mPaint = new Paint( Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG );
+		mPaint.setStyle( Paint.Style.FILL );
 
-    public boolean isFixedRadius() {
-        return mRadiusFixed;
-    }
+		mGradient = new LinearGradient( 0, 0, 0, 1, new int[] { Color.WHITE, Color.BLACK }, new float[] { 0.5f, 1 }, TileMode.CLAMP );
+		mGradientMatrix = new Matrix();
+	}
 
-    public void setRadius(float value) {
-        mRadius = value;
-        invalidateSelf();
-    }
+	public int getColor() {
+		return mColor;
+	}
 
-    public void setColor(int color) {
-        mColor = color;
+	public float getRadius() {
+		return mRadius;
+	}
 
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
+	public boolean isFixedRadius() {
+		return mRadiusFixed;
+	}
 
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
+	public void setRadius( float value ) {
+		mRadius = value;
+		invalidateSelf();
+	}
 
-        mLightenColor = Color.argb(255, (int) (red * 0.5 + 127), (int) (green * 0.5 + 127), (int) (blue * 0.5 + 127));
+	public void setColor( int color ) {
+		mColor = color;
 
-        // CHECKSTYLE.OFF: MagicNumber
-        hsv[1] *= 1.1f; // saturation
-        hsv[2] *= 0.3f; // value
-        // CHECKSTYLE.ON: MagicNumber
+		float[] hsv = new float[3];
+		Color.colorToHSV( color, hsv );
 
-        int bottomColor = Color.HSVToColor(hsv);
+		int red = Color.red( color );
+		int green = Color.green( color );
+		int blue = Color.blue( color );
 
-        mGradient = new LinearGradient(0, 0, 0, 1, new int[]{mColor, bottomColor}, new float[]{0.0f, 1}, TileMode.CLAMP);
-        invalidateSelf();
-    }
+		mLightenColor = Color.argb( 255, (int) ( red * 0.5 + 127 ), (int) ( green * 0.5 + 127 ), (int) ( blue * 0.5 + 127 ) );
 
-    public void setFixedRadius(float value) {
-        mRadiusFixed = true;
-        mRadius = value;
-        invalidateSelf();
-    }
+		hsv[1] *= 1.1f; // saturation
+		hsv[2] *= 0.3f; // value
 
-    @Override
-    public void draw(Canvas canvas) {
-        copyBounds(mDstRect);
+		int bottomColor = Color.HSVToColor( hsv );
 
-        float radius = mRadius;
-        if (!mRadiusFixed) {
-            radius = Math.min(mDstRect.width(), mDstRect.height()) * 0.5f * mRadius;
-        }
+		mGradient = new LinearGradient( 0, 0, 0, 1, new int[] { mColor, bottomColor }, new float[] { 0.0f, 1 }, TileMode.CLAMP );
+		invalidateSelf();
+	}
 
-        // reset the paint
-        mPaint.setShader(null);
-        mPaint.setMaskFilter(null);
-        mPaint.setXfermode(null);
+	public void setFixedRadius( float value ) {
+		mRadiusFixed = true;
+		mRadius = value;
+		invalidateSelf();
+	}
 
-        // draw the black border around the circle
-        mPaint.setMaskFilter(null);
-        mPaint.setColor(mStrokeColor);
-        canvas.drawCircle(mDstRect.centerX(), mDstRect.centerY(), radius + mStrokeWidth, mPaint);
+	@Override
+	public void draw( Canvas canvas ) {
+		copyBounds( mDstRect );
 
-        // draw the circle fill
-        canvas.saveLayer(mDstRect.left, mDstRect.top, mDstRect.right, mDstRect.bottom, mPaint, Canvas.ALL_SAVE_FLAG);
+		float radius = mRadius;
+		if ( !mRadiusFixed ) {
+			radius = Math.min( mDstRect.width(), mDstRect.height() ) * 0.5f * mRadius;
+		}
 
-        mPaint.setColor(mLightenColor);
-        canvas.drawCircle(mDstRect.centerX(), mDstRect.centerY(), radius, mPaint);
+		// reset the paint
+		mPaint.setShader( null );
+		mPaint.setMaskFilter( null );
+		mPaint.setXfermode( null );
 
-        mGradientMatrix.reset();
-        mGradientMatrix.postScale(1, radius * 4);
-        mGradientMatrix.postTranslate(0, mDstRect.centerY() + 2 - radius * 2);
-        mGradient.setLocalMatrix(mGradientMatrix);
+		// draw the black border around the circle
+		mPaint.setMaskFilter( null );
+		mPaint.setColor( mStrokeColor );
+		canvas.drawCircle( mDstRect.centerX(), mDstRect.centerY(), radius + mStrokeWidth, mPaint );
 
-        mPaint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        mPaint.setColor(Color.WHITE);
-        mPaint.setShader(mGradient);
-        canvas.drawCircle(mDstRect.centerX(), mDstRect.centerY() + 2, radius, mPaint);
+		// draw the circle fill
+		canvas.saveLayer( mDstRect.left, mDstRect.top, mDstRect.right, mDstRect.bottom, mPaint, Canvas.ALL_SAVE_FLAG );
 
-        canvas.restore();
-    }
+		mPaint.setColor( mLightenColor );
+		canvas.drawCircle( mDstRect.centerX(), mDstRect.centerY(), radius, mPaint );
 
-    @Override
-    public boolean isStateful() {
-        return true;
-    }
+		mGradientMatrix.reset();
+		mGradientMatrix.postScale( 1, radius * 4 );
+		mGradientMatrix.postTranslate( 0, mDstRect.centerY() + 2 - radius * 2 );
+		mGradient.setLocalMatrix( mGradientMatrix );
 
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
-    }
+		mPaint.setXfermode( new PorterDuffXfermode( Mode.SRC_IN ) );
+		mPaint.setColor( Color.WHITE );
+		mPaint.setShader( mGradient );
+		canvas.drawCircle( mDstRect.centerX(), mDstRect.centerY() + 2, radius, mPaint );
 
-    @Override
-    public void setAlpha(int alpha) {}
+		canvas.restore();
+	}
 
-    @Override
-    public void setColorFilter(ColorFilter cf) {}
+	@Override
+	public boolean isStateful() {
+		return true;
+	}
 
-    @Override
-    protected boolean onStateChange(int[] state) {
+	@Override
+	public int getOpacity() {
+		return PixelFormat.TRANSLUCENT;
+	}
 
-        boolean checked = mChecked;
-        boolean pressed = mPressed;
+	@Override
+	public void setAlpha( int alpha ) {}
 
-        mChecked = false;
-        mPressed = false;
+	@Override
+	public void setColorFilter( ColorFilter cf ) {}
 
-        for (int i = 0; i < state.length; i++) {
-            if (state[i] == android.R.attr.state_pressed) {
-                mPressed = true;
-            }
+	@Override
+	protected boolean onStateChange( int[] state ) {
 
-            if (state[i] == android.R.attr.state_selected) {
-                mChecked = true;
-            }
-        }
+		boolean checked = mChecked;
+		boolean pressed = mPressed;
 
-        return checked != mChecked || pressed != mPressed;
+		mChecked = false;
+		mPressed = false;
 
-    }
+		for ( int i = 0; i < state.length; i++ ) {
+			if ( state[i] == android.R.attr.state_pressed ) {
+				mPressed = true;
+			}
+
+			if ( state[i] == android.R.attr.state_selected ) {
+				mChecked = true;
+			}
+		}
+
+		return checked != mChecked || pressed != mPressed;
+
+	}
 }

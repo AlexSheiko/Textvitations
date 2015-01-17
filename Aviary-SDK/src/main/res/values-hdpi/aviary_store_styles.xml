@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="AviaryStoreBuyButtonTextStyle" parent="AviaryWidget.TextView">
+		<item name="android:textAppearance">?aviaryTextAppearanceSmall</item>
+		<item name="android:textColor">@color/aviary_store_buy_button_text_color</item>
+		<item name="android:gravity">center</item>
+		<item name="android:ellipsize">end</item>
+		<item name="aviary_typeface">?attr/aviaryFontRegular</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:maxLines">1</item>
+	</style>
+</resources>

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- color selector for the gallery items -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_selected="true" android:state_pressed="false" android:drawable="@color/aviary_gallery_item_background_color2"/>
-
-    <item android:state_selected="false" android:state_pressed="true" android:drawable="@color/aviary_gallery_item_background_color3"/>
-
-    <item android:state_selected="true" android:state_pressed="true" android:drawable="@color/aviary_gallery_item_background_color3"/>
-
+    <!-- selected state -->
+    <item android:drawable="@color/aviary_gallery_item_background_color2" android:state_selected="true"/>
+    <!-- default state -->
     <item android:drawable="@android:color/transparent"/>
 
 </selector>

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.aviary.android.feather.common.utils.ApiHelper;
+import com.aviary.android.feather.common.utils.SystemUtils;
 import com.aviary.android.feather.common.utils.os.AviaryAsyncTask;
 import com.aviary.android.feather.headless.moa.Moa;
 import com.aviary.android.feather.library.Constants;
@@ -16,6 +16,7 @@ import com.aviary.android.feather.library.filters.EnhanceFilter;
 import com.aviary.android.feather.library.filters.EnhanceFilter.Types;
 import com.aviary.android.feather.library.filters.ToolLoaderFactory;
 import com.aviary.android.feather.library.services.IAviaryController;
+import com.aviary.android.feather.library.services.LocalDataService;
 import com.aviary.android.feather.library.utils.BitmapUtils;
 import com.aviary.android.feather.library.vo.ToolActionVO;
 import com.aviary.android.feather.sdk.R;
@@ -25,321 +26,315 @@ import com.aviary.android.feather.sdk.widget.AviaryHighlightImageButton.OnChecke
 import org.json.JSONException;
 
 public class EnhanceEffectPanel extends AbstractOptionPanel implements OnCheckedChangeListener {
-    // current rendering task
-    private RenderTask mCurrentTask;
-    // panel is renderding
-    volatile boolean mIsRendering = false;
-    private ToolLoaderFactory.Tools mFilterType;
-    boolean enableFastPreview = false;
-    private AviaryHighlightImageButton mButton1, mButton2, mButton3;
-    private AviaryHighlightImageButton mCurrent;
 
-    public EnhanceEffectPanel(IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools type) {
-        super(context, entry);
-        mFilterType = type;
-    }
+	// current rendering task
+	private RenderTask mCurrentTask;
 
-    @Override
-    public void onCreate(Bitmap bitmap, Bundle options) {
-        super.onCreate(bitmap, options);
+	// panel is renderding
+	volatile boolean mIsRendering = false;
 
-        ViewGroup panel = getOptionView();
+	private ToolLoaderFactory.Tools mFilterType;
+	boolean enableFastPreview = false;
+	private AviaryHighlightImageButton mButton1, mButton2, mButton3;
+	private AviaryHighlightImageButton mCurrent;
 
-        mButton1 = (AviaryHighlightImageButton) panel.findViewById(R.id.button1);
-        mButton1.setOnCheckedChangeListener(this);
-        if (mButton1.isChecked()) {
-            mCurrent = mButton1;
-        }
+	public EnhanceEffectPanel ( IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools type ) {
+		super( context, entry );
+		mFilterType = type;
+	}
 
-        mButton2 = (AviaryHighlightImageButton) panel.findViewById(R.id.button2);
-        mButton2.setOnCheckedChangeListener(this);
-        if (mButton2.isChecked()) {
-            mCurrent = mButton2;
-        }
+	@Override
+	public void onCreate( Bitmap bitmap, Bundle options ) {
+		super.onCreate( bitmap, options );
 
-        mButton3 = (AviaryHighlightImageButton) panel.findViewById(R.id.button3);
-        mButton3.setOnCheckedChangeListener(this);
-        if (mButton3.isChecked()) {
-            mCurrent = mButton3;
-        }
-    }
+		ViewGroup panel = getOptionView();
 
-    @Override
-    public void onActivate() {
-        super.onActivate();
-        mPreview = BitmapUtils.copy(mBitmap, Config.ARGB_8888);
+		mButton1 = (AviaryHighlightImageButton) panel.findViewById( R.id.button1 );
+		mButton1.setOnCheckedChangeListener( this );
+		if ( mButton1.isChecked() ) mCurrent = mButton1;
 
-        enableFastPreview = ApiHelper.fastPreviewEnabled();
+		mButton2 = (AviaryHighlightImageButton) panel.findViewById( R.id.button2 );
+		mButton2.setOnCheckedChangeListener( this );
+		if ( mButton2.isChecked() ) mCurrent = mButton2;
 
-        if (hasOptions()) {
-            final Bundle options = getOptions();
-            final String stringValue = options.getString(Constants.QuickLaunch.STRING_VALUE);
-            mLogger.log("stringValue: %s", stringValue);
-            if (null != stringValue) {
-                AviaryHighlightImageButton button = (AviaryHighlightImageButton) getOptionView().findViewWithTag(stringValue);
-                if (null != button) {
-                    mLogger.log("button found: %s", button);
-                    button.setChecked(true);
-                    buttonClick(stringValue, true);
-                }
-            }
-        }
-    }
+		mButton3 = (AviaryHighlightImageButton) panel.findViewById( R.id.button3 );
+		mButton3.setOnCheckedChangeListener( this );
+		if ( mButton3.isChecked() ) mCurrent = mButton3;
+	}
 
-    @Override
-    public void onDeactivate() {
-        super.onDeactivate();
+	@Override
+	public void onActivate() {
+		super.onActivate();
+		mPreview = BitmapUtils.copy( mBitmap, Config.ARGB_8888 );
 
-        mButton1.setOnCheckedChangeListener(null);
-        mButton2.setOnCheckedChangeListener(null);
-        mButton3.setOnCheckedChangeListener(null);
-    }
+		LocalDataService dataService = getContext().getService( LocalDataService.class );
+		enableFastPreview = dataService.getFastPreviewEnabled();
 
-    @Override
-    public boolean isRendering() {
-        return mIsRendering;
-    }
+		if (hasOptions()) {
+			final Bundle options = getOptions();
+			final String stringValue = options.getString(Constants.QuickLaunch.STRING_VALUE);
+			mLogger.log("stringValue: %s", stringValue);
+			if (null != stringValue) {
+				AviaryHighlightImageButton button = (AviaryHighlightImageButton) getOptionView().findViewWithTag(stringValue);
+				if (null != button) {
+					mLogger.log("button found: %s", button);
+					button.setChecked(true);
+					buttonClick(stringValue, true);
+				}
+			}
+		}
+	}
 
-    @Override
-    public void onBitmapReplaced(Bitmap bitmap) {
-        super.onBitmapReplaced(bitmap);
+	@Override
+	public void onDeactivate() {
+		super.onDeactivate();
 
-        if (isActive()) {
-            mButton1.setChecked(false);
-            mButton2.setChecked(false);
-            mButton3.setChecked(false);
-        }
-    }
+		mButton1.setOnCheckedChangeListener( null );
+		mButton2.setOnCheckedChangeListener( null );
+		mButton3.setOnCheckedChangeListener( null );
+	}
 
-    @Override
-    public void onCheckedChanged(AviaryHighlightImageButton buttonView, boolean isChecked, boolean fromUser) {
+	@Override
+	public boolean isRendering() {
+		return mIsRendering;
+	}
 
-        mLogger.info("onCheckedChanged: %b, fromUser: %b", isChecked, fromUser);
+	@Override
+	public void onBitmapReplaced( Bitmap bitmap ) {
+		super.onBitmapReplaced( bitmap );
 
-        if (mCurrent != null && !buttonView.equals(mCurrent)) {
-            mCurrent.setChecked(false);
-        }
+		if ( isActive() ) {
+			mButton1.setChecked( false );
+			mButton2.setChecked( false );
+			mButton3.setChecked( false );
+		}
+	}
 
-        mCurrent = buttonView;
+	@Override
+	public void onCheckedChanged( AviaryHighlightImageButton buttonView, boolean isChecked, boolean fromUser ) {
 
-        if (!isActive() || !isEnabled() || !fromUser) {
-            return;
-        }
+		mLogger.info("onCheckedChanged: %b, fromUser: %b", isChecked, fromUser);
 
-        final String tag = (String) buttonView.getTag();
-        buttonClick(tag, isChecked);
-    }
+		if (mCurrent != null && ! buttonView.equals(mCurrent)) {
+			mCurrent.setChecked(false);
+		}
 
-    private void buttonClick(final String tag, boolean isChecked) {
-        mLogger.info("buttonClick: %s, %b", tag, isChecked);
-        Types type = Types.HiDef;
-        killCurrentTask();
+		mCurrent = buttonView;
 
-        if (EnhanceFilter.ENHANCE_HIDEF.equals(tag)) {
-            type = Types.HiDef;
-        } else if (EnhanceFilter.ENHANCE_ILLUMINATE.equals(tag)) {
-            type = Types.Illuminate;
-        } else if (EnhanceFilter.ENHANCE_COLOR_FIX.equals(tag)) {
-            type = Types.ColorFix;
-        }
+		if (! isActive() || ! isEnabled() || ! fromUser) return;
 
-        if (!isChecked) {
-            // restore the original image
-            BitmapUtils.copy(mBitmap, mPreview);
-            onPreviewChanged(mPreview, false, true);
-            mEditResult.setActionList(null);
-            mEditResult.setToolAction(null);
-            mTrackingAttributes.clear();
-            setIsChanged(false);
-        } else {
-            setIsChanged(true);
+		final String tag = (String) buttonView.getTag();
+		buttonClick(tag, isChecked);
+	}
 
-            if (type != null) {
-                mIsRendering = true;
-                mCurrentTask = new RenderTask();
-                mCurrentTask.execute(type);
+	private void buttonClick(final String tag, boolean isChecked) {
+		mLogger.info("buttonClick: %s, %b", tag, isChecked);
+		Types type = Types.HiDef;
+		killCurrentTask();
 
-                mTrackingAttributes.put("name", type.name());
-                getContext().getTracker().tagEvent("enhance: option_selected", "name", type.name());
-            }
-        }
-    }
+		if (EnhanceFilter.ENHANCE_HIDEF.equals(tag)) {
+			type = Types.HiDef;
+		}
+		else if (EnhanceFilter.ENHANCE_ILLUMINATE.equals(tag)) {
+			type = Types.Illuminate;
+		}
+		else if (EnhanceFilter.ENHANCE_COLOR_FIX.equals(tag)) {
+			type = Types.ColorFix;
+		}
 
-    @Override
-    protected void onProgressStart() {
-        if (!enableFastPreview) {
-            onProgressModalStart();
-            return;
-        }
-        super.onProgressStart();
-    }
+		if (! isChecked) {
+			// restore the original image
+			BitmapUtils.copy(mBitmap, mPreview);
+			onPreviewChanged(mPreview, false, true);
+			mEditResult.setActionList(null);
+			mEditResult.setToolAction(null);
+			mTrackingAttributes.clear();
+			setIsChanged(false);
+		}
+		else {
+			setIsChanged(true);
 
-    @Override
-    protected void onProgressEnd() {
-        if (!enableFastPreview) {
-            onProgressModalEnd();
-            return;
-        }
-        super.onProgressEnd();
-    }
+			if (type != null) {
+				mIsRendering = true;
+				mCurrentTask = new RenderTask();
+				mCurrentTask.execute(type);
 
-    @Override
-    protected ViewGroup generateOptionView(LayoutInflater inflater, ViewGroup parent) {
-        return (ViewGroup) inflater.inflate(R.layout.aviary_panel_enhance, parent, false);
-    }
+				mTrackingAttributes.put("name", type.name());
+				getContext().getTracker().tagEvent("enhance: option_selected", "name", type.name());
+			}
+		}
+	}
 
-    @Override
-    public boolean onBackPressed() {
-        killCurrentTask();
-        return super.onBackPressed();
-    }
+	@Override
+	protected void onProgressStart() {
+		if ( !enableFastPreview ) {
+			onProgressModalStart();
+			return;
+		}
+		super.onProgressStart();
+	}
 
-    @Override
-    public void onCancelled() {
-        killCurrentTask();
-        mIsRendering = false;
-        super.onCancelled();
-    }
+	@Override
+	protected void onProgressEnd() {
+		if ( !enableFastPreview ) {
+			onProgressModalEnd();
+			return;
+		}
+		super.onProgressEnd();
+	}
 
-    @Override
-    public boolean onCancel() {
-        killCurrentTask();
-        return super.onCancel();
-    }
+	@Override
+	protected ViewGroup generateOptionView( LayoutInflater inflater, ViewGroup parent ) {
+		return (ViewGroup) inflater.inflate( R.layout.aviary_panel_enhance, parent, false );
+	}
 
-    private void killCurrentTask() {
-        if (mCurrentTask != null) {
-            synchronized (mCurrentTask) {
-                mCurrentTask.cancel(true);
-                mCurrentTask.renderFilter.stop();
-                onProgressEnd();
-            }
-            mIsRendering = false;
-            mCurrentTask = null;
-        }
-    }
+	@Override
+	public boolean onBackPressed() {
+		killCurrentTask();
+		return super.onBackPressed();
+	}
 
-    class RenderTask extends AviaryAsyncTask<Types, Void, Bitmap> {
-        String mError;
-        volatile EnhanceFilter renderFilter;
+	@Override
+	public void onCancelled() {
+		killCurrentTask();
+		mIsRendering = false;
+		super.onCancelled();
+	}
 
-        public RenderTask() {
-            renderFilter = (EnhanceFilter) ToolLoaderFactory.get(mFilterType);
-            mError = null;
-        }
+	@Override
+	public boolean onCancel() {
+		killCurrentTask();
+		return super.onCancel();
+	}
 
-        @Override
-        protected void doPreExecute() {
-            onProgressStart();
-        }
+	private void killCurrentTask() {
+		if ( mCurrentTask != null ) {
+			synchronized ( mCurrentTask ) {
+				mCurrentTask.cancel( true );
+				mCurrentTask.renderFilter.stop();
+				onProgressEnd();
+			}
+			mIsRendering = false;
+			mCurrentTask = null;
+		}
+	}
 
-        @Override
-        protected Bitmap doInBackground(Types... params) {
-            if (isCancelled()) {
-                return null;
-            }
-            Bitmap result = null;
-            Types type = params[0];
-            renderFilter.setType(type);
+	class RenderTask extends AviaryAsyncTask<Types, Void, Bitmap> {
 
-            try {
-                result = renderFilter.execute(mBitmap, mPreview, 1, 1);
-                mEditResult.setActionList(renderFilter.getActions());
-                mEditResult.setToolAction(new ToolActionVO<String>(type.name()));
+		String mError;
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-                mError = e.getMessage();
-                return null;
-            }
+		volatile EnhanceFilter renderFilter;
 
-            if (isCancelled()) {
-                return null;
-            }
-            return result;
-        }
+		public RenderTask () {
+			renderFilter = (EnhanceFilter) ToolLoaderFactory.get(mFilterType);
+			mError = null;
+		}
 
-        @Override
-        protected void doPostExecute(Bitmap result) {
+		@Override
+		protected void PreExecute() {
+			onProgressStart();
+		}
 
-            if (!isActive()) {
-                return;
-            }
+		@Override
+		protected Bitmap doInBackground( Types... params ) {
+			if ( isCancelled() ) return null;
+			Bitmap result = null;
+			Types type = params[0];
+			renderFilter.setType( type );
 
-            onProgressEnd();
+			try {
+				result = renderFilter.execute( mBitmap, mPreview, 1, 1 );
+				mEditResult.setActionList(renderFilter.getActions());
+				mEditResult.setToolAction(new ToolActionVO<String>(type.name()));
 
-            if (isCancelled()) {
-                return;
-            }
+			} catch ( JSONException e ) {
+				e.printStackTrace();
+				mError = e.getMessage();
+				return null;
+			}
 
-            if (result != null) {
-                Moa.notifyPixelsChanged(mPreview);
-                onPreviewChanged(mPreview, false, true);
-            } else {
-                if (mError != null) {
-                    onGenericError(mError, android.R.string.ok, null);
-                }
-            }
+			if ( isCancelled() ) return null;
+			return result;
+		}
 
-            mIsRendering = false;
-            mCurrentTask = null;
-        }
+		@Override
+		protected void PostExecute( Bitmap result ) {
 
-        @Override
-        protected void onCancelled() {
-            renderFilter.stop();
-            super.onCancelled();
-        }
-    }
+			if ( !isActive() ) return;
 
-    @Override
-    protected void onGenerateResult() {
+			onProgressEnd();
 
-        if (mIsRendering) {
-            GenerateResultTask task = new GenerateResultTask();
-            task.execute();
-        } else {
-            onComplete(mPreview);
-        }
-    }
+			if ( isCancelled() ) return;
 
-    class GenerateResultTask extends AviaryAsyncTask<Void, Void, Void> {
-        /** The m progress. */
-        ProgressDialog mProgress = new ProgressDialog(getContext().getBaseContext());
+			if ( result != null ) {
 
-        @Override
-        protected void doPreExecute() {
-            mProgress.setTitle(getContext().getBaseContext().getString(R.string.feather_loading_title));
-            mProgress.setMessage(getContext().getBaseContext().getString(R.string.feather_effect_loading_message));
-            mProgress.setIndeterminate(true);
-            mProgress.setCancelable(false);
-            mProgress.show();
-        }
+				if ( SystemUtils.isHoneyComb() ) {
+					Moa.notifyPixelsChanged( mPreview );
+				}
 
-        @Override
-        protected Void doInBackground(Void... params) {
+				onPreviewChanged( mPreview, false, true );
+			} else {
+				if ( mError != null ) {
+					onGenericError( mError, android.R.string.ok, null );
+				}
+			}
 
-            mLogger.info("GenerateResultTask::doInBackground", mIsRendering);
+			mIsRendering = false;
+			mCurrentTask = null;
+		}
 
-            while (mIsRendering) {
-                // mLogger.log( "waiting...." );
-            }
+		@Override
+		protected void onCancelled() {
+			renderFilter.stop();
+			super.onCancelled();
+		}
+	}
 
-            return null;
-        }
+	@Override
+	protected void onGenerateResult() {
 
-        @Override
-        protected void doPostExecute(Void result) {
+		if ( mIsRendering ) {
+			GenerateResultTask task = new GenerateResultTask();
+			task.execute();
+		} else {
+			onComplete( mPreview );
+		}
+	}
 
-            mLogger.info("GenerateResultTask::doPostExecute");
+	class GenerateResultTask extends AviaryAsyncTask<Void, Void, Void> {
 
-            if (getContext().getBaseActivity().isFinishing()) {
-                return;
-            }
-            if (mProgress.isShowing()) {
-                mProgress.dismiss();
-            }
-            onComplete(mPreview);
-        }
-    }
+		/** The m progress. */
+		ProgressDialog mProgress = new ProgressDialog( getContext().getBaseContext() );
+
+		@Override
+		protected void PreExecute() {
+			mProgress.setTitle( getContext().getBaseContext().getString( R.string.feather_loading_title ) );
+			mProgress.setMessage( getContext().getBaseContext().getString( R.string.feather_effect_loading_message ) );
+			mProgress.setIndeterminate( true );
+			mProgress.setCancelable( false );
+			mProgress.show();
+		}
+
+		@Override
+		protected Void doInBackground( Void... params ) {
+
+			mLogger.info( "GenerateResultTask::doInBackground", mIsRendering );
+
+			while ( mIsRendering ) {
+				// mLogger.log( "waiting...." );
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void PostExecute( Void result ) {
+
+			mLogger.info( "GenerateResultTask::PostExecute" );
+
+			if ( getContext().getBaseActivity().isFinishing() ) return;
+			if ( mProgress.isShowing() ) mProgress.dismiss();
+			onComplete( mPreview );
+		}
+	}
 }

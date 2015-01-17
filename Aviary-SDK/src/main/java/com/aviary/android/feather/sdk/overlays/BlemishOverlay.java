@@ -1,7 +1,6 @@
 package com.aviary.android.feather.sdk.overlays;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -19,394 +18,438 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
 public class BlemishOverlay extends AviaryOverlay {
-    enum State {
-        NONE,
-        FIRST,
-        SECOND,
-        THIRD,
-        ALL,
-    }
 
-    private State mState = State.NONE;
-    private       View             mView1;
-    private       View             mView2;
-    private final Rect             viewRect1;
-    private final Rect             viewRect2;
-    private       Drawable         ripple;
-    private       Drawable         arrow;
-    private       Drawable         mTitleDrawable1;
-    private       Drawable         mTextDrawable1;
-    private       CharSequence     mTitleText1;
-    private       CharSequence     mDetailText1;
-    private       float            mTextWidthFraction1;
-    private       CharSequence     mTextRelativePosition1;
-    private       Drawable         mTitleDrawable2;
-    private       Drawable         mTextDrawable2;
-    private       CharSequence     mTitleText2;
-    private       CharSequence     mDetailText2;
-    private       float            mTextWidthFraction2;
-    private       CharSequence     mTextRelativePosition2;
-    private       Layout.Alignment mTextAlign1;
-    private int alpha2 = 0;
-    private int alpha1 = 0;
+	enum State {
+		NONE,
+		FIRST,
+		SECOND,
+		THIRD
+	}
 
-    public BlemishOverlay(final Context context, int style, View view1, View view2) {
-        super(context, ToolLoaderFactory.getToolName(ToolLoaderFactory.Tools.BLEMISH), style, ID_BLEMISH);
+	private State mState = State.NONE;
 
-        this.mView1 = view1;
-        this.mView2 = view2;
+	private View mView1;
+	private View mView2;
 
-        this.viewRect1 = new Rect();
-        this.viewRect2 = new Rect();
+	private final Rect viewRect1;
+	private final Rect viewRect2;
 
-        this.ripple = generateRipple();
-        this.arrow = generateArrow();
+	private Drawable ripple;
+	private Drawable arrow;
 
-        final Resources res = context.getResources();
+	private Drawable mTitleDrawable1;
+	private Drawable mTextDrawable1;
+	private CharSequence mTitleText1;
+	private CharSequence mDetailText1;
+	private float mTextWidthFraction1;
+	private CharSequence mTextRelativePosition1;
 
-        // image
-        mTitleText1 = res.getString(R.string.feather_overlay_tap_title);
-        mDetailText1 = res.getString(R.string.feather_overlay_blemish_tap_text);
-        mTextWidthFraction1 = res.getFraction(R.fraction.aviary_overlay_blemish_text1_width, 100, 100);
-        mTextRelativePosition1 = res.getString(R.string.aviary_overlay_blemish_text1_position);
+	private Drawable mTitleDrawable2;
+	private Drawable mTextDrawable2;
+	private CharSequence mTitleText2;
+	private CharSequence mDetailText2;
+	private float mTextWidthFraction2;
+	private CharSequence mTextRelativePosition2;
 
-        mTitleText2 = res.getString(R.string.feather_overlay_zoom_title);
-        mDetailText2 = res.getString(R.string.feather_overlay_zoom_text);
-        mTextWidthFraction2 = res.getFraction(R.fraction.aviary_overlay_blemish_text2_width, 100, 100);
-        mTextRelativePosition2 = res.getString(R.string.aviary_overlay_blemish_text2_position);
+    public boolean mConfigChange = false;
 
-        final String textAlign = res.getString(R.string.aviary_overlay_default_text_align);
+    private Layout.Alignment mTextAlign1;
 
-        if (Layout.Alignment.ALIGN_CENTER.name().equals(textAlign)) {
-            mTextAlign1 = Layout.Alignment.ALIGN_CENTER;
-        } else if (Layout.Alignment.ALIGN_OPPOSITE.equals(textAlign)) {
-            mTextAlign1 = Layout.Alignment.ALIGN_OPPOSITE;
-        } else {
-            mTextAlign1 = Layout.Alignment.ALIGN_NORMAL;
-        }
-        addCloseButton(ALIGN_PARENT_LEFT, ALIGN_PARENT_BOTTOM);
-    }
+	private int alpha2 = 0;
+	private int alpha1 = 0;
 
-    @Override
-    protected Animator generateInAnimation() {
+	public BlemishOverlay ( final Context context, int style, View view1, View view2 ) {
+		super( context, ToolLoaderFactory.getToolName(ToolLoaderFactory.Tools.BLEMISH), style, ID_BLEMISH );
 
-        AnimatorSet animatorSet = new AnimatorSet();
+		this.mView1 = view1;
+		this.mView2 = view2;
 
-        // first fade in animation
-        Animator fadein = ObjectAnimator.ofFloat(this, "alpha", 0, 1);
-        Animator animation1 = ObjectAnimator.ofInt(this, "alpha1", 0, 255);
-        Animator animation2 = ObjectAnimator.ofInt(this, "alpha2", 0, 255);
-        Animator animation3 = ValueAnimator.ofInt(0, 255);
+		this.viewRect1 = new Rect();
+		this.viewRect2 = new Rect();
 
-        animation1.setStartDelay(200);
-        animation2.setStartDelay(400);
-        animation3.setStartDelay(400);
+		this.ripple = generateRipple();
+		this.arrow = generateArrow();
 
-        fadein.setDuration(getAnimationDuration());
-        animation1.setDuration(getAnimationDuration());
-        animation2.setDuration(getAnimationDuration());
-        animation3.setDuration(getAnimationDuration());
+		final Resources res = context.getResources();
 
-        fadein.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(final Animator animation) {}
+		// image
+		mTitleText1 = res.getString( R.string.feather_overlay_tap_title );
+		mDetailText1 = res.getString( R.string.feather_overlay_blemish_tap_text );
+		mTextWidthFraction1 = res.getFraction( R.fraction.aviary_overlay_blemish_text1_width, 100, 100 );
+		mTextRelativePosition1 = res.getString( R.string.aviary_overlay_blemish_text1_position );
 
-            @Override
-            public void onAnimationEnd(final Animator animation) {
-                onAnimationComplete();
-            }
+		mTitleText2 = res.getString( R.string.feather_overlay_zoom_title );
+		mDetailText2 = res.getString( R.string.feather_overlay_zoom_text );
+		mTextWidthFraction2 = res.getFraction( R.fraction.aviary_overlay_blemish_text2_width, 100, 100 );
+		mTextRelativePosition2 = res.getString( R.string.aviary_overlay_blemish_text2_position );
 
-            @Override
-            public void onAnimationCancel(final Animator animation) {}
+		final String textAlign = res.getString( R.string.aviary_overlay_default_text_align );
 
-            @Override
-            public void onAnimationRepeat(final Animator animation) {}
-        });
+		if( Layout.Alignment.ALIGN_CENTER.name()
+				.equals( textAlign ) ) {
+			mTextAlign1 = Layout.Alignment.ALIGN_CENTER;
+		} else if( Layout.Alignment.ALIGN_OPPOSITE.equals( textAlign ) ) {
+			mTextAlign1 = Layout.Alignment.ALIGN_OPPOSITE;
+		} else {
+			mTextAlign1 = Layout.Alignment.ALIGN_NORMAL;
+		}
+		addCloseButton( ALIGN_PARENT_LEFT, ALIGN_PARENT_BOTTOM );
+	}
 
-        animation1.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(final Animator animation) {
-            }
+	@Override
+	protected Animator generateInAnimation () {
 
-            @Override
-            public void onAnimationEnd(final Animator animation) {
-                onAnimationComplete();
-            }
+		AnimatorSet animatorSet = new AnimatorSet();
 
-            @Override
-            public void onAnimationCancel(final Animator animation) {
+		// first fade in animation
+		Animator fadein = ObjectAnimator.ofFloat( this, "alpha", 0, 1 );
+		Animator animation1 = ObjectAnimator.ofInt( this, "alpha1", 0, 255 );
+		Animator animation2 = ObjectAnimator.ofInt( this, "alpha2", 0, 255 );
+		Animator animation3 = ValueAnimator.ofInt( 0, 255 );
 
-            }
+		animation1.setStartDelay( 200 );
+		animation2.setStartDelay( 400 );
+		animation3.setStartDelay( 400 );
 
-            @Override
-            public void onAnimationRepeat(final Animator animation) {
+		fadein.setDuration( getAnimationDuration() );
+		animation1.setDuration( getAnimationDuration() );
+		animation2.setDuration( getAnimationDuration() );
+		animation3.setDuration( getAnimationDuration() );
 
-            }
-        });
 
-        animation2.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(final Animator animation) {
-            }
+		fadein.addListener( new Animator.AnimatorListener() {
+			@Override
+			public void onAnimationStart ( final Animator animation ) {}
 
-            @Override
-            public void onAnimationEnd(final Animator animation) {
-                onAnimationComplete();
-            }
+			@Override
+			public void onAnimationEnd ( final Animator animation ) {
+				onAnimationComplete();
+			}
 
-            @Override
-            public void onAnimationCancel(final Animator animation) {
-            }
+			@Override
+			public void onAnimationCancel ( final Animator animation ) {}
 
-            @Override
-            public void onAnimationRepeat(final Animator animation) {
-            }
-        });
+			@Override
+			public void onAnimationRepeat ( final Animator animation ) {}
+		} );
 
-        animatorSet.playSequentially(fadein, animation1, animation2, animation3);
+		animation1.addListener( new Animator.AnimatorListener() {
+			@Override
+			public void onAnimationStart ( final Animator animation ) {
+			}
 
-        return animatorSet;
-    }
+			@Override
+			public void onAnimationEnd ( final Animator animation ) {
+				onAnimationComplete();
+			}
 
-    private void onAnimationComplete() {
-        logger.info("onAnimationComplete. state: %s", mState);
+			@Override
+			public void onAnimationCancel ( final Animator animation ) {
 
-        switch (mState) {
-            case NONE:
-                break;
+			}
 
-            case FIRST:
-                setState(State.SECOND);
-                break;
+			@Override
+			public void onAnimationRepeat ( final Animator animation ) {
 
-            case SECOND:
-                setState(State.THIRD);
-                break;
+			}
+		} );
 
-            case THIRD:
-            default:
-                break;
-        }
-    }
+		animation2.addListener( new Animator.AnimatorListener() {
+			@Override
+			public void onAnimationStart ( final Animator animation ) {
+			}
 
-    @SuppressWarnings ("unused")
-    public void setAlpha2(int alpha) {
-        this.alpha2 = alpha;
-        arrow.setAlpha(alpha);
-        mTitleDrawable2.setAlpha(alpha);
-        mTextDrawable2.setAlpha(alpha);
-        postInvalidate();
-    }
+			@Override
+			public void onAnimationEnd ( final Animator animation ) {
+				onAnimationComplete();
+			}
 
-    @SuppressWarnings ("unused")
-    public int getAlpha2() {
-        return alpha2;
-    }
+			@Override
+			public void onAnimationCancel ( final Animator animation ) {
+			}
 
-    @SuppressWarnings ("unused")
-    public void setAlpha1(int alpha) {
-        this.alpha1 = alpha;
-        ripple.setAlpha(alpha);
-        mTitleDrawable1.setAlpha(alpha);
-        mTextDrawable1.setAlpha(alpha);
-        postInvalidate();
-    }
+			@Override
+			public void onAnimationRepeat ( final Animator animation ) {
+			}
+		} );
 
-    @SuppressWarnings ("unused")
-    public int getAlpha1() {
-        return alpha1;
-    }
+		animatorSet.playSequentially(
+				fadein,
+				animation1,
+				animation2,
+				animation3 );
 
-    @Override
-    public boolean onTouchEvent(final MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            hide(TAG_CLOSE_FROM_BACKGROUND);
-            return true;
-        }
+		return animatorSet;
+	}
 
-        return true;
-    }
+	private void onAnimationComplete() {
+		logger.info( "onAnimationComplete. state: %s", mState );
 
-    @Override
-    public void calculatePositions() {
-        calculateTextLayouts();
-    }
+		switch( mState ) {
+			case NONE:
+				break;
 
-    @Override
-    protected void doShow() {
-        logger.info("doShow");
-        if (!isAttachedToParent()) {
-            return;
-        }
-        fadeIn();
-    }
+			case FIRST:
+				setState( State.SECOND );
+				break;
 
-    @Override
-    protected void inAnimationCompleted() {
-        logger.info("inAnimationCompleted");
-        if (null != getCloseButton()) {
-            getCloseButton().setVisibility(View.VISIBLE);
-        }
-    }
+			case SECOND:
+				setState( State.THIRD );
+				break;
+
+			case THIRD:
+				break;
+		}
+	}
+
+	@SuppressWarnings( "unused" )
+	public void setAlpha2( int alpha ) {
+		this.alpha2 = alpha;
+		arrow.setAlpha( alpha );
+		mTitleDrawable2.setAlpha( alpha );
+		mTextDrawable2.setAlpha( alpha );
+		postInvalidate();
+	}
+
+	@SuppressWarnings( "unused" )
+	public int getAlpha2() {
+		return alpha2;
+	}
+
+	@SuppressWarnings( "unused" )
+	public void setAlpha1( int alpha ) {
+		this.alpha1 = alpha;
+		ripple.setAlpha( alpha );
+		mTitleDrawable1.setAlpha( alpha );
+		mTextDrawable1.setAlpha( alpha );
+		postInvalidate();
+	}
+
+	@SuppressWarnings( "unused" )
+	public int getAlpha1() {
+		return alpha1;
+	}
+
+	@Override
+	public boolean onTouchEvent ( final MotionEvent event ) {
+		if( event.getAction() == MotionEvent.ACTION_DOWN ) {
+			hide( TAG_CLOSE_FROM_BACKGROUND );
+			return true;
+		}
+
+		return true;
+	}
+
+	@Override
+	public void calculatePositions () {
+		calculateTextLayouts();
+	}
 
     @Override
-    protected void dispatchDraw(final Canvas canvas) {
-        if (getVisibility() != View.VISIBLE || !isAttachedToParent() || null == mView1) {
-            return;
-        }
-
-        calculateTextLayouts();
-        canvas.drawColor(getBackgroundColor());
-
-        if (mState == State.SECOND || mState == State.THIRD || mState == State.ALL) {
-            ripple.draw(canvas);
-            mTextDrawable1.draw(canvas);
-            mTitleDrawable1.draw(canvas);
-        }
-
-        if (mState == State.THIRD || mState == State.ALL) {
-            arrow.draw(canvas);
-            mTextDrawable2.draw(canvas);
-            mTitleDrawable2.draw(canvas);
-
-            if (!USE_CIRCLE) {
-                canvas.save();
-                canvas.translate(viewRect2.left, viewRect2.top);
-
-                if (alpha2 < 255) {
-                    int count = canvas.saveLayerAlpha(0,
-                                                      0,
-                                                      viewRect2.width(),
-                                                      viewRect2.height(),
-                                                      alpha2,
-                                                      Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
-                    mView2.draw(canvas);
-                    canvas.restoreToCount(count);
-                } else {
-                    mView2.draw(canvas);
-                }
-
-                canvas.restore();
-            }
-        }
-
-        super.dispatchDraw(canvas);
+    public void forceInvalidate() {
+        mConfigChange = true;
+        forceCalculatePositions();
+        invalidate();
     }
 
-    private void calculateTextLayouts() {
-        if (!isAttachedToParent()) {
-            return;
-        }
+	@Override
+	protected void doShow () {
+		logger.info( "doShow" );
+		if( ! isAttachedToParent() ) {
+			return;
+		}
+		fadeIn();
+	}
 
-        int alpha = 0;
-        if (mState == State.ALL) alpha = 255;
+	@Override
+	protected void inAnimationCompleted () {
+		logger.info( "inAnimationCompleted" );
+		if( null != getCloseButton() ) {
+			getCloseButton().setVisibility( View.VISIBLE );
+		}
+	}
+
+	@Override
+	protected void dispatchDraw ( final Canvas canvas ) {
+		if( getVisibility() != View.VISIBLE || ! isAttachedToParent() || null == mView1 ) {
+			return;
+		}
+
+        if( mConfigChange ) {
+            forceCalculatePositions();
+        }
+		else calculateTextLayouts();
+		canvas.drawColor( getBackgroundColor() );
+
+		if( mState == State.SECOND || mState == State.THIRD ) {
+			ripple.draw( canvas );
+			mTextDrawable1.draw( canvas );
+			mTitleDrawable1.draw( canvas );
+		}
+
+		if( mState == State.THIRD ) {
+			arrow.draw( canvas );
+			mTextDrawable2.draw( canvas );
+			mTitleDrawable2.draw( canvas );
+
+			if( ! USE_CIRCLE ) {
+				canvas.save();
+				canvas.translate( viewRect2.left, viewRect2.top );
+
+				if( alpha2 < 255 ) {
+					int count = canvas.saveLayerAlpha( 0, 0, viewRect2.width(), viewRect2.height(), alpha2, Canvas.HAS_ALPHA_LAYER_SAVE_FLAG );
+					mView2.draw( canvas );
+					canvas.restoreToCount( count );
+				} else {
+					mView2.draw( canvas );
+				}
+
+				canvas.restore();
+			}
+		}
+
+		super.dispatchDraw( canvas );
+	}
+
+    public void forceCalculatePositions() {
+
+        logger.warn( "forceCalculatePositions" );
 
         final DisplayMetrics metrics = getDisplayMetrics();
+        mView1.getGlobalVisibleRect( viewRect1 );
 
-        if (mState == State.FIRST) {
-            // nothing to calculate...
-        }
+        ripple.setBounds( viewRect1.left + viewRect1.width() / 3, viewRect1.top + viewRect1.height() / 3, viewRect1.left + viewRect1.width() / 3 + ripple.getIntrinsicWidth(),
+                viewRect1.top + viewRect1.height() / 3 + ripple.getIntrinsicHeight() );
 
-        if (mState == State.SECOND || mState == State.ALL) {
-            if (mState == State.ALL || null == mTextDrawable1 || null == mTitleDrawable1) {
-                mView1.getGlobalVisibleRect(viewRect1);
+        int textWidth = (int) ( ( metrics.widthPixels ) * ( mTextWidthFraction1 / 100f ) );
 
-                ripple.setBounds(viewRect1.left + viewRect1.width() / 3,
-                                 viewRect1.top + viewRect1.height() / 3,
-                                 viewRect1.left + viewRect1.width() / 3 + ripple.getIntrinsicWidth(),
-                                 viewRect1.top + viewRect1.height() / 3 + ripple.getIntrinsicHeight());
-                ripple.setAlpha(alpha);
+        // TEXT
+        mTextDrawable1 = generateTextDrawable( getContext(), mDetailText1, textWidth, mTextAlign1 );
+        Rect textBounds = generateBounds( mTextDrawable1, ripple.getBounds(), getTextMargins(), mTextRelativePosition1 );
+        mTextDrawable1.setBounds( textBounds );
 
-                int textWidth = (int) ((metrics.widthPixels) * (mTextWidthFraction1 / 100));
+        // TITLE
+        mTitleDrawable1 = generateTitleDrawable( getContext(), mTitleText1, textWidth, mTextAlign1 );
+        Rect titleBounds = new Rect( 0, 0, mTitleDrawable1.getIntrinsicWidth(), mTitleDrawable1.getIntrinsicHeight() );
+        titleBounds.offsetTo( textBounds.left, textBounds.top - titleBounds.height() - getTitleMargins() );
 
-                // TEXT
-                mTextDrawable1 = generateTextDrawable(getContext(), mDetailText1, textWidth, mTextAlign1);
-                Rect textBounds = generateBounds(mTextDrawable1, ripple.getBounds(), getTextMargins(), mTextRelativePosition1);
-                mTextDrawable1.setBounds(textBounds);
-                mTextDrawable1.setAlpha(alpha);
+        mTitleDrawable1.setBounds( titleBounds );
 
-                // TITLE
-                mTitleDrawable1 = generateTitleDrawable(getContext(), mTitleText1, textWidth, mTextAlign1);
-                Rect titleBounds = new Rect(0, 0, mTitleDrawable1.getIntrinsicWidth(), mTitleDrawable1.getIntrinsicHeight());
-                titleBounds.offsetTo(textBounds.left, textBounds.top - titleBounds.height() - getTitleMargins());
+        mView2.getGlobalVisibleRect( viewRect2 );
+        arrow.setBounds( viewRect2.centerX(), viewRect2.top - arrow.getIntrinsicHeight(), viewRect2.centerX() + arrow.getIntrinsicWidth(), viewRect2.top );
 
-                mTitleDrawable1.setAlpha(alpha);
-                mTitleDrawable1.setBounds(titleBounds);
+        textWidth = (int) ( ( metrics.widthPixels ) * ( mTextWidthFraction2 / 100f ) );
 
-            }
-        }
+        // TEXT
+        mTextDrawable2 = generateTextDrawable( getContext(), mDetailText2, textWidth, mTextAlign1 );
+        textBounds = generateBounds( mTextDrawable2, arrow.getBounds(), getTextMargins(), mTextRelativePosition2 );
+        mTextDrawable2.setBounds( textBounds );
 
-        if (mState == State.THIRD || mState == State.ALL) {
-            if (mState == State.ALL || null == mTextDrawable2 || null == mTitleDrawable2) {
-                mView2.getGlobalVisibleRect(viewRect2);
-                arrow.setBounds(viewRect2.centerX(),
-                                viewRect2.top - arrow.getIntrinsicHeight(),
-                                viewRect2.centerX() + arrow.getIntrinsicWidth(),
-                                viewRect2.top);
-                arrow.setAlpha(alpha);
+        // TITLE
+        mTitleDrawable2 = generateTitleDrawable( getContext(), mTitleText2, textWidth, mTextAlign1 );
+        titleBounds = new Rect( 0, 0, mTitleDrawable2.getIntrinsicWidth(), mTitleDrawable2.getIntrinsicHeight() );
+        titleBounds.offsetTo( textBounds.left, textBounds.top - titleBounds.height() - getTitleMargins() );
+        mTitleDrawable2.setBounds( titleBounds );
 
-                int textWidth = (int) ((metrics.widthPixels) * (mTextWidthFraction2 / 100));
-
-                // TEXT
-                mTextDrawable2 = generateTextDrawable(getContext(), mDetailText2, textWidth, mTextAlign1);
-                Rect textBounds = generateBounds(mTextDrawable2, arrow.getBounds(), getTextMargins(), mTextRelativePosition2);
-                mTextDrawable2.setBounds(textBounds);
-                mTextDrawable2.setAlpha(alpha);
-
-                // TITLE
-                mTitleDrawable2 = generateTitleDrawable(getContext(), mTitleText2, textWidth, mTextAlign1);
-                Rect titleBounds = new Rect(0, 0, mTitleDrawable2.getIntrinsicWidth(), mTitleDrawable2.getIntrinsicHeight());
-                titleBounds.offsetTo(textBounds.left, textBounds.top - titleBounds.height() - getTitleMargins());
-                mTitleDrawable2.setBounds(titleBounds);
-                mTitleDrawable2.setAlpha(alpha);
-            }
-        }
     }
 
-    private Rect generateBounds(Drawable drawable, Rect relativeTo, int margins, CharSequence relativePosition) {
-        final DisplayMetrics metrics = getDisplayMetrics();
-        final int drawableWidth = drawable.getIntrinsicWidth();
-        final int drawableHeight = drawable.getIntrinsicHeight();
+	private void calculateTextLayouts () {
+		if( ! isAttachedToParent() ) {
+			return;
+		}
 
-        Rect textBounds = new Rect(0, 0, drawableWidth, drawableHeight);
+		final DisplayMetrics metrics = getDisplayMetrics();
 
-        int left;
-        int top = relativeTo.top - textBounds.height() - margins;
+		if( mState == State.FIRST ) {
+			// nothing to calculate...
+		} else if( mState == State.SECOND ) {
+			if( null == mTextDrawable1 || null == mTitleDrawable1 ) {
+				mView1.getGlobalVisibleRect( viewRect1 );
 
-        if (POSITION_LEFT.equals(relativePosition)) {
-            left = relativeTo.left - drawableWidth;
-        } else if (POSITION_CENTER.equals(relativePosition)) {
-            left = relativeTo.centerX() - drawableWidth / 2;
-        } else {
-            left = relativeTo.right;
-        }
+				ripple.setBounds( viewRect1.left + viewRect1.width() / 3, viewRect1.top + viewRect1.height() / 3, viewRect1.left + viewRect1.width() / 3 + ripple.getIntrinsicWidth(),
+				                  viewRect1.top + viewRect1.height() / 3 + ripple.getIntrinsicHeight() );
+				ripple.setAlpha( 0 );
 
-        textBounds.offsetTo(left, top);
+				int textWidth = (int) ( ( metrics.widthPixels ) * ( mTextWidthFraction1 / 100f ) );
 
-        if (textBounds.right > metrics.widthPixels) {
-            textBounds.offsetTo(metrics.widthPixels - textBounds.width() - margins, textBounds.top);
-        } else if (textBounds.left < 0) {
-            textBounds.offsetTo(margins, textBounds.top);
-        }
+				// TEXT
+				mTextDrawable1 = generateTextDrawable( getContext(), mDetailText1, textWidth, mTextAlign1 );
+				Rect textBounds = generateBounds( mTextDrawable1, ripple.getBounds(), getTextMargins(), mTextRelativePosition1 );
+				mTextDrawable1.setBounds( textBounds );
+				mTextDrawable1.setAlpha( 0 );
 
-        return textBounds;
-    }
+				// TITLE
+				mTitleDrawable1 = generateTitleDrawable( getContext(), mTitleText1, textWidth, mTextAlign1 );
+				Rect titleBounds = new Rect( 0, 0, mTitleDrawable1.getIntrinsicWidth(), mTitleDrawable1.getIntrinsicHeight() );
+				titleBounds.offsetTo( textBounds.left, textBounds.top - titleBounds.height() - getTitleMargins() );
 
-    private void setState(State state) {
-        logger.info("setState: %s", state);
-        this.mState = state;
-        calculatePositions();
-    }
+				mTitleDrawable1.setAlpha( 0 );
+				mTitleDrawable1.setBounds( titleBounds );
 
-    @Override
-    public boolean showDelayed(long delay) {
-        setState(State.FIRST);
-        return super.showDelayed(delay);
-    }
+			}
+		} else if( mState == State.THIRD ) {
+			if( null == mTextDrawable2 || null == mTitleDrawable2 ) {
+				mView2.getGlobalVisibleRect( viewRect2 );
+				arrow.setBounds( viewRect2.centerX(), viewRect2.top - arrow.getIntrinsicHeight(), viewRect2.centerX() + arrow.getIntrinsicWidth(), viewRect2.top );
+				arrow.setAlpha( 0 );
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        this.mState = State.ALL;
-        super.onConfigurationChanged(newConfig);
-    }
+				int textWidth = (int) ( ( metrics.widthPixels ) * ( mTextWidthFraction2 / 100f ) );
+
+				// TEXT
+				mTextDrawable2 = generateTextDrawable( getContext(), mDetailText2, textWidth, mTextAlign1 );
+				Rect textBounds = generateBounds( mTextDrawable2, arrow.getBounds(), getTextMargins(), mTextRelativePosition2 );
+				mTextDrawable2.setBounds( textBounds );
+				mTextDrawable2.setAlpha( 0 );
+
+				// TITLE
+				mTitleDrawable2 = generateTitleDrawable( getContext(), mTitleText2, textWidth, mTextAlign1 );
+				Rect titleBounds = new Rect( 0, 0, mTitleDrawable2.getIntrinsicWidth(), mTitleDrawable2.getIntrinsicHeight() );
+				titleBounds.offsetTo( textBounds.left, textBounds.top - titleBounds.height() - getTitleMargins() );
+				mTitleDrawable2.setBounds( titleBounds );
+				mTitleDrawable2.setAlpha( 0 );
+			}
+		}
+	}
+
+	private Rect generateBounds ( Drawable drawable, Rect relativeTo, int margins, CharSequence relativePosition ) {
+		final DisplayMetrics metrics = getDisplayMetrics();
+		final int drawableWidth = drawable.getIntrinsicWidth();
+		final int drawableHeight = drawable.getIntrinsicHeight();
+
+		Rect textBounds = new Rect( 0, 0, drawableWidth, drawableHeight );
+
+		int left;
+		int top = relativeTo.top - textBounds.height() - margins;
+
+		if( POSITION_LEFT.equals( relativePosition ) ) {
+			left = relativeTo.left - drawableWidth;
+		} else if( POSITION_CENTER.equals( relativePosition ) ) {
+			left = relativeTo.centerX() - drawableWidth / 2;
+		} else {
+			left = relativeTo.right;
+		}
+
+		textBounds.offsetTo( left, top );
+
+		if( textBounds.right > metrics.widthPixels ) {
+			textBounds.offsetTo( metrics.widthPixels - textBounds.width() - margins, textBounds.top );
+		} else if( textBounds.left < 0 ) {
+			textBounds.offsetTo( margins, textBounds.top );
+		}
+
+		return textBounds;
+	}
+
+	private void setState( State state ) {
+		logger.info( "setState: %s", state );
+		this.mState = state;
+		calculatePositions();
+	}
+
+	@Override
+	public boolean showDelayed ( long delay ) {
+		setState( State.FIRST );
+		return super.showDelayed( delay );
+	}
+
 }

@@ -2,6 +2,8 @@ package com.aviary.android.feather.sdk.panels;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,158 +24,159 @@ import com.aviary.android.feather.sdk.widget.AviaryHighlightImageButton;
 import org.json.JSONException;
 
 public class AdjustEffectPanel extends AbstractContentPanel implements OnClickListener, OnResetListener {
-    boolean isClosing;
-    // panel buttons
-    private AviaryHighlightImageButton mButton1, mButton2, mButton3, mButton4;
-    // image overlay
-    private AdjustImageView mAdjustImageView;
 
-    public AdjustEffectPanel(IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools adjust) {
-        super(context, entry);
-        mFilter = ToolLoaderFactory.get(adjust);
-    }
+	boolean isClosing;
 
-    @Override
-    public void onCreate(Bitmap bitmap, Bundle options) {
-        super.onCreate(bitmap, options);
+	// panel buttons
+	private AviaryHighlightImageButton mButton1, mButton2, mButton3, mButton4;
+	// image overlay
+	private AdjustImageView mAdjustImageView;
 
-        mAdjustImageView = (AdjustImageView) getContentView().findViewById(R.id.aviary_overlay);
+	public AdjustEffectPanel ( IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools adjust ) {
+		super( context, entry );
+		mFilter = ToolLoaderFactory.get(adjust);
+	}
 
-        View v = getOptionView();
-        mButton1 = (AviaryHighlightImageButton) v.findViewById(R.id.aviary_button1);
-        mButton2 = (AviaryHighlightImageButton) v.findViewById(R.id.aviary_button2);
-        mButton3 = (AviaryHighlightImageButton) v.findViewById(R.id.aviary_button3);
-        mButton4 = (AviaryHighlightImageButton) v.findViewById(R.id.aviary_button4);
-    }
+	@Override
+	public void onCreate( Bitmap bitmap, Bundle options ) {
+		super.onCreate( bitmap, options );
 
-    @Override
-    public void onActivate() {
-        super.onActivate();
+		mAdjustImageView = (AdjustImageView) getContentView().findViewById( R.id.aviary_overlay );
 
-        mAdjustImageView.setImageBitmap(mBitmap);
-        mAdjustImageView.setOnResetListener(this);
+		View v = getOptionView();
+		mButton1 = (AviaryHighlightImageButton) v.findViewById( R.id.aviary_button1 );
+		mButton2 = (AviaryHighlightImageButton) v.findViewById( R.id.aviary_button2 );
+		mButton3 = (AviaryHighlightImageButton) v.findViewById( R.id.aviary_button3 );
+		mButton4 = (AviaryHighlightImageButton) v.findViewById( R.id.aviary_button4 );
+	}
 
-        mButton1.setOnClickListener(this);
-        mButton2.setOnClickListener(this);
-        mButton3.setOnClickListener(this);
-        mButton4.setOnClickListener(this);
+	@Override
+	public void onActivate() {
+		super.onActivate();
 
-        // straighten stuff
-        contentReady();
-    }
+		mAdjustImageView.setImageBitmap( mBitmap );
+		mAdjustImageView.setOnResetListener( this );
 
-    @Override
-    public void onDeactivate() {
-        mAdjustImageView.setOnResetListener(null);
-        mButton1.setOnClickListener(null);
-        mButton2.setOnClickListener(null);
-        mButton3.setOnClickListener(null);
-        mButton4.setOnClickListener(null);
+		mButton1.setOnClickListener( this );
+		mButton2.setOnClickListener( this );
+		mButton3.setOnClickListener( this );
+		mButton4.setOnClickListener( this );
 
-        super.onDeactivate();
-    }
+		// straighten stuff
+		contentReady();
+	}
 
-    @Override
-    public void onDestroy() {
-        mAdjustImageView.setImageBitmap(null);
-        super.onDestroy();
-    }
+	@Override
+	public void onDeactivate() {
+		mAdjustImageView.setOnResetListener( null );
+		mButton1.setOnClickListener( null );
+		mButton2.setOnClickListener( null );
+		mButton3.setOnClickListener( null );
+		mButton4.setOnClickListener( null );
 
-    @Override
-    protected ViewGroup generateOptionView(LayoutInflater inflater, ViewGroup parent) {
-        return (ViewGroup) inflater.inflate(R.layout.aviary_panel_adjust, parent, false);
-    }
+		super.onDeactivate();
+	}
 
-    @SuppressLint ("InflateParams")
-    @Override
-    protected View generateContentView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aviary_content_adjust, null);
-    }
+	@Override
+	public void onDestroy() {
+		mAdjustImageView.setImageBitmap( null );
+		super.onDestroy();
+	}
 
-    @Override
-    public void onClick(View v) {
+	@Override
+	protected ViewGroup generateOptionView( LayoutInflater inflater, ViewGroup parent ) {
+		return (ViewGroup) inflater.inflate( R.layout.aviary_panel_adjust, parent, false );
+	}
 
-        if (!isActive() || !isEnabled()) {
-            return;
-        }
+	@SuppressLint ("InflateParams")
+	@Override
+	protected View generateContentView( LayoutInflater inflater ) {
+		return inflater.inflate( R.layout.aviary_content_adjust, null );
+	}
 
-        final int id = v.getId();
+	@Override
+	public void onClick( View v ) {
 
-        if (id == R.id.aviary_button1) {
-            mAdjustImageView.rotate90(false);
-        } else if (id == R.id.aviary_button2) {
-            mAdjustImageView.rotate90(true);
-        } else if (id == R.id.aviary_button3) {
-            mAdjustImageView.flip(true);
-        } else if (id == R.id.aviary_button4) {
-            mAdjustImageView.flip(false);
-        }
-    }
+		if ( !isActive() || !isEnabled() ) return;
 
-    @Override
-    public boolean getIsChanged() {
-        boolean straightenStarted = mAdjustImageView.getStraightenStarted();
-        final int rotation = (int) mAdjustImageView.getCurrentRotation();
-        final int flipType = mAdjustImageView.getFlipType();
-        return rotation != 0 || (flipType != FlipType.FLIP_NONE.nativeInt) || straightenStarted;
-    }
+		final int id = v.getId();
 
-    @Override
-    protected void onGenerateResult() {
-        final int rotation = (int) mAdjustImageView.getCurrentRotation();
-        final double rotationFromStraighten = mAdjustImageView.getStraightenAngle();
-        final boolean horizontal = mAdjustImageView.getHorizontalFlip();
-        final boolean vertical = mAdjustImageView.getVerticalFlip();
-        final double growthFactor = (1 / mAdjustImageView.getGrowthFactor());
+		if ( id == R.id.aviary_button1 ) {
+			mAdjustImageView.rotate90( false );
+		} else if ( id == R.id.aviary_button2 ) {
+			mAdjustImageView.rotate90( true );
+		} else if ( id == R.id.aviary_button3 ) {
+			mAdjustImageView.flip( true );
+		} else if ( id == R.id.aviary_button4 ) {
+			mAdjustImageView.flip( false );
+		}
+	}
 
-        AdjustFilter filter = (AdjustFilter) mFilter;
-        filter.setFlip(horizontal, vertical);
-        filter.setFixedRotation(rotation);
-        filter.setStraighten(rotationFromStraighten, growthFactor, growthFactor);
+	@Override
+	public boolean getIsChanged() {
+		boolean straightenStarted = mAdjustImageView.getStraightenStarted();
+		final int rotation = (int) mAdjustImageView.getCurrentRotation();
+		final int flip_type = mAdjustImageView.getFlipType();
+		return rotation != 0 || ( flip_type != FlipType.FLIP_NONE.nativeInt ) || straightenStarted;
+	}
 
-        // Bitmap output = filter.generateBitmap(mBitmap);
-        Bitmap output;
+	@Override
+	protected void onGenerateResult() {
+		final int rotation = (int) mAdjustImageView.getCurrentRotation();
+		final double rotationFromStraighten = mAdjustImageView.getStraightenAngle();
+		final boolean horizontal = mAdjustImageView.getHorizontalFlip();
+		final boolean vertical = mAdjustImageView.getVerticalFlip();
+		final double growthFactor = ( 1 / mAdjustImageView.getGrowthFactor() );
 
-        try {
-            output = filter.execute(mBitmap, null, 1, 1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            onGenericError(e);
-            return;
-        }
+		AdjustFilter filter = (AdjustFilter) mFilter;
+		filter.setFlip( horizontal, vertical );
+		filter.setFixedRotation( rotation );
+		filter.setStraighten( rotationFromStraighten, growthFactor, growthFactor );
 
-        mAdjustImageView.setImageBitmap(output);
-        mEditResult.setActionList(filter.getActions());
-        mEditResult.setToolAction(new ToolActionVO<Integer>(0));
 
-        onComplete(output);
-    }
+//		Bitmap output = filter.generateBitmap(mBitmap);
 
-    @Override
-    public boolean onCancel() {
-        if (isClosing) {
-            return true;
-        }
+		Bitmap output;
 
-        isClosing = true;
-        setEnabled(false);
+		try {
+			output = filter.execute( mBitmap, null, 1, 1 );
+		} catch ( JSONException e ) {
+			e.printStackTrace();
+			onGenericError( e );
+			return;
+		}
 
-        final int rotation = (int) mAdjustImageView.getCurrentRotation();
-        final boolean hflip = mAdjustImageView.getHorizontalFlip();
-        final boolean vflip = mAdjustImageView.getVerticalFlip();
-        boolean straightenStarted = mAdjustImageView.getStraightenStarted();
-        final double rotationFromStraighten = mAdjustImageView.getStraightenAngle();
+		mAdjustImageView.setImageBitmap( output );
+		mEditResult.setActionList(filter.getActions());
+		mEditResult.setToolAction(new ToolActionVO<Integer>(0));
 
-        if (rotation != 0 || hflip || vflip || (straightenStarted && rotationFromStraighten != 0)) {
-            mAdjustImageView.reset();
-            return true;
-        } else {
-            return false;
-        }
-    }
+		onComplete(output);
+	}
 
-    @Override
-    public void onResetComplete() {
-        getContext().cancel();
-    }
+
+	@Override
+	public boolean onCancel() {
+		if ( isClosing ) return true;
+
+		isClosing = true;
+		setEnabled( false );
+
+		final int rotation = (int) mAdjustImageView.getCurrentRotation();
+		final boolean hflip = mAdjustImageView.getHorizontalFlip();
+		final boolean vflip = mAdjustImageView.getVerticalFlip();
+		boolean straightenStarted = mAdjustImageView.getStraightenStarted();
+		final double rotationFromStraighten = mAdjustImageView.getStraightenAngle();
+
+		if ( rotation != 0 || hflip || vflip || ( straightenStarted && rotationFromStraighten != 0 ) ) {
+			mAdjustImageView.reset();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public void onResetComplete() {
+		getContext().cancel();
+	}
 }

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<style name="AviaryStoreListItemTitle">
+		<item name="aviary_typeface">?attr/aviaryFontRegular</item>
+		<item name="android:textSize">@dimen/aviary_store_list_item_title_size</item>
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+
+	<style name="AviaryStoreListItemSubTitle">
+		<item name="android:layout_marginTop">5dip</item>
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceSmallInverted</item>
+		<item name="android:maxLines">1</item>
+	</style>
+
+	<style name="AviaryStoreBuyButton" parent="AviaryWidget.Button">
+		<item name="android:textAppearance">?aviaryTextAppearanceSmall</item>
+		<item name="android:background">@drawable/aviary_green_button_background</item>
+		<item name="android:paddingLeft">8dp</item>
+		<item name="android:paddingRight">8dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+	</style>
+
+	<style name="AviaryStorePassportButton" parent="AviaryStoreBuyButton">
+		<item name="android:background">@drawable/aviary_store_blue_button_selector</item>
+	</style>
+
+	<style name="AviaryStoreBuyButtonTextStyle" parent="AviaryWidget.TextView">
+		<item name="android:textAppearance">?aviaryTextAppearanceSmall</item>
+		<item name="android:textColor">@color/aviary_store_buy_button_text_color</item>
+		<item name="android:gravity">center</item>
+		<item name="android:ellipsize">end</item>
+		<item name="aviary_typeface">?attr/aviaryFontRegular</item>
+		<item name="android:maxLines">1</item>
+	</style>
+
+	<style name="AviaryStoreDetailText" parent="AviaryWidget.TextView"></style>
+
+	<style name="AviarySubscriptionText" parent="AviaryWidget.TextView">
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceSmallInverted</item>
+	</style>
+
+	<style name="AviarySubscriptionTitle" parent="AviaryWidget.TextView">
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceLargeInverted</item>
+	</style>
+
+	<style name="AviaryStoreDetailText.Title">
+		<item name="android:ellipsize">marquee</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:singleLine">true</item>
+		<item name="aviary_typeface">?attr/aviaryFontRegular</item>
+		<item name="android:textSize">@dimen/aviary_store_detail_title_size</item>
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
+	</style>
+
+	<style name="AviaryStoreDetailText.Description">
+		<item name="android:ellipsize">none</item>
+		<item name="android:textSize">@dimen/aviary_store_detail_description_size</item>
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
+	</style>
+
+	<style name="AviaryStoreDetailText.Subscription">
+		<item name="aviary_typeface">?attr/aviaryFontLight</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:textSize">@dimen/aviary_store_detail_subscription_size</item>
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceSmallInverted</item>
+	</style>
+
+	<style name="AviaryStoreDetailIcon">
+		<item name="android:layout_width">@dimen/aviary_store_detail_icon_size</item>
+		<item name="android:layout_height">@dimen/aviary_store_detail_icon_size</item>
+		<item name="android:adjustViewBounds">true</item>
+		<item name="android:scaleType">fitCenter</item>
+	</style>
+
+	<style name="AviaryStoreDetailWorkspace">
+		<item name="aviary_defaultScreen">0</item>
+		<item name="aviary_overscroll">2</item>
+		<item name="android:paddingBottom">0.0dip</item>
+		<item name="android:paddingLeft">0.0dip</item>
+		<item name="android:paddingRight">0.0dip</item>
+		<item name="android:paddingTop">0.0dip</item>
+	</style>
+
+	<style name="AviaryStoreFeaturedSeeMoreButton" parent="AviaryStoreBuyButton">
+		<item name="android:background">@drawable/aviary_store_blue_button_selector</item>
+		<item name="android:paddingTop">6dip</item>
+		<item name="android:paddingBottom">6dip</item>
+		<item name="android:shadowColor">@null</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<style name="AviaryStoreFeaturedCellTitle" parent="AviaryWidget.TextView">
+		<item name="aviary_typeface">?attr/aviaryFontLight</item>
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:singleLine">true</item>
+	</style>
+
+    <style name="AviaryStoreListDivider">
+        <item name="aviary_typeface">?attr/aviaryFontLight</item>
+        <item name="android:textSize">@dimen/aviary_store_list_item_title_size</item>
+        <item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="AviaryStoreFeaturedCellText" parent="AviaryStoreFeaturedCellTitle">
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceSmallInverted</item>
+	</style>
+
+	<style name="AviaryStoreFeaturedItemTitle" parent="AviaryStoreListItemTitle">
+		<item name="android:textAppearance">?attr/aviaryTextAppearanceMedium</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+
+	<style name="AviaryStoreDetailGridStyle">
+		<item name="android:verticalSpacing">5dip</item>
+		<item name="android:horizontalSpacing">5dip</item>
+		<item name="android:gravity">center</item>
+		<item name="android:stretchMode">columnWidth</item>
+	</style>
+
+</resources>

@@ -18,137 +18,139 @@ import com.aviary.android.feather.library.utils.ImageInfo;
  * @author alessandro
  */
 public class DownloadImageAsyncTask extends AviaryAsyncTask<Context, Void, Bitmap> {
-    private static final String TAG = "DownloadImageAsyncTask";
 
-    /**
-     * The listener interface for receiving onImageDownload events. The class that is
-     * interested in processing a onImageDownload
-     * event implements this interface, and the object created with that class is
-     * registered with a component using the component's
-     * <code>addOnImageDownloadListener<code> method. When
-     * the onImageDownload event occurs, that object's appropriate
-     * method is invoked.
-     */
-    public interface OnImageDownloadListener {
-        /**
-         * On download start.
-         */
-        void onDownloadStart();
+	private static final String TAG = "DownloadImageAsyncTask";
 
-        /**
-         * On download complete.
-         *
-         * @param result the result
-         */
-        void onDownloadComplete(Bitmap result, ImageInfo sizes);
+	/**
+	 * The listener interface for receiving onImageDownload events. The class that is
+	 * interested in processing a onImageDownload
+	 * event implements this interface, and the object created with that class is
+	 * registered with a component using the component's
+	 * <code>addOnImageDownloadListener<code> method. When
+	 * the onImageDownload event occurs, that object's appropriate
+	 * method is invoked.
+	 */
+	public static interface OnImageDownloadListener {
 
-        /**
-         * On download error.
-         *
-         * @param error the error
-         */
-        void onDownloadError(String error);
-    }
+		/**
+		 * On download start.
+		 */
+		void onDownloadStart();
 
-    private OnImageDownloadListener mListener;
-    private Uri                     mUri;
-    private String                  error;
-    private ImageInfo               mImageOutputInfo;
-    private int                     mMaxSize;
+		/**
+		 * On download complete.
+		 *
+		 * @param result the result
+		 */
+		void onDownloadComplete(Bitmap result, ImageInfo sizes);
 
-    /**
-     * Instantiates a new download image async task.
-     *
-     * @param uri     the image uri
-     * @param maxSize the image max size (in px)
-     */
-    public DownloadImageAsyncTask(Uri uri, int maxSize) {
-        super();
-        mUri = uri;
-        mMaxSize = maxSize;
-        mImageOutputInfo = new ImageInfo();
-    }
+		/**
+		 * On download error.
+		 *
+		 * @param error the error
+		 */
+		void onDownloadError(String error);
+	}
 
-    /**
-     * Sets the on load listener.
-     *
-     * @param listener the new on load listener
-     */
-    public void setOnLoadListener(OnImageDownloadListener listener) {
-        mListener = listener;
-    }
+	private OnImageDownloadListener mListener;
+	private Uri mUri;
+	private String error;
+	private ImageInfo mImageOutputInfo;
+	private int mMaxSize;
 
-    @Override
-    protected void doPreExecute() {
-        Log.i(TAG, "doPreExecute: current thread #" + Thread.currentThread().getId());
-        if (mListener != null) {
-            mListener.onDownloadStart();
-        }
-    }
+	/**
+	 * Instantiates a new download image async task.
+	 * @param uri the image uri
+	 * @param maxSize the image max size (in px)
+	 */
+	public DownloadImageAsyncTask(Uri uri, int maxSize) {
+		super();
+		mUri = uri;
+		mMaxSize = maxSize;
+		mImageOutputInfo = new ImageInfo();
+	}
 
-    @Override
-    protected Bitmap doInBackground(Context... params) {
-        Log.i(TAG, "doInBackground: current thread #" + Thread.currentThread().getId());
+	/**
+	 * Sets the on load listener.
+	 *
+	 * @param listener the new on load listener
+	 */
+	public void setOnLoadListener(OnImageDownloadListener listener) {
+		mListener = listener;
+	}
 
-        final Context context = params[0];
-        int maxSize = -1;
+	@Override
+	protected void PreExecute() {
+		Log.i(TAG, "PreExecute: current thread #" + Thread.currentThread().getId());
+		if (mListener != null) mListener.onDownloadStart();
+	}
 
-        if (mMaxSize > 0) {
-            maxSize = mMaxSize;
-        }
+	@Override
+	protected Bitmap doInBackground(Context... params) {
+		Log.i(TAG, "doInBackground: current thread #" + Thread.currentThread().getId());
 
-        if (maxSize <= 0) {
-            maxSize = getManagedMaxImageSize(context);
-        }
+		final Context context = params[0];
+		int max_size = - 1;
 
-        try {
-            return DecodeUtils.decode(context, mUri, maxSize, maxSize, mImageOutputInfo);
-        } catch (Exception e) {
-            Log.e(TAG, "decode error", e);
-            error = e.getMessage();
-        }
+		if (mMaxSize > 0) {
+			max_size = mMaxSize;
+		}
 
-        return null;
-    }
+		if (max_size <= 0) {
+			max_size = getManagedMaxImageSize(context);
+		}
 
-    @Override
-    protected void doPostExecute(Bitmap result) {
-        Log.i(TAG, "doPostExecute: current thread #" + Thread.currentThread().getId());
-        if (mListener != null) {
-            if (result != null) {
-                mListener.onDownloadComplete(result, mImageOutputInfo);
-            } else {
-                mListener.onDownloadError(error);
-            }
-        }
+		try {
+			return DecodeUtils.decode(context, mUri, max_size, max_size, mImageOutputInfo);
+		} catch (Exception e) {
+			Log.e(TAG, "decode error", e);
+			error = e.getMessage();
+		}
 
-        mListener = null;
-        mUri = null;
-        error = null;
-    }
+		return null;
+	}
 
-    /**
-     * Return the maximum image size allowed for this device. Be careful if you want to
-     * modify the return value because it's easy to
-     * throw an {@link OutOfMemoryError} in android expecially when dealing with
-     * {@link Bitmap}.<br />
-     * Part of the application available memory has been already taken by the host
-     * application.
-     *
-     * @return the managed max image size
-     */
-    public static int getManagedMaxImageSize(Context context) {
+	@Override
+	protected void PostExecute(Bitmap result) {
+		Log.i(TAG, "PostExecute: current thread #" + Thread.currentThread().getId());
+		if (mListener != null) {
+			if (result != null) {
+				mListener.onDownloadComplete(result, mImageOutputInfo);
+			}
+			else {
+				mListener.onDownloadError(error);
+			}
+		}
 
-        final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        final int screenSize = Math.max(metrics.widthPixels, metrics.heightPixels);
-        double applicationMemory = SystemUtils.MemoryInfo.getRuntimeTotalMemory();
+		mListener = null;
+		mUri = null;
+		error = null;
+	}
 
-        if (applicationMemory >= Constants.APP_MEMORY_MEDIUM) {
-            return Math.min(screenSize, 1280);
-        } else if (applicationMemory >= Constants.APP_MEMORY_SMALL) {
-            return Math.min(screenSize, 900);
-        } else {
-            return Math.min(screenSize, 700);
-        }
-    }
+	/**
+	 * Return the maximum image size allowed for this device. Be careful if you want to
+	 * modify the return value because it's easy to
+	 * throw an {@link OutOfMemoryError} in android expecially when dealing with
+	 * {@link Bitmap}.<br />
+	 * Part of the application available memory has been already taken by the host
+	 * application.
+	 *
+	 * @return the managed max image size
+	 */
+	public static int getManagedMaxImageSize(Context context) {
+
+		final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		final int screen_size = Math.max(metrics.widthPixels, metrics.heightPixels);
+		double applicationMemory = SystemUtils.getApplicationTotalMemory();
+
+		if (applicationMemory >= Constants.APP_MEMORY_MEDIUM) {
+			return Math.min(screen_size, 1280);
+		}
+		else if (applicationMemory >= Constants.APP_MEMORY_SMALL) {
+			return Math.min(screen_size, 900);
+		}
+		else {
+			return Math.min(screen_size, 700);
+		}
+	}
 }

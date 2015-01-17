@@ -1,5 +1,8 @@
 package com.aviary.android.feather.sdk.widget;
 
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
+import it.sephiroth.android.library.imagezoom.graphics.IBitmapDrawable;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -12,280 +15,289 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import it.sephiroth.android.library.imagezoom.ImageViewTouch;
-import it.sephiroth.android.library.imagezoom.graphics.IBitmapDrawable;
-
 public class ImageViewTouchAndDraw extends ImageViewTouch {
-    protected static final float TOUCH_TOLERANCE = 4;
-    public static final float DEFAULT_STROKE_WIDTH = 10.0f;
-    protected Paint mPaint;
-    protected Path tmpPath = new Path();
-    protected Canvas mCanvas;
-    protected TouchMode mTouchMode = TouchMode.DRAW;
-    protected float mX, mY;
-    protected Matrix mIdentityMatrix = new Matrix();
-    protected Matrix mInvertedMatrix = new Matrix();
-    protected Bitmap              mCopy;
-    private   boolean             mTouchStarted;
-    private   OnDrawStartListener mDrawListener;
-    private   OnDrawPathListener  mDrawPathListener;
 
-    public ImageViewTouchAndDraw(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+	private boolean mTouchStarted;
 
-    public ImageViewTouchAndDraw(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+	public static enum TouchMode {
+		IMAGE, DRAW
+	}
 
-    public void setOnDrawStartListener(OnDrawStartListener listener) {
-        mDrawListener = listener;
-    }
+	public static interface OnDrawStartListener {
 
-    public void setOnDrawPathListener(OnDrawPathListener listener) {
-        mDrawPathListener = listener;
-    }
+		void onDrawStart ();
+	}
 
-    @Override
-    protected void init(Context context, AttributeSet attrs, int defStyle) {
-        super.init(context, attrs, defStyle);
+	public static interface OnDrawPathListener {
 
-        Log.i(TAG, "init, paint: " + mPaint);
+		void onStart ();
 
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mPaint.setFilterBitmap(false);
-        mPaint.setColor(0xFFFF0000);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
+		void onMoveTo ( float x, float y );
 
-        tmpPath = new Path();
-    }
+		void onLineTo ( float x, float y );
 
-    @Override
-    protected void onLayoutChanged(int left, int top, int right, int bottom) {
-        super.onLayoutChanged(left, top, right, bottom);
-        onDrawModeChanged();
-    }
+		void onQuadTo ( float x, float y, float x1, float y1 );
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (mTouchMode == TouchMode.DRAW && event.getPointerCount() == 1) {
-            float x = event.getX();
-            float y = event.getY();
+		void onEnd ();
+	}
 
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    onTouchStart(x, y);
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    onTouchMove(x, y);
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    onTouchUp();
-                    invalidate();
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        } else {
-            if (mTouchMode == TouchMode.IMAGE) {
-                return super.onTouchEvent(event);
-            } else {
-                return false;
-            }
-        }
-    }
+	protected Paint mPaint;
 
-    private void onTouchStart(float x, float y) {
-        Log.i(TAG, "onTouchStart");
+	protected Path tmpPath = new Path();
 
-        if (mTouchStarted) {
-            Log.w(TAG, "touch already started!");
-            return;
-        }
+	protected Canvas mCanvas;
 
-        mTouchStarted = true;
-        tmpPath.reset();
-        tmpPath.moveTo(x, y);
+	protected TouchMode mTouchMode = TouchMode.DRAW;
 
-        mX = x;
-        mY = y;
+	protected float mX, mY;
 
-        if (mDrawListener != null) {
-            mDrawListener.onDrawStart();
-        }
-        if (mDrawPathListener != null) {
+	protected Matrix mIdentityMatrix = new Matrix();
 
-            mDrawPathListener.onStart();
+	protected Matrix mInvertedMatrix = new Matrix();
 
-            float[] pts = new float[]{x, y};
-            mInvertedMatrix.mapPoints(pts);
-            mDrawPathListener.onMoveTo(pts[0], pts[1]);
-        }
-    }
+	protected Bitmap mCopy;
 
-    private void onTouchMove(float x, float y) {
-        if (!mTouchStarted) {
-            Log.w(TAG, "touch not started!");
-            return;
-        }
+	protected static final float TOUCH_TOLERANCE = 4;
 
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+	private OnDrawStartListener mDrawListener;
 
-            float x1 = (x + mX) / 2;
-            float y1 = (y + mY) / 2;
+	private OnDrawPathListener mDrawPathListener;
 
-            tmpPath.quadTo(mX, mY, x1, y1);
+	public ImageViewTouchAndDraw ( Context context, AttributeSet attrs ) {
+		this( context, attrs, 0 );
+	}
 
-            mCanvas.drawPath(tmpPath, mPaint);
-            tmpPath.reset();
-            tmpPath.moveTo(x1, y1);
+	public ImageViewTouchAndDraw ( Context context, AttributeSet attrs, int defStyle ) {
+		super( context, attrs, defStyle );
+	}
 
-            if (mDrawPathListener != null) {
+	public void setOnDrawStartListener ( OnDrawStartListener listener ) {
+		mDrawListener = listener;
+	}
 
-                float[] pts = new float[]{mX, mY, x1, y1};
-                mInvertedMatrix.mapPoints(pts);
-                mDrawPathListener.onQuadTo(pts[0], pts[1], pts[2], pts[3]);
-            }
+	public void setOnDrawPathListener ( OnDrawPathListener listener ) {
+		mDrawPathListener = listener;
+	}
 
-            mX = x;
-            mY = y;
-        }
-    }
+	@Override
+	protected void init ( Context context, AttributeSet attrs, int defStyle ) {
+		super.init( context, attrs, defStyle );
 
-    private void onTouchUp() {
-        if (mTouchStarted) {
-            tmpPath.reset();
-            if (mDrawPathListener != null) {
-                mDrawPathListener.onEnd();
-            }
-        }
-        mTouchStarted = false;
-    }
+		Log.i( LOG_TAG, "init, paint: " + mPaint );
 
-    public TouchMode getDrawMode() {
-        return mTouchMode;
-    }
+		mPaint = new Paint( Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG );
+		mPaint.setFilterBitmap( false );
+		mPaint.setColor( 0xFFFF0000 );
+		mPaint.setStyle( Paint.Style.STROKE );
+		mPaint.setStrokeJoin( Paint.Join.ROUND );
+		mPaint.setStrokeCap( Paint.Cap.ROUND );
+		mPaint.setStrokeWidth( 10.0f );
 
-    public void setDrawMode(TouchMode mode) {
-        if (mode != mTouchMode) {
-            mTouchMode = mode;
-            onDrawModeChanged();
-        }
-    }
+		tmpPath = new Path();
+	}
 
-    protected void onDrawModeChanged() {
-        if (mTouchMode == TouchMode.DRAW) {
+	public TouchMode getDrawMode () {
+		return mTouchMode;
+	}
 
-            Matrix m1 = new Matrix(getImageMatrix());
-            mInvertedMatrix.reset();
+	public void setDrawMode ( TouchMode mode ) {
+		if( mode != mTouchMode ) {
+			mTouchMode = mode;
+			onDrawModeChanged();
+		}
+	}
 
-            float[] v1 = getMatrixValues(m1);
-            m1.invert(m1);
-            float[] v2 = getMatrixValues(m1);
+	protected void onDrawModeChanged () {
+		if( mTouchMode == TouchMode.DRAW ) {
 
-            mInvertedMatrix.postTranslate(-v1[Matrix.MTRANS_X], -v1[Matrix.MTRANS_Y]);
-            mInvertedMatrix.postScale(v2[Matrix.MSCALE_X], v2[Matrix.MSCALE_Y]);
-            mCanvas.setMatrix(mInvertedMatrix);
+			Matrix m1 = new Matrix( getImageMatrix() );
+			mInvertedMatrix.reset();
 
-            Log.d(TAG, "scale: " + getScale(mInvertedMatrix));
-        }
-    }
+			float[] v1 = getMatrixValues( m1 );
+			m1.invert( m1 );
+			float[] v2 = getMatrixValues( m1 );
 
-    public static float[] getMatrixValues(Matrix m) {
-        float[] values = new float[9];
-        m.getValues(values);
-        return values;
-    }
+			mInvertedMatrix.postTranslate( - v1[Matrix.MTRANS_X], - v1[Matrix.MTRANS_Y] );
+			mInvertedMatrix.postScale( v2[Matrix.MSCALE_X], v2[Matrix.MSCALE_Y] );
+			mCanvas.setMatrix( mInvertedMatrix );
 
-    public float getDrawingScale() {
-        return getScale(mInvertedMatrix);
-    }
+			Log.d( LOG_TAG, "scale: " + getScale( mInvertedMatrix ) );
+		}
+	}
 
-    public Paint getPaint() {
-        return mPaint;
-    }
+	public float getDrawingScale () {
+		return getScale( mInvertedMatrix );
+	}
 
-    public void setPaint(Paint paint) {
-        mPaint.set(paint);
-    }
+	@Override
+	protected void onLayoutChanged ( int left, int top, int right, int bottom ) {
+		super.onLayoutChanged( left, top, right, bottom );
+		onDrawModeChanged();
+	}
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+	public Paint getPaint () {
+		return mPaint;
+	}
 
-        // canvas.drawPath( tmpPath, mPaint );
+	public void setPaint ( Paint paint ) {
+		mPaint.set( paint );
+	}
 
-        if (mCopy != null) {
-            final int saveCount = canvas.getSaveCount();
-            canvas.save();
-            canvas.drawBitmap(mCopy, getImageMatrix(), null);
-            canvas.restoreToCount(saveCount);
-        }
-    }
+	@Override
+	protected void onDraw ( Canvas canvas ) {
+		super.onDraw( canvas );
 
-    /**
-     * Commit the current changes to the passed {@link Bitmap}.<br />
-     * Call this method when you want to save the current status of the drawing operations
-     * to an output bitmap.
-     *
-     * @param canvas
-     */
-    public void commit(Canvas canvas) {
-        Drawable drawable = getDrawable();
-        if (null != drawable && drawable instanceof IBitmapDrawable) {
-            canvas.drawBitmap(((IBitmapDrawable) drawable).getBitmap(), new Matrix(), null);
-            canvas.drawBitmap(mCopy, new Matrix(), null);
-        }
-    }
+		// canvas.drawPath( tmpPath, mPaint );
 
-    @Override
-    protected void onDrawableChanged(Drawable drawable) {
-        super.onDrawableChanged(drawable);
+		if( mCopy != null ) {
+			final int saveCount = canvas.getSaveCount();
+			canvas.save();
+			canvas.drawBitmap( mCopy, getImageMatrix(), null );
+			canvas.restoreToCount( saveCount );
+		}
+	}
 
-        if (mCopy != null) {
-            mCopy.recycle();
-            mCopy = null;
-        }
+	/**
+	 * Commit the current changes to the passed {@link Bitmap}.<br />
+	 * Call this method when you want to save the current status of the drawing operations
+	 * to an output bitmap.
+	 *
+	 * @param canvas
+	 */
+	public void commit ( Canvas canvas ) {
+		Drawable drawable = getDrawable();
+		if( null != drawable && drawable instanceof IBitmapDrawable ) {
+			canvas.drawBitmap( ( (IBitmapDrawable) drawable ).getBitmap(), new Matrix(), null );
+			canvas.drawBitmap( mCopy, new Matrix(), null );
+		}
+	}
 
-        if (drawable != null && (drawable instanceof IBitmapDrawable)) {
-            final Bitmap bitmap = ((IBitmapDrawable) drawable).getBitmap();
-            mCopy = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
-            mCanvas = new Canvas(mCopy);
-            mCanvas.drawColor(0);
-            onDrawModeChanged();
-        }
-    }
+	@Override
+	protected void onDrawableChanged ( Drawable drawable ) {
+		super.onDrawableChanged( drawable );
 
-    public Bitmap getOverlayBitmap() {
-        return mCopy;
-    }
+		if( mCopy != null ) {
+			mCopy.recycle();
+			mCopy = null;
+		}
 
-    public static enum TouchMode {
-        IMAGE, DRAW
-    }
+		if( drawable != null && ( drawable instanceof IBitmapDrawable ) ) {
+			final Bitmap bitmap = ( (IBitmapDrawable) drawable ).getBitmap();
+			mCopy = Bitmap.createBitmap( bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888 );
+			mCanvas = new Canvas( mCopy );
+			mCanvas.drawColor( 0 );
+			onDrawModeChanged();
+		}
+	}
 
-    public interface OnDrawStartListener {
-        void onDrawStart();
-    }
+	private void touch_start ( float x, float y ) {
+		Log.i( LOG_TAG, "touch_start" );
 
-    public interface OnDrawPathListener {
-        void onStart();
+		if( mTouchStarted ) {
+			Log.w( LOG_TAG, "touch already started!" );
+			return;
+		}
 
-        void onMoveTo(float x, float y);
+		mTouchStarted = true;
+		tmpPath.reset();
+		tmpPath.moveTo( x, y );
 
-        void onLineTo(float x, float y);
+		mX = x;
+		mY = y;
 
-        void onQuadTo(float x, float y, float x1, float y1);
+		if( mDrawListener != null ) {
+			mDrawListener.onDrawStart();
+		}
+		if( mDrawPathListener != null ) {
 
-        void onEnd();
-    }
+			mDrawPathListener.onStart();
+
+			float[] pts = new float[]{ x, y };
+			mInvertedMatrix.mapPoints( pts );
+			mDrawPathListener.onMoveTo( pts[0], pts[1] );
+		}
+	}
+
+	private void touch_move ( float x, float y ) {
+		if( ! mTouchStarted ) {
+			Log.w( LOG_TAG, "touch not started!" );
+			return;
+		}
+
+		float dx = Math.abs( x - mX );
+		float dy = Math.abs( y - mY );
+		if( dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE ) {
+
+			float x1 = ( x + mX ) / 2;
+			float y1 = ( y + mY ) / 2;
+
+			tmpPath.quadTo( mX, mY, x1, y1 );
+
+			mCanvas.drawPath( tmpPath, mPaint );
+			tmpPath.reset();
+			tmpPath.moveTo( x1, y1 );
+
+			if( mDrawPathListener != null ) {
+
+				float[] pts = new float[]{ mX, mY, x1, y1 };
+				mInvertedMatrix.mapPoints( pts );
+				mDrawPathListener.onQuadTo( pts[0], pts[1], pts[2], pts[3] );
+			}
+
+			mX = x;
+			mY = y;
+		}
+	}
+
+	private void touch_up () {
+		Log.i( LOG_TAG, "touch_up" );
+		if( mTouchStarted ) {
+			tmpPath.reset();
+			if( mDrawPathListener != null ) {
+				mDrawPathListener.onEnd();
+			}
+		}
+		mTouchStarted = false;
+	}
+
+	public static float[] getMatrixValues ( Matrix m ) {
+		float[] values = new float[9];
+		m.getValues( values );
+		return values;
+	}
+
+	@Override
+	public boolean onTouchEvent ( MotionEvent event ) {
+		if( mTouchMode == TouchMode.DRAW && event.getPointerCount() == 1 ) {
+			float x = event.getX();
+			float y = event.getY();
+
+			switch( event.getAction() ) {
+				case MotionEvent.ACTION_DOWN:
+					touch_start( x, y );
+					invalidate();
+					break;
+				case MotionEvent.ACTION_MOVE:
+					touch_move( x, y );
+					invalidate();
+					break;
+				case MotionEvent.ACTION_UP:
+				case MotionEvent.ACTION_CANCEL:
+					touch_up();
+					invalidate();
+					break;
+			}
+			return true;
+		} else {
+			if( mTouchMode == TouchMode.IMAGE ) {
+				return super.onTouchEvent( event );
+			} else {
+				return false;
+			}
+		}
+	}
+
+	public Bitmap getOverlayBitmap () {
+		return mCopy;
+	}
 }

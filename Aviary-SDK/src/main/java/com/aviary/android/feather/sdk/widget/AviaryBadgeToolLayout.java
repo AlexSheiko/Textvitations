@@ -22,171 +22,145 @@ import com.aviary.android.feather.sdk.R;
  * This view will register itself as listener to the {@link BadgeService} service.<br />
  * When there is an update to the badges this view will manage the visibility change of
  * its badge-view.<br />
- *
+ * 
  * @author alessandro
  */
 public class AviaryBadgeToolLayout extends LinearLayout implements OnToolBadgesUpdateListener {
-    static final String LOG_TAG = "AviaryBadgeToolLayout";
-    OnAttachStatusListener mOnAttachStatusListener;
-    /** the badge-view contained in the xml layout */
-    View         mBadgeView;
-    /** tool icon */
-    ImageView    mImageView;
-    /** tool label */
-    TextView     mTextView;
-    /** {@link BadgeService} reference */
-    BadgeService mBadgeService;
-    public AviaryBadgeToolLayout(Context context) {
-        this(context, null);
-    }
 
-    public AviaryBadgeToolLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+	static final String LOG_TAG = "AviaryBadgeToolLayout";
 
-    public AviaryBadgeToolLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs);
-    }
+	/** the badge-view contained in the xml layout */
+	View mBadgeView;
+	/** tool icon */
+	ImageView mImageView;
+	/** tool label */
+	TextView mTextView;
+	/** {@link BadgeService} reference */
+	BadgeService mBadgeService;
 
-    public void setOnAttachStatusListener(OnAttachStatusListener listener) {
-        mOnAttachStatusListener = listener;
-    }
+	public AviaryBadgeToolLayout ( Context context ) {
+		this( context, null );
+	}
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+	public AviaryBadgeToolLayout ( Context context, AttributeSet attrs ) {
+		this( context, attrs, 0 );
+	}
 
-        if (null != mBadgeService) {
-            onToolBadgesUpdate(mBadgeService);
-        }
+	public AviaryBadgeToolLayout ( Context context, AttributeSet attrs, int defStyle ) {
+		super( context, attrs );
+	}
 
-        if (mOnAttachStatusListener != null) {
-            mOnAttachStatusListener.onAttachedtoWindow(this);
-        }
+	@Override
+	public void setTag( Object tag ) {
+		super.setTag( tag );
+		onTagChanged( tag );
+	}
 
-    }
+	protected void onTagChanged( Object tag ) {
+		if ( null != tag ) {
+			ToolEntry entry = (ToolEntry) tag;
+			mImageView.setImageResource( entry.iconResourceId );
+			mTextView.setText( entry.labelResourceId );
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mOnAttachStatusListener != null) {
-            mOnAttachStatusListener.onDetachedFromWindow(this);
-        }
-    }
+			if ( null != getContext() ) {
+				setContentDescription( getContext().getString( entry.labelResourceId ) );
+			}
 
-    @Override
-    public void onFinishTemporaryDetach() {
-        super.onFinishTemporaryDetach();
-        if (mOnAttachStatusListener != null) {
-            mOnAttachStatusListener.onFinishTemporaryDetach(this);
-        }
-    }
+			if( null != mBadgeService ) {
+				onToolBadgesUpdate( mBadgeService );
+			}
+			postInvalidate();
+		}
+	}
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        mBadgeView = findViewById(R.id.aviary_badge);
-        mTextView = (TextView) findViewById(R.id.aviary_text);
-        mImageView = (ImageView) findViewById(R.id.aviary_image);
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		mBadgeView = findViewById( R.id.aviary_badge );
+		mTextView = (TextView) findViewById( R.id.aviary_text );
+		mImageView = (ImageView) findViewById( R.id.aviary_image );
 
-        registerToService();
-    }
+		registerToService();
+	}
 
-    @Override
-    public void setTag(Object tag) {
-        super.setTag(tag);
-        onTagChanged(tag);
-    }
+	protected void registerToService() {
+		FeatherActivity activity = (FeatherActivity) getContext();
+		if ( null != activity ) {
+			AviaryMainController controller = activity.getMainController();
+			if ( null != controller ) {
+				mBadgeService = controller.getService( BadgeService.class );
+				mBadgeService.registerOnToolBadgesUpdateListener( this );
+			}
+		}
+	}
 
-    protected void onTagChanged(Object tag) {
-        if (null != tag) {
-            ToolEntry entry = (ToolEntry) tag;
-            mImageView.setImageResource(entry.iconResourceId);
-            mTextView.setText(entry.labelResourceId);
+	protected void removeFromService() {
+		if ( null != mBadgeService ) {
+			mBadgeService.removeOnToolBadgesUpdateListener( this );
+		}
+	}
 
-            if (null != getContext()) {
-                setContentDescription(getContext().getString(entry.labelResourceId));
-            }
+	@Override
+	protected void onAttachedToWindow() {
+		super.onAttachedToWindow();
 
-            if (null != mBadgeService) {
-                onToolBadgesUpdate(mBadgeService);
-            }
-            postInvalidate();
-        }
-    }
+		if ( null != mBadgeService ) {
+			onToolBadgesUpdate( mBadgeService );
+		}
+	}
 
-    @Override
-    public void onToolBadgesUpdate(BadgeService service) {
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+	}
 
-        ToolEntry entry = (ToolEntry) getTag();
+	@Override
+	protected void finalize() throws Throwable {
+		removeFromService();
+		super.finalize();
+	}
 
-        if (null != entry) {
-            if (service.getIsActive(entry.name)) {
-                showBadge();
-            } else {
-                hideBadge();
-            }
-        }
-    }
+	@Override
+	public void onToolBadgesUpdate( BadgeService service ) {
 
-    @Override
-    public void onToolBadgeSingleUpdate(BadgeService service, ToolLoaderFactory.Tools type) {
+		ToolEntry entry = (ToolEntry) getTag();
 
-        ToolEntry entry = (ToolEntry) getTag();
+		if ( null != entry ) {
+			if ( service.getIsActive( entry.name ) ) {
+				showBadge();
+			} else {
+				hideBadge();
+			}
+		}
+	}
 
-        if (null != entry && entry.name == type) {
+	@Override
+	public void onToolBadgeSingleUpdate( BadgeService service, ToolLoaderFactory.Tools type ) {
 
-            Log.i(LOG_TAG, "onToolBadgeSingleUpdate: " + type);
+		ToolEntry entry = (ToolEntry) getTag();
 
-            if (service.getIsActive(entry.name)) {
-                showBadge();
-            } else {
-                hideBadge();
-            }
-        }
-    }
+		if ( null != entry && entry.name == type ) {
 
-    protected void showBadge() {
-        if (null != mBadgeView) {
-            mBadgeView.setVisibility(View.VISIBLE);
-        }
-    }
+			Log.i( LOG_TAG, "onToolBadgeSingleUpdate: " + type );
 
-    protected void hideBadge() {
-        if (null != mBadgeView) {
-            mBadgeView.setVisibility(View.GONE);
-        }
-    }
+			if ( service.getIsActive( entry.name ) ) {
+				showBadge();
+			} else {
+				hideBadge();
+			}
+		}
+	}
 
-    protected void registerToService() {
-        FeatherActivity activity = (FeatherActivity) getContext();
-        if (null != activity) {
-            AviaryMainController controller = activity.getMainController();
-            if (null != controller) {
-                mBadgeService = controller.getService(BadgeService.class);
-                mBadgeService.registerOnToolBadgesUpdateListener(this);
-            }
-        }
-    }
+	protected void hideBadge() {
+		if ( null != mBadgeView ) {
+			mBadgeView.setVisibility( View.GONE );
+		}
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        removeFromService();
-        super.finalize();
-    }
-
-    protected void removeFromService() {
-        if (null != mBadgeService) {
-            mBadgeService.removeOnToolBadgesUpdateListener(this);
-        }
-    }
-
-    public interface OnAttachStatusListener {
-        void onAttachedtoWindow(View view);
-
-        void onDetachedFromWindow(View view);
-
-        void onFinishTemporaryDetach(View view);
-    }
+	protected void showBadge() {
+		if ( null != mBadgeView ) {
+			mBadgeView.setVisibility( View.VISIBLE );
+		}
+	}
 
 }

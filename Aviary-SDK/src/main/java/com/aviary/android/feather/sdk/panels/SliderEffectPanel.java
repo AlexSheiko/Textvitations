@@ -17,145 +17,145 @@ import com.aviary.android.feather.sdk.widget.AviarySeekBar;
 import com.aviary.android.feather.sdk.widget.AviaryWheel;
 import com.aviary.android.feather.sdk.widget.AviaryWheel.OnWheelChangeListener;
 
-public abstract class SliderEffectPanel extends AbstractOptionPanel
-    implements OnSeekBarChangeListener, OnClickListener, OnWheelChangeListener {
-    enum SliderStyle {
-        SeekBarStyle, WheelStyle
-    }
+public abstract class SliderEffectPanel extends AbstractOptionPanel implements OnSeekBarChangeListener, OnClickListener, OnWheelChangeListener {
 
-    private SliderStyle mStyle;
-    AviaryWheel   mWheel;
-    AviarySeekBar mSeekBar;
-    String        mResourceName;
-    View          mButtonMinus, mButtonPlus;
+	enum SliderStyle {
+		SeekBarStyle, WheelStyle
+	};
 
-    public SliderEffectPanel(IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools type, String resourcesBaseName) {
-        super(context, entry);
-        mStyle = SliderStyle.WheelStyle;
+	private SliderStyle mStyle;
+	AviaryWheel mWheel;
+	AviarySeekBar mSeekBar;
+	String mResourceName;
+	View mButtonMinus, mButtonPlus;
 
-        mFilter = ToolLoaderFactory.get(type);
-        mResourceName = resourcesBaseName;
-    }
+	public SliderEffectPanel ( IAviaryController context, ToolEntry entry, ToolLoaderFactory.Tools type, String resourcesBaseName ) {
+		super( context, entry );
+		mStyle = SliderStyle.WheelStyle;
 
-    @Override
-    public void onCreate(Bitmap bitmap, Bundle options) {
-        super.onCreate(bitmap, options);
+		mFilter = ToolLoaderFactory.get(type);
+		mResourceName = resourcesBaseName;
+	}
 
-        mButtonMinus = getOptionView().findViewById(R.id.aviary_button_minus);
-        mButtonPlus = getOptionView().findViewById(R.id.aviary_button_plus);
+	@Override
+	public void onCreate( Bitmap bitmap, Bundle options ) {
+		super.onCreate( bitmap, options );
 
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            mSeekBar = (AviarySeekBar) getOptionView().findViewById(R.id.aviary_seekbar);
-            mSeekBar.setProgress(50);
-        } else {
-            mWheel = (AviaryWheel) getOptionView().findViewById(R.id.aviary_wheel);
-            mWheel.setValue(50);
-        }
-    }
+		mButtonMinus = getOptionView().findViewById( R.id.aviary_button_minus );
+		mButtonPlus = getOptionView().findViewById( R.id.aviary_button_plus );
 
-    @Override
-    public void onActivate() {
-        super.onActivate();
-        mButtonMinus.setOnClickListener(this);
-        mButtonPlus.setOnClickListener(this);
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			mSeekBar = (AviarySeekBar) getOptionView().findViewById( R.id.aviary_seekbar );
+			mSeekBar.setProgress( 50 );
+		} else {
+			mWheel = (AviaryWheel) getOptionView().findViewById( R.id.aviary_wheel );
+			mWheel.setValue( 50 );
+		}
+	}
 
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            mSeekBar.setOnSeekBarChangeListener(this);
-        } else {
-            mWheel.setOnWheelChangeListener(this);
-            disableHapticIsNecessary(mWheel);
-        }
-    }
+	@Override
+	public void onActivate() {
+		super.onActivate();
+		mButtonMinus.setOnClickListener( this );
+		mButtonPlus.setOnClickListener( this );
 
-    @Override
-    public void onDeactivate() {
-        super.onDeactivate();
-        mButtonMinus.setOnClickListener(null);
-        mButtonPlus.setOnClickListener(null);
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			mSeekBar.setOnSeekBarChangeListener( this );
+		} else {
+			mWheel.setOnWheelChangeListener( this );
+			disableHapticIsNecessary( mWheel );
+		}
+	}
 
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            mSeekBar.setOnSeekBarChangeListener(null);
-        } else {
-            mWheel.setOnWheelChangeListener(this);
-        }
-    }
+	@Override
+	public void onDeactivate() {
+		super.onDeactivate();
+		mButtonMinus.setOnClickListener( null );
+		mButtonPlus.setOnClickListener( null );
 
-    protected void setValue(int value) {
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            mSeekBar.setProgress(value);
-        } else {
-            mWheel.setValue(value);
-        }
-    }
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			mSeekBar.setOnSeekBarChangeListener( null );
+		} else {
+			mWheel.setOnWheelChangeListener( this );
+		}
+	}
 
-    @Override
-    public void onClick(View v) {
-        final int id = v.getId();
-        if (id == mButtonMinus.getId()) {
-            decreaseValue();
-        } else if (id == mButtonPlus.getId()) {
-            increaseValue();
-        }
-    }
+	protected void setValue( int value ) {
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			mSeekBar.setProgress( value );
+		} else {
+			mWheel.setValue( value );
+		}
+	}
 
-    protected void decreaseValue() {
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            mSeekBar.setProgress(mSeekBar.getProgress() - 1);
-        } else {
-            mWheel.setValue(mWheel.getValue() - 1);
-        }
-    }
+	@Override
+	public void onClick( View v ) {
+		final int id = v.getId();
+		if ( id == mButtonMinus.getId() ) {
+			decreaseValue();
+		} else if ( id == mButtonPlus.getId() ) {
+			increaseValue();
+		}
+	}
 
-    protected void increaseValue() {
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            mSeekBar.setProgress(mSeekBar.getProgress() + 1);
-        } else {
-            mWheel.setValue(mWheel.getValue() + 1);
-        }
-    }
+	protected void decreaseValue() {
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			mSeekBar.setProgress( mSeekBar.getProgress() - 1 );
+		} else {
+			mWheel.setValue( mWheel.getValue() - 1 );
+		}
+	}
 
-    @Override
-    protected ViewGroup generateOptionView(LayoutInflater inflater, ViewGroup parent) {
-        if (mStyle == SliderStyle.SeekBarStyle) {
-            return (ViewGroup) inflater.inflate(R.layout.aviary_panel_seekbar, parent, false);
-        } else {
-            return (ViewGroup) inflater.inflate(R.layout.aviary_panel_wheel, parent, false);
-        }
-    }
+	protected void increaseValue() {
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			mSeekBar.setProgress( mSeekBar.getProgress() + 1 );
+		} else {
+			mWheel.setValue( mWheel.getValue() + 1 );
+		}
+	}
 
-    @Override
-    public final void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        onSliderChanged(progress, fromUser);
-    }
+	@Override
+	protected ViewGroup generateOptionView( LayoutInflater inflater, ViewGroup parent ) {
+		if ( mStyle == SliderStyle.SeekBarStyle ) {
+			return (ViewGroup) inflater.inflate( R.layout.aviary_panel_seekbar, parent, false );
+		} else {
+			return (ViewGroup) inflater.inflate( R.layout.aviary_panel_wheel, parent, false );
+		}
+	}
 
-    @Override
-    public final void onStartTrackingTouch(SeekBar seekBar) {
-        onSliderStart(seekBar.getProgress());
-    }
+	@Override
+	public final void onProgressChanged( SeekBar seekBar, int progress, boolean fromUser ) {
+		onSliderChanged( progress, fromUser );
+	}
 
-    @Override
-    public final void onStopTrackingTouch(SeekBar seekBar) {
-        onSliderEnd(seekBar.getProgress());
-    }
+	@Override
+	public final void onStartTrackingTouch( SeekBar seekBar ) {
+		onSliderStart( seekBar.getProgress() );
+	}
 
-    @Override
-    public final void onStartTrackingTouch(AviaryWheel view) {
-        onSliderStart(view.getValue());
-    }
+	@Override
+	public final void onStopTrackingTouch( SeekBar seekBar ) {
+		onSliderEnd( seekBar.getProgress() );
+	}
 
-    @Override
-    public final void onValueChanged(AviaryWheel view, int value) {
-        onSliderChanged(value, true);
-    }
+	@Override
+	public final void onStartTrackingTouch( AviaryWheel view ) {
+		onSliderStart( view.getValue() );
+	}
 
-    @Override
-    public void onStopTrackingTouch(AviaryWheel view) {
-        onSliderEnd(view.getValue());
-    }
+	@Override
+	public final void OnValueChanged( AviaryWheel view, int value ) {
+		onSliderChanged( value, true );
+	}
 
-    protected abstract void onSliderStart(int value);
+	@Override
+	public void onStopTrackingTouch( AviaryWheel view ) {
+		onSliderEnd( view.getValue() );
+	}
 
-    protected abstract void onSliderChanged(int value, boolean fromUser);
+	protected abstract void onSliderStart( int value );
 
-    protected abstract void onSliderEnd(int value);
+	protected abstract void onSliderChanged( int value, boolean fromUser );
+
+	protected abstract void onSliderEnd( int value );
 }

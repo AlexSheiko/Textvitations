@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<!-- iap dialog detail, detail image view height (sdk) -->
-	<dimen name="aviary_store_detail_image_height_iap2">212dip</dimen>
-</resources>

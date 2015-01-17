@@ -12,115 +12,114 @@ import android.widget.SeekBar;
 import com.aviary.android.feather.sdk.R;
 
 public class AviarySeekBar extends SeekBar {
-    @SuppressWarnings ("unused")
-    private static final String LOG_TAG = "seekbar";
-    protected Drawable mSecondary;
-    protected Drawable mSecondaryInverted;
-    protected Drawable mSecondaryCenter;
-    protected int      mSecondaryMinWidth;
-    protected int      mSecondaryMinHeight;
-    protected double   mSecondaryCenterOffset;
-    protected int      mBackgroundOffset;
-    private   int      mRealWidth;
-    private   Drawable mCurrentDrawable;
 
-    public AviarySeekBar(Context context) {
-        this(context, null);
-    }
+	@SuppressWarnings ( "unused" )
+	private static final String LOG_TAG = "seekbar";
 
-    public AviarySeekBar(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.aviarySeekBarStyle);
-    }
+	protected Drawable mSecondary;
+	protected Drawable mSecondaryInverted;
+	protected Drawable mSecondaryCenter;
 
-    @SuppressWarnings("checkstyle:magicnumber")
-    public AviarySeekBar(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+	protected int mSecondaryMinWidth;
+	protected int mSecondaryMinHeight;
+	protected double mSecondaryCenterOffset;
+	protected int mBackgroundOffset;
+	private int mRealWidth;
+	private Drawable mCurrentDrawable;
 
-        final Theme theme = context.getTheme();
-        TypedArray typedArray = theme.obtainStyledAttributes(attrs, R.styleable.AviarySeekBar, defStyle, 0);
-        Drawable thumb = typedArray.getDrawable(R.styleable.AviarySeekBar_aviarySeekBarThumb);
-        int offset = typedArray.getDimensionPixelOffset(R.styleable.AviarySeekBar_aviarySeekBarThumbOffset, 0);
-        mSecondary = typedArray.getDrawable(R.styleable.AviarySeekBar_aviarySeekBarSecondary);
-        mSecondaryInverted = typedArray.getDrawable(R.styleable.AviarySeekBar_aviarySeekBarSecondaryInverted);
-        mSecondaryCenter = typedArray.getDrawable(R.styleable.AviarySeekBar_aviarySeekBarSecondaryCenter);
-        typedArray.recycle();
+	public AviarySeekBar ( Context context ) {
+		this( context, null );
+	}
 
-        mSecondaryMinWidth = mSecondary.getIntrinsicWidth();
-        mSecondaryMinHeight = mSecondary.getIntrinsicHeight();
-        mSecondaryCenterOffset = (double) mSecondaryMinWidth * 0.5;
+	public AviarySeekBar ( Context context, AttributeSet attrs ) {
+		this( context, attrs, R.attr.aviarySeekBarStyle );
+	}
 
-        mBackgroundOffset = (int) (getProgressDrawable().getIntrinsicWidth() * 0.12);
+	public AviarySeekBar ( Context context, AttributeSet attrs, int defStyle ) {
+		super( context, attrs, defStyle );
 
-        // thumb.setAlpha( 50 );
-        setThumb(thumb);
-        setThumbOffset(offset);
-    }
+		final Theme theme = context.getTheme();
+		TypedArray typedArray = theme.obtainStyledAttributes( attrs, R.styleable.AviarySeekBar, defStyle, 0 );
+		Drawable thumb = typedArray.getDrawable( R.styleable.AviarySeekBar_aviarySeekBarThumb );
+		int offset = typedArray.getDimensionPixelOffset( R.styleable.AviarySeekBar_aviarySeekBarThumbOffset, 0 );
+		mSecondary = typedArray.getDrawable( R.styleable.AviarySeekBar_aviarySeekBarSecondary );
+		mSecondaryInverted = typedArray.getDrawable( R.styleable.AviarySeekBar_aviarySeekBarSecondaryInverted );
+		mSecondaryCenter = typedArray.getDrawable( R.styleable.AviarySeekBar_aviarySeekBarSecondaryCenter );
+		typedArray.recycle();
 
-    @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
+		mSecondaryMinWidth = mSecondary.getIntrinsicWidth();
+		mSecondaryMinHeight = mSecondary.getIntrinsicHeight();
+		mSecondaryCenterOffset = (double) mSecondaryMinWidth * 0.5;
 
-        int[] state = getDrawableState();
-        mSecondary.setState(state);
-        mSecondaryInverted.setState(state);
-        mSecondaryCenter.setState(state);
-    }
+		mBackgroundOffset = (int) ( getProgressDrawable().getIntrinsicWidth() * 0.12 );
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        mRealWidth = (w - (getPaddingLeft() + getPaddingRight())) - mBackgroundOffset;
-    }
+		// thumb.setAlpha( 50 );
+		setThumb( thumb );
+		setThumbOffset( offset );
+	}
 
-    @Override
-    @SuppressWarnings("checkstyle:magicnumber")
-    protected synchronized void onDraw(Canvas canvas) {
+	@Override
+	protected void drawableStateChanged() {
+		super.drawableStateChanged();
 
-        if (mRealWidth < 1) {
-            return;
-        }
+		int[] state = getDrawableState();
+		mSecondary.setState( state );
+		mSecondaryInverted.setState( state );
+		mSecondaryCenter.setState( state );
+	}
 
-        double progress = (getProgress() - 50.0) / 50.0; // 0.0 - 1.0
-        double center = -getPaddingLeft() + (getWidth() / 2.0);
-        double w = progress * mRealWidth / 2.0;
+	@Override
+	protected void onSizeChanged( int w, int h, int oldw, int oldh ) {
+		super.onSizeChanged( w, h, oldw, oldh );
+		mRealWidth = ( w - ( getPaddingLeft() + getPaddingRight() ) ) - mBackgroundOffset;
+	}
 
-        if (getProgressDrawable() instanceof LayerDrawable) {
+	@Override
+	protected synchronized void onDraw( Canvas canvas ) {
 
-            // retrieve the current drawable state ( selected, pressed, ... )
-            LayerDrawable layerDrawable = (LayerDrawable) getProgressDrawable();
+		if ( mRealWidth < 1 ) return;
 
-            int left = 0;
-            int right = 0;
-            Drawable drawable = null;
+		double progress = ( getProgress() - 50.0 ) / 50.0; // 0.0 - 1.0
+		double center = -getPaddingLeft() + ( getWidth() / 2.0 );
+		double w = progress * mRealWidth / 2.0;
 
-            if (progress > 0) {
-                // right
-                left = (int) (center - mSecondaryCenterOffset);
-                right = (int) (left + w + mSecondaryCenterOffset);
-                drawable = mSecondary;
-            } else if (progress < 0) {
-                // left
-                left = (int) (center + w);
-                right = (int) (center + mSecondaryCenterOffset);
-                drawable = mSecondaryInverted;
-            }
+		if ( getProgressDrawable() instanceof LayerDrawable ) {
 
-            if ((right - left) < mSecondaryMinWidth) {
-                // center
-                left = (int) (center - (mSecondaryMinWidth / 2));
-                right = (int) (center + (mSecondaryMinWidth / 2));
-                drawable = mSecondaryCenter;
-            }
+			// retrieve the current drawable state ( selected, pressed, ... )
+			LayerDrawable layerDrawable = (LayerDrawable) getProgressDrawable();
 
-            if (mCurrentDrawable != drawable) {
-                mCurrentDrawable = drawable;
-                layerDrawable.setDrawableByLayerId(android.R.id.secondaryProgress, mCurrentDrawable);
-            }
+			int left = 0;
+			int right = 0;
+			Drawable drawable = null;
 
-            if (null != drawable) {
-                drawable.setBounds(left, 0, right, mSecondaryMinHeight);
-            }
-        }
-        super.onDraw(canvas);
-    }
+			if ( progress > 0 ) {
+				// right
+				left = (int) ( center - mSecondaryCenterOffset );
+				right = (int) ( left + w + mSecondaryCenterOffset );
+				drawable = mSecondary;
+			} else if ( progress < 0 ) {
+				// left
+				left = (int) ( center + w );
+				right = (int) ( center + mSecondaryCenterOffset );
+				drawable = mSecondaryInverted;
+			}
+
+			if ( ( right - left ) < mSecondaryMinWidth ) {
+				// center
+				left = (int) ( center - ( mSecondaryMinWidth / 2 ) );
+				right = (int) ( center + ( mSecondaryMinWidth / 2 ) );
+				drawable = mSecondaryCenter;
+			}
+
+			if ( mCurrentDrawable != drawable ) {
+				mCurrentDrawable = drawable;
+				layerDrawable.setDrawableByLayerId( android.R.id.secondaryProgress, mCurrentDrawable );
+			}
+
+			if ( null != drawable ) {
+				drawable.setBounds( left, 0, right, mSecondaryMinHeight );
+			}
+		}
+		super.onDraw( canvas );
+	}
 }

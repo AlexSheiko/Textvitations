@@ -7,184 +7,153 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aviary.android.feather.sdk.R;
 import com.aviary.android.feather.cds.CdsUtils;
 import com.aviary.android.feather.cds.CdsUtils.PackOption;
-import com.aviary.android.feather.sdk.R;
 
 public class IAPBuyButton extends RelativeLayout {
-    TextView                     mTextView;
-    View                         mProgress;
-    CdsUtils.PackOptionWithPrice mOption;
-    long                         mPackId;
-    Runnable checkDownloadStatus = new Runnable() {
-        @Override
-        public void run() {
-            if (mPackId > -1 && null != getContext() && null != mOption) {
-                Pair<PackOption, String> result = CdsUtils.getPackOptionDownloadStatus(getContext(), mPackId);
-                if (null != result) {
-                    if (null != getContext()) {
-                        setPackOption(new CdsUtils.PackOptionWithPrice(result.first), mPackId);
-                    }
-                }
-            }
-        }
-    };
 
-    public IAPBuyButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+	TextView mTextView;
+	View mProgress;
+	CdsUtils.PackOptionWithPrice mOption;
+	long mPackId;
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        mTextView = (TextView) findViewById(R.id.aviary_buy_button_text);
-        mProgress = findViewById(R.id.aviary_buy_button_loader);
-    }
+	public IAPBuyButton( Context context, AttributeSet attrs ) {
+		super( context, attrs );
+	}
 
-    public CdsUtils.PackOptionWithPrice getPackOption() {
-        return mOption;
-    }
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		mTextView = (TextView) findViewById( R.id.aviary_buy_button_text );
+		mProgress = findViewById( R.id.aviary_buy_button_loader );
+	}
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        getHandler().removeCallbacks(checkDownloadStatus);
-    }
+	public CdsUtils.PackOptionWithPrice getPackOption() {
+		return mOption;
+	}
 
-    public long getPackId() {
-        return mPackId;
-    }
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		getHandler().removeCallbacks( checkDownloadStatus );
+	}
 
-    public void setPackOption(CdsUtils.PackOptionWithPrice option, long packId) {
-        if (null != option && option.equals(mOption)) {
-            // no need to update
-            return;
-        }
+	Runnable checkDownloadStatus = new Runnable() {
 
-        mOption = option;
-        mPackId = packId;
+		@Override
+		public void run() {
+			if( mPackId > - 1 && null != getContext() && null != mOption ) {
+				Pair<PackOption, String> result = CdsUtils.getPackOptionDownloadStatus( getContext(), mPackId );
+				if( null != result ) {
+					if( null != getContext() ) {
+						setPackOption( new CdsUtils.PackOptionWithPrice( result.first ), mPackId );
+					}
+				}
+			}
+		}
+	};
 
-        if (null != getHandler()) {
-            getHandler().removeCallbacks(checkDownloadStatus);
-        }
+	public long getPackId() {
+		return mPackId;
+	}
 
-        if (null == option) {
-            return;
-        }
+	public void setPackOption( CdsUtils.PackOptionWithPrice option, long packId ) {
+		if( null != option && option.equals( mOption ) ) {
+			// no need to update
+			return;
+		}
 
-        boolean oldEnableStatus = isEnabled();
-        int oldProgressVisibility = mProgress.getVisibility();
-        int oldTextVisibility = mTextView.getVisibility();
+		mOption = option;
+		mPackId = packId;
 
-        InnerVisibility innerVisibility = new InnerVisibility(option, true, View.INVISIBLE, View.VISIBLE).invoke();
+		if( null != getHandler() )
+			getHandler().removeCallbacks( checkDownloadStatus );
 
-        if (oldEnableStatus != innerVisibility.isNewEnableStatus()) {
-            setEnabled(innerVisibility.newEnableStatus);
-        }
+		if( null == option ) {
+			return;
+		}
 
-        if (oldProgressVisibility != innerVisibility.newProgressVisibility) {
-            mProgress.setVisibility(innerVisibility.newProgressVisibility);
-        }
+		boolean oldEnableStatus = isEnabled();
+		boolean newEnableStatus = true;
+		int oldProgressVisibility = mProgress.getVisibility();
+		int oldTextVisibility = mTextView.getVisibility();
+		int newProgressVisibility = View.INVISIBLE;
+		int newTextVisibility = View.VISIBLE;
 
-        if (oldTextVisibility != innerVisibility.newTextVisibility) {
-            mTextView.setVisibility(innerVisibility.newTextVisibility);
-        }
+		switch( option.option ) {
+			case RESTORE:
+				mTextView.setText( R.string.feather_iap_restore );
+				break;
 
-    }
+			case PURCHASE:
+				mTextView.setVisibility( View.VISIBLE );
+				if( null != option.price ) {
+					mTextView.setText( option.price );
+				}
+				else {
+					mTextView.setText( R.string.feather_iap_unavailable );
+				}
+				break;
 
-    private class InnerVisibility {
-        private final CdsUtils.PackOptionWithPrice option;
-        private       boolean                      newEnableStatus;
-        private       int                          newProgressVisibility;
-        private       int                          newTextVisibility;
+			case OWNED:
+				mTextView.setText( R.string.feather_iap_owned );
+				newEnableStatus = false;
+				break;
 
-        public InnerVisibility(
-            final CdsUtils.PackOptionWithPrice option, final boolean newEnableStatus, final int newProgressVisibility,
-            final int newTextVisibility) {
-            this.option = option;
-            this.newEnableStatus = newEnableStatus;
-            this.newProgressVisibility = newProgressVisibility;
-            this.newTextVisibility = newTextVisibility;
-        }
+            case UNINSTALL:
+                mTextView.setText( R.string.feather_iap_uninstall );
+                break;
 
-        public boolean isNewEnableStatus() {
-            return newEnableStatus;
-        }
+			case ERROR:
+				mTextView.setText( R.string.feather_iap_retry );
+				break;
 
-        public int getNewProgressVisibility() {
-            return newProgressVisibility;
-        }
+			case FREE:
+				mTextView.setText( R.string.feather_iap_download );
+				break;
 
-        public int getNewTextVisibility() {
-            return newTextVisibility;
-        }
+            case INSTALL:
+                mTextView.setText( R.string.feather_iap_install );
+                break;
 
-        public InnerVisibility invoke() {
-            switch (option.option) {
-                case RESTORE:
-                    mTextView.setText(R.string.feather_iap_restore);
-                    break;
+			case DOWNLOAD_COMPLETE:
+				mTextView.setText( R.string.feather_iap_installing );
+				newEnableStatus = false;
+				break;
 
-                case PURCHASE:
-                    mTextView.setVisibility(View.VISIBLE);
-                    if (null != option.price) {
-                        mTextView.setText(option.price);
-                    } else {
-                        mTextView.setText(R.string.feather_iap_unavailable);
-                    }
-                    break;
+			case DOWNLOADING:
+				newProgressVisibility = View.VISIBLE;
+				newTextVisibility = View.INVISIBLE;
+				newEnableStatus = false;
 
-                case OWNED:
-                    mTextView.setText(R.string.feather_iap_owned);
-                    newEnableStatus = false;
-                    break;
+				if( null != getHandler() )
+					getHandler().postDelayed( checkDownloadStatus, (long) ( ( Math.random() * 100 ) + 900 ) );
+				break;
 
-                case UNINSTALL:
-                    mTextView.setText(R.string.feather_iap_uninstall);
-                    break;
+			case PACK_OPTION_BEING_DETERMINED:
+				newProgressVisibility = View.VISIBLE;
+				newTextVisibility = View.INVISIBLE;
+				newEnableStatus = false;
+				break;
 
-                case ERROR:
-                    mTextView.setText(R.string.feather_iap_retry);
-                    break;
+			case DOWNLOAD_ERROR:
+				mTextView.setText( R.string.feather_iap_retry );
+				break;
+		}
 
-                case FREE:
-                    mTextView.setText(R.string.feather_iap_download);
-                    break;
+		if( oldEnableStatus != newEnableStatus ) {
+			setEnabled( newEnableStatus );
+		}
 
-                case INSTALL:
-                    mTextView.setText(R.string.feather_iap_install);
-                    break;
+		if( oldProgressVisibility != newProgressVisibility ) {
+			mProgress.setVisibility( newProgressVisibility );
+		}
 
-                case DOWNLOAD_COMPLETE:
-                    mTextView.setText(R.string.feather_iap_installing);
-                    newEnableStatus = false;
-                    break;
+		if( oldTextVisibility != newTextVisibility ) {
+			mTextView.setVisibility( newTextVisibility );
+		}
 
-                case DOWNLOADING:
-                    newProgressVisibility = View.VISIBLE;
-                    newTextVisibility = View.INVISIBLE;
-                    newEnableStatus = false;
+	}
 
-                    if (null != getHandler()) {
-                        getHandler().postDelayed(checkDownloadStatus, (long) ((Math.random() * 100) + 900));
-                    }
-                    break;
-
-                case PACK_OPTION_BEING_DETERMINED:
-                    newProgressVisibility = View.VISIBLE;
-                    newTextVisibility = View.INVISIBLE;
-                    newEnableStatus = false;
-                    break;
-
-                case DOWNLOAD_ERROR:
-                    mTextView.setText(R.string.feather_iap_retry);
-                    break;
-
-                default:
-                    /* invalid case */
-                    break;
-            }
-            return this;
-        }
-    }
 }

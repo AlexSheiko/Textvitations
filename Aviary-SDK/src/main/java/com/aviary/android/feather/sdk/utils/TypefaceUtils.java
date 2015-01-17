@@ -1,39 +1,38 @@
 package com.aviary.android.feather.sdk.utils;
 
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
-
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 
-public final class TypefaceUtils {
-    private static final HashMap<String, SoftReference<Typeface>> S_TYPE_CACHE = new HashMap<String, SoftReference<Typeface>>();
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 
-    private TypefaceUtils() { }
+public class TypefaceUtils {
 
-    public static Typeface createFromAsset(final AssetManager assets, final String fontname) {
-        Typeface result = null;
-        SoftReference<Typeface> cachedFont = getFromCache(fontname);
+	private static final HashMap<String, SoftReference<Typeface>> sTypeCache = new HashMap<String, SoftReference<Typeface>>();
 
-        if (null != cachedFont && cachedFont.get() != null) {
-            result = cachedFont.get();
-        } else {
-            result = Typeface.createFromAsset(assets, fontname);
-            putIntoCache(fontname, result);
-        }
+	public static Typeface createFromAsset( final AssetManager assets, final String fontname ) {
+		Typeface result = null;
+		SoftReference<Typeface> cachedFont = getFromCache( fontname );
 
-        return result;
-    }
+		if ( null != cachedFont && cachedFont.get() != null ) {
+			result = cachedFont.get();
+		} else {
+			result = Typeface.createFromAsset( assets, fontname );
+			putIntoCache( fontname, result );
+		}
 
-    private static SoftReference<Typeface> getFromCache(final String fontname) {
-        synchronized (S_TYPE_CACHE) {
-            return S_TYPE_CACHE.get(fontname);
-        }
-    }
+		return result;
+	}
 
-    private static void putIntoCache(final String fontname, final Typeface font) {
-        synchronized (S_TYPE_CACHE) {
-            S_TYPE_CACHE.put(fontname, new SoftReference<Typeface>(font));
-        }
-    }
+	private static SoftReference<Typeface> getFromCache( final String fontname ) {
+		synchronized ( sTypeCache ) {
+			return sTypeCache.get( fontname );
+		}
+	}
+
+	private static void putIntoCache( final String fontname, final Typeface font ) {
+		synchronized ( sTypeCache ) {
+			sTypeCache.put( fontname, new SoftReference<Typeface>( font ) );
+		}
+	}
 }

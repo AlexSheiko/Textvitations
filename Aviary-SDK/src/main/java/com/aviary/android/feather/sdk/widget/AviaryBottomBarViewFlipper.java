@@ -14,160 +14,157 @@ import com.aviary.android.feather.sdk.R;
 import it.sephiroth.android.library.widget.HListView;
 
 public class AviaryBottomBarViewFlipper extends ViewFlipper implements OnClickListener {
-    private View                         mLogo;
-    private OnViewChangingStatusListener mListener;
-    private OnBottomBarItemClickListener mBottomClickListener;
-    public AviaryBottomBarViewFlipper(Context context) {
-        super(context);
-    }
-    public AviaryBottomBarViewFlipper(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
 
-    @Override
-    protected void onFinishInflate() {
+	public static interface OnViewChangingStatusListener {
 
-        mLogo = findViewById(R.id.aviary_white_logo);
-        mLogo.setOnClickListener(this);
+		void OnOpenStart();
 
-        super.onFinishInflate();
-    }
+		void OnOpenEnd();
 
-    public void setOnViewChangingStatusListener(OnViewChangingStatusListener listener) {
-        mListener = listener;
-    }
+		void OnCloseStart();
 
-    public void setOnBottomBarItemClickListener(OnBottomBarItemClickListener listener) {
-        mBottomClickListener = listener;
-    }
+		void OnCloseEnd();
+	}
 
-    public boolean open() {
+	public static interface OnBottomBarItemClickListener {
+		void onBottomBarItemClick( int id );
+	}
 
-        if (getDisplayedChild() == 1) {
+	private View mLogo;
+	private OnViewChangingStatusListener mListener;
+	private OnBottomBarItemClickListener mBottomClickListener;
 
-            Animation inAnimation = getInAnimation();
+	public AviaryBottomBarViewFlipper ( Context context ) {
+		super( context );
+	}
 
-            if (null != inAnimation) {
+	public AviaryBottomBarViewFlipper ( Context context, AttributeSet attrs ) {
+		super( context, attrs );
+	}
 
-                if (inAnimation.hasStarted() && !inAnimation.hasEnded()) {
-                    return false;
-                }
+	@Override
+	protected void onFinishInflate() {
 
-                inAnimation.setAnimationListener(new AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        getChildAt(0).setVisibility(View.VISIBLE);
-                        if (null != mListener) {
-                            mListener.onOpenStart();
-                        }
-                    }
+//		mLogo = findViewById( R.id.aviary_white_logo );
+//		mLogo.setOnClickListener( this );
 
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
+		super.onFinishInflate();
+	}
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        if (null != mListener) {
-                            mListener.onOpenEnd();
-                        }
-                        getChildAt(1).setVisibility(View.GONE);
-                    }
-                });
-            }
+	public void setOnViewChangingStatusListener( OnViewChangingStatusListener listener ) {
+		mListener = listener;
+	}
 
-            setDisplayedChild(0);
-            return true;
-        }
-        return false;
-    }
+	public void setOnBottomBarItemClickListener( OnBottomBarItemClickListener listener ) {
+		mBottomClickListener = listener;
+	}
 
-    public boolean close() {
+	public boolean open() {
 
-        if (getDisplayedChild() == 0) {
+		if ( getDisplayedChild() == 1 ) {
 
-            Animation inAnimation = getInAnimation();
+			Animation inAnimation = getInAnimation();
 
-            if (null != inAnimation) {
+			if ( null != inAnimation ) {
 
-                if (inAnimation.hasStarted() && !inAnimation.hasEnded()) {
-                    return false;
-                }
+				if ( inAnimation.hasStarted() && !inAnimation.hasEnded() ) {
+					return false;
+				}
 
-                inAnimation.setAnimationListener(new AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        getChildAt(1).setVisibility(View.VISIBLE);
-                        if (null != mListener) {
-                            mListener.onCloseStart();
-                        }
-                    }
+				inAnimation.setAnimationListener( new AnimationListener() {
 
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
+					@Override
+					public void onAnimationStart( Animation animation ) {
+						getChildAt( 0 ).setVisibility( View.VISIBLE );
+						if ( null != mListener ) mListener.OnOpenStart();
+					}
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        if (null != mListener) {
-                            mListener.onCloseEnd();
-                        }
-                        getChildAt(0).setVisibility(View.GONE);
-                    }
-                });
-            }
+					@Override
+					public void onAnimationRepeat( Animation animation ) {}
 
-            setDisplayedChild(1);
-            return true;
-        }
-        return false;
-    }
+					@Override
+					public void onAnimationEnd( Animation animation ) {
+						if ( null != mListener ) mListener.OnOpenEnd();
+						getChildAt( 1 ).setVisibility( View.GONE );
+					}
+				} );
+			}
 
-    public boolean opened() {
-        return getDisplayedChild() == 0;
-    }
+			setDisplayedChild( 0 );
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Return the child used to populate the tools
-     *
-     * @return
-     */
-    public ViewGroup getContentPanel() {
-        return (ViewGroup) getChildAt(0);
-    }
+	public boolean close() {
 
-    public HListView getToolsListView() {
-        return (HListView) findViewById(R.id.aviary_tools_listview);
-    }
+		if ( getDisplayedChild() == 0 ) {
 
-    public void toggleLogoVisibility(boolean visible) {
-        if (visible) {
-            findViewById(R.id.aviary_white_logo).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.aviary_white_logo).setVisibility(View.INVISIBLE);
-        }
-    }
+			Animation inAnimation = getInAnimation();
 
-    @Override
-    public void onClick(View v) {
-        if (null != v) {
-            final int id = v.getId();
+			if ( null != inAnimation ) {
 
-            if (null != mBottomClickListener) {
-                mBottomClickListener.onBottomBarItemClick(id);
-            }
-        }
-    }
+				if ( inAnimation.hasStarted() && !inAnimation.hasEnded() ) {
+					return false;
+				}
 
-    public interface OnViewChangingStatusListener {
-        void onOpenStart();
+				inAnimation.setAnimationListener( new AnimationListener() {
 
-        void onOpenEnd();
+					@Override
+					public void onAnimationStart( Animation animation ) {
+						getChildAt( 1 ).setVisibility( View.VISIBLE );
+						if ( null != mListener ) mListener.OnCloseStart();
+					}
 
-        void onCloseStart();
+					@Override
+					public void onAnimationRepeat( Animation animation ) {}
 
-        void onCloseEnd();
-    }
+					@Override
+					public void onAnimationEnd( Animation animation ) {
+						if ( null != mListener ) mListener.OnCloseEnd();
+						getChildAt( 0 ).setVisibility( View.GONE );
+					}
+				} );
+			}
 
-    public interface OnBottomBarItemClickListener {
-        void onBottomBarItemClick(int id);
-    }
+			setDisplayedChild( 1 );
+			return true;
+		}
+		return false;
+	}
+
+	public boolean opened() {
+		return getDisplayedChild() == 0;
+	}
+
+	/**
+	 * Return the child used to populate the tools
+	 * 
+	 * @return
+	 */
+	public ViewGroup getContentPanel() {
+		return (ViewGroup) getChildAt( 0 );
+	}
+
+	public HListView getToolsListView() {
+		return (HListView) findViewById( R.id.aviary_tools_listview );
+	}
+
+	public void toggleLogoVisibility( boolean visible ) {
+//		if( visible )
+//			findViewById( R.id.aviary_white_logo ).setVisibility( View.VISIBLE );
+//		else
+//			findViewById( R.id.aviary_white_logo ).setVisibility( View.INVISIBLE );
+	}
+
+	@Override
+	public void onClick( View v ) {
+		if ( null != v ) {
+			final int id = v.getId();
+
+			if ( null != mBottomClickListener ) {
+				mBottomClickListener.onBottomBarItemClick( id );
+			}
+		}
+	}
 }

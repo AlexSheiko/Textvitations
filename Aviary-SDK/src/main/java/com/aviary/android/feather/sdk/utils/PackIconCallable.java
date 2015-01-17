@@ -9,229 +9,215 @@ import android.graphics.drawable.BitmapDrawable;
 import com.aviary.android.feather.cds.AviaryCds.PackType;
 import com.aviary.android.feather.library.utils.BitmapUtils;
 import com.aviary.android.feather.sdk.R;
+import it.sephiroth.android.library.picasso.Transformation;
 
 import java.lang.ref.SoftReference;
 import java.util.concurrent.Callable;
 
-import it.sephiroth.android.library.picasso.Transformation;
-
 public class PackIconCallable implements Transformation, Callable<Bitmap> {
-    public static class Builder {
-        Resources resources;
-        String    path;
-        PackType  packType;
-        boolean   roundedCorners;
-        boolean   noBackground;
-        int alpha = 255;
-        private boolean isnew;
 
-        public Builder() { }
+	public static class Builder {
+		Resources resources;
+		String path;
+		PackType packType;
+		boolean roundedCorners;
+		boolean noBackground;
+		int alpha = 255;
+		private boolean isnew;
 
-        public Builder withResources(Resources resources) {
-            this.resources = resources;
-            return this;
-        }
+		public Builder() {}
 
-        public Builder withPackType(PackType packType) {
-            this.packType = packType;
-            return this;
-        }
+		public Builder withResources( Resources resources ) {
+			this.resources = resources;
+			return this;
+		}
 
-        public Builder withPath(String path) {
-            this.path = path;
-            return this;
-        }
+		public Builder withPackType( PackType packType ) {
+			this.packType = packType;
+			return this;
+		}
 
-        public Builder withAlpha(int alpha) {
-            this.alpha = alpha;
-            return this;
-        }
+		public Builder withPath( String path ) {
+			this.path = path;
+			return this;
+		}
 
-        public Builder roundedCorners() {
-            this.roundedCorners = true;
-            return this;
-        }
+		public Builder withAlpha( int alpha ) {
+			this.alpha = alpha;
+			return this;
+		}
 
-        public Builder noBackground() {
-            this.noBackground = true;
-            return this;
-        }
+		public Builder roundedCorners() {
+			this.roundedCorners = true;
+			return this;
+		}
 
-        public Builder isNew(final boolean value) {
-            this.isnew = value;
-            return this;
-        }
+		public Builder noBackground() {
+			this.noBackground = true;
+			return this;
+		}
 
-        public PackIconCallable build() {
-            PackIconCallable instance = new PackIconCallable();
+		public Builder isNew ( final boolean value ) {
+			this.isnew = value;
+			return this;
+		}
 
-            if (null == path) {
-                throw new IllegalArgumentException("path cannot be null");
-            }
-            if (null == packType) {
-                throw new IllegalArgumentException("packType cannot be null");
-            }
-            if (null == resources) {
-                throw new IllegalArgumentException("resources cannot be null");
-            }
+		public PackIconCallable build() {
+			PackIconCallable instance = new PackIconCallable();
 
-            instance.imagePath = path;
-            instance.packType = packType;
-            instance.resourcesRef = new SoftReference<Resources>(resources);
-            instance.roundedCorners = roundedCorners;
-            instance.noBackground = noBackground;
-            instance.alpha = alpha;
-            instance.isnew = isnew;
-            return instance;
-        }
-    }
+			if( null == path ) throw new IllegalArgumentException( "path cannot be null" );
+			if( null == packType ) throw new IllegalArgumentException( "packType cannot be null" );
+			if( null == resources ) throw new IllegalArgumentException( "resources cannot be null" );
 
-    SoftReference<Resources> resourcesRef;
-    int fallbackResId = -1;
-    int maxSize       = -1;
-    private String   imagePath;
-    private PackType packType;
-    private boolean  roundedCorners;
-    private boolean  noBackground;
-    private int      alpha;
-    private boolean  isnew;
+			instance.imagePath = path;
+			instance.packType = packType;
+			instance.resourcesRef = new SoftReference<Resources>( resources );
+			instance.roundedCorners = roundedCorners;
+			instance.noBackground = noBackground;
+			instance.alpha = alpha;
+			instance.isnew = isnew;
+			return instance;
+		}
+	}
 
-    PackIconCallable() { }
+	SoftReference<Resources> resourcesRef;
+	int fallbackResId = -1;
+	int maxSize = -1;
 
-    @Override
-    public String key() {
-        return imagePath + "_" + packType.name() + "_" + roundedCorners + "_" + noBackground + "_" + alpha + "_" + isnew;
-    }
+	private String imagePath;
+	private PackType packType;
+	private boolean roundedCorners;
+	private boolean noBackground;
+	private int alpha;
+	private boolean isnew;
 
-    @Override
-    public Bitmap call() throws Exception {
+	PackIconCallable() {}
 
-        Bitmap result = null;
-        Bitmap bitmap = null;
+	@Override
+	public String key() {
+		return imagePath + "_" + packType.name() + "_"  +roundedCorners + "_" + noBackground + "_" + alpha + "_" + isnew;
+	}
 
-        final Resources resources = resourcesRef.get();
+	@Override
+	public Bitmap call() throws Exception {
 
-        if (null == resources) {
-            return null;
-        }
+		Bitmap result = null;
+		Bitmap bitmap = null;
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Config.ARGB_8888;
+		final Resources resources = resourcesRef.get();
 
-        if (null != imagePath && imagePath.length() > 0) {
-            result = BitmapFactory.decodeFile(imagePath, options);
-        }
+		if ( null == resources ) {
+			return null;
+		}
 
-        if (null == result) {
-            result = BitmapFactory.decodeResource(resources, fallbackResId);
-        }
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPreferredConfig = Config.ARGB_8888;
 
-        result = transform(result);
+		if ( null != imagePath && imagePath.length() > 0 ) {
+			result = BitmapFactory.decodeFile( imagePath, options );
+		}
 
-        if (maxSize > 0 && null != result) {
-            bitmap = BitmapUtils.resizeBitmap(result, maxSize, maxSize);
-            if (null != bitmap && result != bitmap) {
-                result.recycle();
-                result = bitmap;
-            }
-        }
+		if ( null == result ) {
+			result = BitmapFactory.decodeResource( resources, fallbackResId );
+		}
+		
+		result = transform( result );
 
-        return result;
-    }
+		if ( maxSize > 0 && null != result ) {
+			bitmap = BitmapUtils.resizeBitmap( result, maxSize, maxSize );
+			if ( null != bitmap && result != bitmap ) {
+				result.recycle();
+				result = bitmap;
+			}
+		}
 
-    Bitmap generate(Resources res, Bitmap icon, int maxSize) {
-        Bitmap result = generate(res, icon);
-        Bitmap resized = BitmapUtils.resizeBitmap(result, maxSize, maxSize);
+		return result;
+	}
 
-        if (resized != null && resized != result) {
-            if (result != icon) {
-                result.recycle();
-            }
-        }
-        return resized;
-    }
+	Bitmap generate( Resources res, Bitmap icon, int maxSize ) {
+		Bitmap result = generate( res, icon );
+		Bitmap resized = BitmapUtils.resizeBitmap( result, maxSize, maxSize );
+		
+		if( resized != null && resized != result ) {
+			if( result != icon ) {
+				result.recycle();
+			}
+		}
+		return resized;
+	}
+	
+	Bitmap generate( Resources res, Bitmap icon ) {
+		Bitmap background = null;
+		Bitmap result = null;
+		
+		if( res == null ) return icon;
+		
+		if ( PackType.EFFECT.equals( packType ) ) {
 
-    @SuppressWarnings ({ "checkstyle:cyclomaticcomplexity", "checkstyle:magicnumber" })
-    Bitmap generate(Resources res, Bitmap icon) {
-        Bitmap background = null;
-        Bitmap result = null;
+			if( !noBackground ) {
+				background = BitmapFactory.decodeResource( res, R.drawable.aviary_effects_pack_background );
+			}
 
-        if (res == null) {
-            return icon;
-        }
+			if ( null != background ) {
+				Bitmap newBitmap = BitmapUtils.roundedCorners( icon, 10, 10 );
+				result = BitmapUtils.flattenDrawables( new BitmapDrawable( res, background ), new BitmapDrawable( res, newBitmap ), 0.76f, 0f );
+				
+				if( null != result && !newBitmap.equals( result ) ) {
+					newBitmap.recycle();
+				}
 
-        if (PackType.EFFECT.equals(packType)) {
+			} else {
+				if( roundedCorners ) {
+					result = BitmapUtils.roundedCorners( icon, 12, 12 );
+				}
+			}
 
-            if (!noBackground) {
-                background = BitmapFactory.decodeResource(res, R.drawable.aviary_effects_pack_background);
-            }
+		} else if ( PackType.STICKER.equals( packType ) ) {
 
-            if (null != background) {
-                Bitmap newBitmap = BitmapUtils.roundedCorners(icon, 10, 10);
-                result = BitmapUtils.flattenDrawables(new BitmapDrawable(res, background),
-                                                      new BitmapDrawable(res, newBitmap),
-                                                      0.76f,
-                                                      0f);
+			if( !noBackground ) {
+				background = BitmapFactory.decodeResource( res, isnew ? R.drawable.aviary_sticker_pack_background_glow : R.drawable.aviary_sticker_pack_background );
+			}
 
-                if (null != result && !newBitmap.equals(result)) {
-                    newBitmap.recycle();
-                }
+			if ( null != background ) {
+				result = BitmapUtils.flattenDrawables( new BitmapDrawable( res, background ), new BitmapDrawable( res, icon ), 0.58f, 0.05f );
+			}
+		}
 
-            } else {
-                if (roundedCorners) {
-                    result = BitmapUtils.roundedCorners(icon, 12, 12);
-                }
-            }
+		if( null != result ) {
+			if( alpha == 255 ) {
+				return result;
+			}
 
-        } else if (PackType.STICKER.equals(packType)) {
+			Bitmap result2 = BitmapUtils.copy( result, alpha );
+			if( !result.equals( result2 )) {
+				result.recycle();
+			}
 
-            if (!noBackground) {
-                background = BitmapFactory.decodeResource(res,
-                                                          isnew ? R.drawable.aviary_sticker_pack_background_glow
-                                                              : R.drawable.aviary_sticker_pack_background);
-            }
+			return result2;
+		}
 
-            if (null != background) {
-                result =
-                    BitmapUtils.flattenDrawables(new BitmapDrawable(res, background), new BitmapDrawable(res, icon), 0.58f, 0.05f);
-            }
-        }
+		return icon;
+	}
 
-        if (null != result) {
-            if (alpha == 255) {
-                return result;
-            }
+	@Override
+	public Bitmap transform( Bitmap bitmap ) {
 
-            Bitmap result2 = BitmapUtils.copy(result, alpha);
-            if (!result.equals(result2)) {
-                result.recycle();
-            }
+		final Resources resources = resourcesRef.get();
 
-            return result2;
-        }
+		if ( null == resources ) {
+			return null;
+		}
 
-        return icon;
-    }
+		// packtype
+		if ( null != bitmap ) {
+			Bitmap result = generate( resources, bitmap );
 
-    @Override
-    public Bitmap transform(Bitmap bitmap) {
-
-        final Resources resources = resourcesRef.get();
-
-        if (null == resources) {
-            return null;
-        }
-
-        // packtype
-        if (null != bitmap) {
-            Bitmap result = generate(resources, bitmap);
-
-            if (null != result && result != bitmap) {
-                bitmap.recycle();
-                bitmap = result;
-            }
-        }
-
-        return bitmap;
-    }
+			if ( null != result && result != bitmap ) {
+				bitmap.recycle();
+				bitmap = result;
+			}
+		}
+		
+		return bitmap;
+	}
 }

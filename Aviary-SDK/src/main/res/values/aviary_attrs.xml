@@ -12,6 +12,18 @@
         <attr name="aviaryTiltShiftViewStyle" format="reference" />
         <attr name="aviarySymbolMinusStyle" format="reference" />
         <attr name="aviarySymbolPlusStyle" format="reference" />
+        <!-- ImageView style for the crop content panel -->
+        <attr name="aviaryCropImageViewStyle" format="reference" />
+        <!-- the hightlight view used in the crop image view -->
+        <attr name="aviaryCropHighlightStyle" format="reference" />
+        
+        <!-- style for the ImageViewDrawableOverlay in the text panel -->
+        <attr name="aviaryImageViewDrawableOverlayText" format="reference" />
+        <attr name="aviaryImageViewDrawableOverlayTextHighlightStyle" format="reference" />
+        
+        <!-- image view style of the stickers panel -->
+        <attr name="aviaryImageViewDrawableOverlaySticker" format="reference" />
+        <attr name="aviaryImageViewDrawableOverlayStickerHighlightStyle" format="reference" />
         
         <!-- image view used for the orientation content panel -->
         <attr name="aviaryAdjustImageViewStyle" format="reference" />
@@ -19,6 +31,12 @@
         <!-- bottom bar viewflipper -->
         <attr name="aviaryBottomBarViewFlipperStyle" format="reference" />
         <attr name="aviaryBottomBarHeight" format="dimension" />
+        
+        <!-- bottom bar logo container -->
+        <attr name="aviaryBottomBarLogoContainerStyle" format="reference" />
+        
+        <!-- bottom bar logo image -->
+        <attr name="aviaryBottomBarLogoImageStyle" format="reference" />
         
         <!-- option tool panel -->
         <attr name="aviaryBottomBarOptionPanelStyle" format="reference" />
@@ -37,6 +55,8 @@
 
         <!-- main navigation bar -->
         <attr name="aviaryNavBarStyle" format="reference" />
+        <!-- navigation view height -->
+        <attr name="aviaryNavBarHeight" format="dimension" />
         <!-- navigation bar title -->
         <attr name="aviaryNavTitleStyle" format="reference" />
         <!-- navigation button style -->
@@ -95,6 +115,9 @@
         <attr name="aviaryColorSplashOptionPanelToggleLeftButtonStyle" format="reference" />
         <attr name="aviaryColorSplashOptionPanelToggleRightButtonStyle" format="reference" />
         
+        <!-- main restore image view switcher style -->
+        <attr name="aviaryImageRestoreViewStyle" format="reference" />
+        
         <!-- preview spot drawable default style -->
         <attr name="aviaryPreviewSpotDrawableStyle" format="reference" />
         <!-- fill preview drawable style -->
@@ -120,6 +143,9 @@
         
         <!-- light gray button style -->
         <attr name="aviaryLightGrayButtonStyle" format="reference" />
+        
+        <!-- style of the restore button in the navbar -->
+        <attr name="aviaryNavBarRestoreButtonStyle" format="reference" />
         
         <!-- default toggle button style -->
         <attr name="aviaryToggleButtonStyle" format="reference" />
@@ -150,7 +176,21 @@
         
         <!-- style for the navbar divider view -->
         <attr name="aviaryNavDividerStyle" format="reference" />
-
+        
+        <!-- progress bar view styles -->
+        <attr name="aviaryProgressBarSmall" format="reference" />
+        <attr name="aviaryProgressBarMedium" format="reference" />
+        <attr name="aviaryProgressBarLarge" format="reference" />
+        <!-- progress bar for the actionbar -->
+        <attr name="aviaryProgressBarActionBar" format="reference" />
+        
+        <attr name="aviaryProgressBarActionBarWidth" format="dimension" />
+        <attr name="aviaryProgressBarActionBarHeight" format="dimension" />
+        
+        <attr name="aviaryProgressBarSmallInverse" format="reference" />
+        <attr name="aviaryProgressBarMediumInverse" format="reference" />
+        <attr name="aviaryProgressBarLargeInverse" format="reference" />        
+        
         <!-- main image padding -->
         <attr name="aviaryMainImagePadding" format="dimension" />
         
@@ -172,6 +212,15 @@
         <!-- text drawn on top of the divider bitmap -->
         <attr name="aviaryEffectThumbDividerTextStyle" format="reference" />
         
+        <!-- IAP Dialog -->
+		<attr name="aviaryIAPDialogWorkspaceStyle" format="reference" />
+		<attr name="aviaryIAPDialogWorkspaceIndicatorStyle" format="reference" />  
+		<attr name="aviaryIAPDialogShadowTop" format="reference" />
+		<attr name="aviaryIAPDialogShadowBottom" format="reference" />  
+		<attr name="aviaryIAPDialogWorkspaceCellEffects" format="reference" />
+		<attr name="aviaryIAPDialogWorkspaceCellStickers" format="reference" />
+		
+		
 		<!-- Feedback dialog -->
 		<attr name="aviaryFeedbackDialogStyle" format="reference" />
 		<attr name="aviaryFeedbackDialogTextVersionStyle" format="reference" />
@@ -385,8 +434,6 @@
         <attr name="aviary_rotateDrawable" format="reference" />
         <!-- delete knob drawable -->
         <attr name="aviary_deleteDrawable" format="reference" />
-	    <!-- opacity knob drawable -->
-	    <attr name="aviary_opacityDrawable" format="reference" />
         <!-- overlay minimum size -->
         <attr name="aviary_minSize" format="dimension" />
         <!-- overlay can be moved -->
@@ -468,6 +515,15 @@
         <attr name="aviary_layout_direction" />
     </declare-styleable>
 
+    <declare-styleable name="AviaryWorkspaceIndicator">
+        <attr name="aviary_indicatorId" format="reference" />
+    </declare-styleable>
+    
+    <declare-styleable name="AviaryWorkspace">
+        <attr name="aviary_defaultScreen" format="integer"  />
+        <attr name="aviary_overscroll" format="integer" />
+    </declare-styleable>       
+    
     <attr name="aviary_layout_direction">
         <enum name="vertical" value="0" />
         <enum name="horizontal" value="1" />
@@ -501,6 +557,11 @@
         <!-- color blending mode -->
         <attr name="aviary_blendMode" />        
     </declare-styleable>
+    
+    <declare-styleable name="AviaryImageRestoreSwitcher">
+        <!-- duration of the restore status -->
+        <attr name="aviary_restoreTimeout" format="integer" />
+    </declare-styleable>
 
 	<declare-styleable name="AviaryOverlay">
 		<attr name="android:background" />
@@ -512,7 +573,6 @@
 		<attr name="aviary_textMargins" format="dimension" />
 		<attr name="android:animationDuration" />
 		<attr name="aviary_closeButtonMargins" format="dimension" />
-		<attr name="aviary_activationDelay" format="integer" />
 	</declare-styleable>
 
 	<declare-styleable name="AviaryTextAppearance">
@@ -522,26 +582,6 @@
 		<attr name="android:textColorLink" />
 		<attr name="android:textStyle" />
 		<attr name="android:textSize" />
-	</declare-styleable>
-
-	<declare-styleable name="AviaryImageViewIntensity">
-		<attr name="aviary_tooltipSize" format="dimension"></attr>
-		<attr name="aviary_strokeWidth"></attr>
-		<attr name="aviary_strokeColor"></attr>
-		<attr name="android:textColor" />
-	</declare-styleable>
-
-	<declare-styleable name="ImageViewVignette">
-		<attr name="aviary_vignette_strokeSize" format="dimension"></attr>
-		<attr name="aviary_vignette_strokeColor1" format="color"></attr>
-		<attr name="aviary_vignette_strokeColor2" format="color"></attr>
-		<attr name="aviary_vignette_fadeout_time" format="integer"></attr>
-		<attr name="aviary_vignette_controlPointSize" format="dimension"></attr>
-		<attr name="aviary_vignette_feather" format="float"></attr>
-		<attr name="aviary_vignette_intensity" format="integer"></attr>
-		<attr name="aviary_vignette_aviaryWave_pointDrawable" format="reference"></attr>
-		<attr name="aviary_vignette_rippleAnimationDuration" format="integer"></attr>
-		<attr name="aviary_vignette_animationDelay" format="integer"></attr>
 	</declare-styleable>
 
 </resources>

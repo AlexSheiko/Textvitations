@@ -2,7 +2,7 @@
 <com.aviary.android.feather.sdk.widget.ImageViewDrawableOverlay
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/aviary_overlay"
-    style="@style/AviaryWidget.StickerImageView"
+    style="?attr/aviaryImageViewDrawableOverlaySticker"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scaleType="matrix" />

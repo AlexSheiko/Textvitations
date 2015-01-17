@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<integer name="aviary_store_featured_cell_weightSum">1097</integer>
+	<integer name="aviary_store_featured_cell_weight">341</integer>
+	<integer name="aviary_store_featured_cols">3</integer>
+
+	<integer name="aviary_store_detail_cols_stickers">3</integer>
+	<integer name="aviary_store_detail_cols_frames">3</integer>
+	<integer name="aviary_store_detail_cols_effects">3</integer>
+
+	<!-- featured fragment display also the big featured banner -->
+	<integer name="aviary_store_featured_has_featured">0</integer>
+	<integer name="aviary_store_detail_top_weight">10</integer>
+	<integer name="aviary_store_detail_bottom_weight">10</integer>
+</resources>

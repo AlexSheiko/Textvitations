@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="aviary_store_list_item_padding_left">16dp</dimen>
+    <dimen name="aviary_store_list_item_padding_right">16dp</dimen>
+    <dimen name="aviary_store_list_item_padding_top">10dp</dimen>
+    <dimen name="aviary_store_list_item_padding_bottom">10dp</dimen>
+    <dimen name="aviary_store_list_icon_size">56dp</dimen>
+    <dimen name="aviary_store_list_divider_height">1px</dimen>
+    <dimen name="aviary_store_list_item_title_size">18sp</dimen>
+    <dimen name="aviary_store_list_buy_button_width">80dip</dimen>
+    <dimen name="aviary_store_passport_button_width">100dip</dimen>
+
+	<dimen name="aviary_store_detail_title_size">22sp</dimen>
+	<dimen name="aviary_store_detail_description_size">16sp</dimen>
+	<dimen name="aviary_store_detail_subscription_size">12sp</dimen>
+	<dimen name="aviary_store_detail_icon_size">100dip</dimen>
+	<dimen name="aviary_store_detail_padding_horizontal">16dip</dimen>
+	<dimen name="aviary_store_detail_padding_vertical">16dip</dimen>
+	<dimen name="aviary_store_detail_preview_padding_horizontal">8dip</dimen>
+
+	<dimen name="aviary_store_featured_padding_vertical">16dip</dimen>
+
+	<dimen name="aviary_store_featured_image_height">200dip</dimen>
+	<dimen name="aviary_store_detail_image_right_margin">10dip</dimen>
+	<dimen name="aviary_store_detail_passport_banner_v_margin">15dip</dimen>
+
+	<dimen name="aviary_store_detail_grid_v_space">15dip</dimen>
+
+	<dimen name="aviary_store_buy_button_min_height">16dip</dimen>
+
+	<!--
+	################ SUBSCRIPTION ###############
+	 -->
+	<dimen name="aviary_subscription_text_padding_h">10dip</dimen>
+	<dimen name="aviary_subscription_text_padding_v">10dip</dimen>
+
+	<dimen name="aviary_subscription_message_h_padding">17dp</dimen>
+	<dimen name="aviary_subscription_message_v_padding">17dp</dimen>
+
+	<dimen name="aviary_subscription_bottombar_padding_v">10dip</dimen>
+	<dimen name="aviary_subscription_bottombar_padding_h">20dip</dimen>
+	<dimen name="aviary_subscription_textarea_height">160dip</dimen>
+</resources>

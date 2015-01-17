@@ -1,5 +1,6 @@
 package com.aviary.android.feather.sdk.graphics;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BlurMaskFilter;
@@ -20,285 +21,296 @@ import com.aviary.android.feather.common.log.LoggerFactory.LoggerType;
 import com.aviary.android.feather.sdk.utils.UIUtils;
 
 public class GlowDrawable extends Drawable {
-    private static int mCount = 0;
-    private int mThisCount;
-    private static Logger logger = LoggerFactory.getLogger("glow-drawable", LoggerType.ConsoleLoggerType);
-    // The original drawable
-    protected Drawable mDrawable;
-    // paint used to draw the current bitmap
-    protected Paint    mPaint;
-    // paint used to generate the highlight bitmap
-    protected Paint    mPaintBlur;
-    // holds the current bounds
-    private Rect mDstRect = new Rect();
-    // the background bitmap used to generate the current bitmap
-    private Bitmap  mBackground;
-    /**
-     * boolean to indicate if the generated bitmap should be drawn or
-     * the original drawable instead
-     */
-    private boolean mDraw;
-    // canvas used to generate the current bitmap
-    private Canvas            tmpCanvas        = new Canvas();
-    /**
-     * Holds the current {@link StateSet}
-     */
-    private GlowDrawableState mCurrentStateSet = new GlowDrawableState();
-    private int mHighlightColorPressed;
-    private int mHighlightColorChecked;
-    private int mHighlightColorSelected;
-    private int mBlurValue;
-    private int mGlowMode, mHighlightMode;
 
-    public GlowDrawable(
-        Drawable drawable, int colorPressed, int colorChecked, int colorSelected, int blurSize, int highlightMode, int glowMode) {
-        super();
+	private static int mCount = 0;
 
-        mThisCount = ++mCount;
+	private int mThisCount;
 
-        mPaint = new Paint();
-        mPaint.setDither(true);
-        mPaint.setFilterBitmap(true);
+	private static Logger logger = LoggerFactory.getLogger( "glow-drawable", LoggerType.ConsoleLoggerType );
 
-        mPaintBlur = new Paint();
-        mPaintBlur.setXfermode(new PorterDuffXfermode(Mode.DARKEN));
+	// The original drawable
+	protected Drawable mDrawable;
 
-        initialize(colorPressed, colorChecked, colorSelected, blurSize, highlightMode, glowMode);
-        setDrawable(drawable);
-    }
+	// paint used to draw the current bitmap
+	protected Paint mPaint;
 
-    private void initialize(
-        int colorPressed, int colorChecked, int colorSelected, int blurSize, int highlightMode, int glowMode) {
-        mHighlightColorChecked = colorChecked;
-        mHighlightColorPressed = colorPressed;
-        mHighlightColorSelected = colorSelected;
-        mBlurValue = blurSize;
-        mGlowMode = glowMode;
-        mHighlightMode = highlightMode;
-    }
+	// paint used to generate the highlight bitmap
+	protected Paint mPaintBlur;
 
-    public void update(int colorPressed, int colorChecked, int colorSelected, int blurSize, int highlightMode, int glowMode) {
-        initialize(colorPressed, colorChecked, colorSelected, blurSize, highlightMode, glowMode);
-        setState(getState());
-    }
+	// holds the current bounds
+	private Rect mDstRect = new Rect();
 
-    public void setDrawable(Drawable drawable) {
-        mDrawable = drawable;
-    }
+	// the background bitmap used to generate the current bitmap
+	private Bitmap mBackground;
 
-    void invalidateBackground(int width, int height) {
+	/**
+	 * boolean to indicate if the generated bitmap should be drawn or
+	 * the original drawable instead
+	 */
+	private boolean mDraw;
 
-        logger.info(this + ", invalidateBitmap, current: " + mBackground + ", size: " + width + "x" + height);
+	// canvas used to generate the current bitmap
+	private Canvas tmpCanvas = new Canvas();
 
-        if (width > 0 && height > 0) {
-            if (mBackground != null) {
-                if (mBackground.getWidth() != width || mBackground.getHeight() != height || mBackground.isRecycled()) {
-                    recycleBackground();
-                    mBackground = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-                }
-            } else {
-                mBackground = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-            }
-        } else {
-            recycleBackground();
-        }
-    }
+	/**
+	 * Holds the current {@link StateSet}
+	 */
+	private GlowDrawableState mCurrentStateSet = new GlowDrawableState();
 
-    private void recycleBackground() {
-        if (null != mBackground && !mBackground.isRecycled()) {
-            mBackground.recycle();
-        }
-        mBackground = null;
-    }
+	private int mHighlightColorPressed;
+	private int mHighlightColorChecked;
+	private int mHighlightColorSelected;
+	private int mBlurValue;
+	private int mGlowMode, mHighlightMode;
 
-    public Bitmap generateBitmap(Drawable src, int color, boolean glow) {
-        logger.info(this + ", generateBitmap");
+	public GlowDrawable ( Resources res, Drawable drawable, int color_pressed, int color_checked, int color_selected, int blur_size, int highlightMode,
+			int glowMode ) {
+		super();
 
-        Bitmap bitmap;
+		mThisCount = ++mCount;
 
-        if (src instanceof BitmapDrawable) {
-            bitmap = ((BitmapDrawable) src).getBitmap();
-        } else {
-            bitmap = Bitmap.createBitmap(mBackground.getWidth(), mBackground.getHeight(), Config.ARGB_8888);
-            tmpCanvas.setBitmap(bitmap);
-            src.draw(tmpCanvas);
-        }
+		mPaint = new Paint();
+		mPaint.setDither( true );
+		mPaint.setFilterBitmap( true );
 
-        mBackground.eraseColor(0);
+		mPaintBlur = new Paint();
+		mPaintBlur.setXfermode( new PorterDuffXfermode( Mode.DARKEN ) );
 
-        tmpCanvas.setBitmap(mBackground);
-        Bitmap alpha = bitmap.extractAlpha();
-        src.draw(tmpCanvas);
+		initialize( color_pressed, color_checked, color_selected, blur_size, highlightMode, glowMode );
+		setDrawable( drawable );
+	}
 
-        mPaintBlur.setMaskFilter(null);
-        mPaintBlur.setColor(color);
-        tmpCanvas.drawBitmap(alpha, 0, 0, mPaintBlur);
+	private void initialize( int color_pressed, int color_checked, int color_selected, int blur_size, int highlightMode, int glowMode ) {
+		mHighlightColorChecked = color_checked;
+		mHighlightColorPressed = color_pressed;
+		mHighlightColorSelected = color_selected;
+		mBlurValue = blur_size;
+		mGlowMode = glowMode;
+		mHighlightMode = highlightMode;
+	}
 
-        if (glow) {
-            BlurMaskFilter maskFilter = new BlurMaskFilter(mBlurValue, BlurMaskFilter.Blur.NORMAL);
-            mPaintBlur.setMaskFilter(maskFilter);
-            mPaintBlur.setAlpha(100);
-            tmpCanvas.drawBitmap(alpha, 0, 0, mPaintBlur);
-        }
+	public void update( int color_pressed, int color_checked, int color_selected, int blur_size, int highlightMode, int glowMode ) {
+		initialize( color_pressed, color_checked, color_selected, blur_size, highlightMode, glowMode );
+		setState( getState() );
+	}
 
-        return mBackground;
-    }
+	public void setDrawable( Drawable drawable ) {
+		mDrawable = drawable;
+	}
 
-    @Override
-    public boolean isStateful() {
-        return true;
-    }
+	void invalidateBackground( int width, int height ) {
 
-    @Override
-    public void draw(Canvas canvas) {
-        copyBounds(mDstRect);
+		logger.info( this + ", invalidateBitmap, current: " + mBackground + ", size: " + width + "x" + height );
 
-        if (mDraw && mBackground != null && !mBackground.isRecycled()) {
-            canvas.drawBitmap(mBackground, null, mDstRect, getPaint());
-        } else {
-            mDrawable.draw(canvas);
-        }
-    }
+		if ( width > 0 && height > 0 ) {
+			if ( mBackground != null ) {
+				if ( mBackground.getWidth() != width || mBackground.getHeight() != height || mBackground.isRecycled() ) {
+					recycleBackground();
+					mBackground = Bitmap.createBitmap( width, height, Config.ARGB_8888 );
+				}
+			} else {
+				mBackground = Bitmap.createBitmap( width, height, Config.ARGB_8888 );
+			}
+		} else {
+			recycleBackground();
+		}
+	}
 
-    public Paint getPaint() {
-        return mPaint;
-    }
+	private void recycleBackground() {
+		if ( null != mBackground && !mBackground.isRecycled() ) {
+			mBackground.recycle();
+		}
+		mBackground = null;
+	}
 
-    @Override
-    public int getIntrinsicHeight() {
-        return mDrawable.getIntrinsicHeight();
-    }
+	public Bitmap generateBitmap( Drawable src, int color, boolean glow ) {
+		logger.info( this + ", generateBitmap" );
 
-    @Override
-    public int getIntrinsicWidth() {
-        return mDrawable.getIntrinsicWidth();
-    }
+		Bitmap bitmap;
 
-    @Override
-    public int getMinimumHeight() {
-        return mDrawable.getMinimumHeight();
-    }
+		if ( src instanceof BitmapDrawable ) {
+			bitmap = ( (BitmapDrawable) src ).getBitmap();
+		} else {
+			bitmap = Bitmap.createBitmap( mBackground.getWidth(), mBackground.getHeight(), Config.ARGB_8888 );
+			tmpCanvas.setBitmap( bitmap );
+			src.draw( tmpCanvas );
+		}
 
-    @Override
-    public int getMinimumWidth() {
-        return mDrawable.getMinimumWidth();
-    }
+		mBackground.eraseColor( 0 );
 
-    @Override
-    public boolean setState(int[] stateSet) {
-        mDrawable.setState(stateSet);
-        return super.setState(stateSet);
-    }
+		tmpCanvas.setBitmap( mBackground );
+		Bitmap alpha = bitmap.extractAlpha();
+		src.draw( tmpCanvas );
 
-    @Override
-    protected void onBoundsChange(Rect bounds) {
-        mDrawable.setBounds(bounds);
-        super.onBoundsChange(bounds);
-        invalidateBackground(bounds.width(), bounds.height());
-    }
+		mPaintBlur.setMaskFilter( null );
+		mPaintBlur.setColor( color );
+		tmpCanvas.drawBitmap( alpha, 0, 0, mPaintBlur );
 
-    @Override
-    protected boolean onStateChange(int[] state) {
+		if ( glow ) {
+			BlurMaskFilter maskFilter = new BlurMaskFilter( mBlurValue, BlurMaskFilter.Blur.NORMAL );
+			mPaintBlur.setMaskFilter( maskFilter );
+			mPaintBlur.setAlpha( 100 );
+			tmpCanvas.drawBitmap( alpha, 0, 0, mPaintBlur );
+		}
 
-        boolean isChanged = mCurrentStateSet.updateStateSet(state);
+		return mBackground;
+	}
 
-        if (isChanged && mBackground != null) {
+	@Override
+	public boolean isStateful() {
+		return true;
+	}
 
-            logger.log(this + ", onStateChange: " + mCurrentStateSet.toString() + ", changed: " + isChanged);
+	@Override
+	public void draw( Canvas canvas ) {
+		copyBounds( mDstRect );
 
-            // state priority:
-            // - pressed
-            // - checked
-            // - selected
+		if ( mDraw && mBackground != null && !mBackground.isRecycled() ) {
+			canvas.drawBitmap( mBackground, null, mDstRect, getPaint() );
+		} else {
+			mDrawable.draw( canvas );
+		}
+	}
 
-            if (mCurrentStateSet.pressed && UIUtils.checkBits(mHighlightMode, UIUtils.HIGHLIGHT_MODE_PRESSED)) {
-                generateBitmap(mDrawable, mHighlightColorPressed, UIUtils.checkBits(mGlowMode, UIUtils.GLOW_MODE_PRESSED));
-                mDraw = true;
-            } else if (mCurrentStateSet.checked && UIUtils.checkBits(mHighlightMode, UIUtils.HIGHLIGHT_MODE_CHECKED)) {
-                generateBitmap(mDrawable, mHighlightColorChecked, UIUtils.checkBits(mGlowMode, UIUtils.GLOW_MODE_CHECKED));
-                mDraw = true;
-            } else if (mCurrentStateSet.selected && UIUtils.checkBits(mHighlightMode, UIUtils.HIGHLIGHT_MODE_SELECTED)) {
-                generateBitmap(mDrawable, mHighlightColorSelected, UIUtils.checkBits(mGlowMode, UIUtils.GLOW_MODE_SELECTED));
-                mDraw = true;
-            } else {
-                // mCurrent = null;
-                mDraw = false;
-            }
-        }
+	public Paint getPaint() {
+		return mPaint;
+	}
 
-        return isChanged;
+	@Override
+	public int getIntrinsicHeight() {
+		return mDrawable.getIntrinsicHeight();
+	}
 
-    }
+	@Override
+	public int getIntrinsicWidth() {
+		return mDrawable.getIntrinsicWidth();
+	}
 
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
-    }
+	@Override
+	public int getMinimumHeight() {
+		return mDrawable.getMinimumHeight();
+	}
 
-    @Override
-    public void setAlpha(int alpha) {
-        mPaint.setAlpha(alpha);
-    }
+	@Override
+	public int getMinimumWidth() {
+		return mDrawable.getMinimumWidth();
+	}
 
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        mPaint.setColorFilter(cf);
-    }
+	@Override
+	public boolean setState( int[] stateSet ) {
+		mDrawable.setState( stateSet );
+		return super.setState( stateSet );
+	}
 
-    @Override
-    public String toString() {
-        return "GlowDrawable(" + mThisCount + ")";
-    }
+	@Override
+	protected void onBoundsChange( Rect bounds ) {
+		mDrawable.setBounds( bounds );
+		super.onBoundsChange( bounds );
+		invalidateBackground( bounds.width(), bounds.height() );
+	}
 
-    public static boolean stateSetContains(int[] stateSpec, int value) {
-        int stateSetSpecSize = stateSpec.length;
+	@Override
+	protected boolean onStateChange( int[] state ) {
 
-        for (int i = 0; i < stateSetSpecSize; i++) {
-            int stateSpecState = stateSpec[i];
+		boolean isChanged = mCurrentStateSet.updateStateSet( state );
 
-            if (stateSpecState > 0) {
-                if (stateSpecState == value) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+		if ( isChanged && mBackground != null ) {
 
-    static class GlowDrawableState {
-        boolean pressed, checked, selected;
+			logger.log( this + ", onStateChange: " + mCurrentStateSet.toString() + ", changed: " + isChanged );
 
-        public boolean updateStateSet(int[] stateSpec) {
-            int stateSetSpecSize = stateSpec.length;
-            boolean tmpPressed = false, tmpChecked = false, tmpSelected = false;
+			// state priority:
+			// - pressed
+			// - checked
+			// - selected
 
-            for (int i = 0; i < stateSetSpecSize; i++) {
-                int stateSpecState = stateSpec[i];
+			if ( mCurrentStateSet.pressed && UIUtils.checkBits( mHighlightMode, UIUtils.HIGHLIGHT_MODE_PRESSED ) ) {
+				generateBitmap( mDrawable, mHighlightColorPressed, UIUtils.checkBits( mGlowMode, UIUtils.GLOW_MODE_PRESSED ) );
+				mDraw = true;
+			} else if ( mCurrentStateSet.checked && UIUtils.checkBits( mHighlightMode, UIUtils.HIGHLIGHT_MODE_CHECKED ) ) {
+				generateBitmap( mDrawable, mHighlightColorChecked, UIUtils.checkBits( mGlowMode, UIUtils.GLOW_MODE_CHECKED ) );
+				mDraw = true;
+			} else if ( mCurrentStateSet.selected && UIUtils.checkBits( mHighlightMode, UIUtils.HIGHLIGHT_MODE_SELECTED ) ) {
+				generateBitmap( mDrawable, mHighlightColorSelected, UIUtils.checkBits( mGlowMode, UIUtils.GLOW_MODE_SELECTED ) );
+				mDraw = true;
+			} else {
+				// mCurrent = null;
+				mDraw = false;
+			}
+		}
 
-                if (stateSpecState > 0) {
-                    if (stateSpecState == android.R.attr.state_selected) {
-                        tmpSelected = true;
-                    } else if (stateSpecState == android.R.attr.state_pressed) {
-                        tmpPressed = true;
-                    } else if (stateSpecState == android.R.attr.state_checked) {
-                        tmpChecked = true;
-                    }
-                }
-            }
+		return isChanged;
 
-            boolean changed = (pressed != tmpPressed) || (checked != tmpChecked) || (selected != tmpSelected);
+	}
 
-            pressed = tmpPressed;
-            checked = tmpChecked;
-            selected = tmpSelected;
+	@Override
+	public int getOpacity() {
+		return PixelFormat.TRANSLUCENT;
+	}
 
-            return changed;
-        }
+	@Override
+	public void setAlpha( int alpha ) {
+		mPaint.setAlpha( alpha );
+	}
 
-        @Override
-        public String toString() {
-            return "{ pressed: " + pressed + ", checked: " + checked + ", selected: " + selected + " }";
-        }
-    }
+	@Override
+	public void setColorFilter( ColorFilter cf ) {
+		mPaint.setColorFilter( cf );
+	}
+
+	@Override
+	public String toString() {
+		return "GlowDrawable(" + mThisCount + ")";
+	}
+
+	static public boolean stateSetContains( int[] stateSpec, int value ) {
+		int stateSetSpecSize = stateSpec.length;
+
+		for ( int i = 0; i < stateSetSpecSize; i++ ) {
+			int stateSpecState = stateSpec[i];
+
+			if ( stateSpecState > 0 ) {
+				if ( stateSpecState == value ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	static class GlowDrawableState {
+		boolean pressed, checked, selected;
+
+		public boolean updateStateSet( int[] stateSpec ) {
+			int stateSetSpecSize = stateSpec.length;
+			boolean tmp_pressed = false, tmp_checked = false, tmp_selected = false;
+
+			for ( int i = 0; i < stateSetSpecSize; i++ ) {
+				int stateSpecState = stateSpec[i];
+
+				if ( stateSpecState > 0 ) {
+					if ( stateSpecState == android.R.attr.state_selected ) {
+						tmp_selected = true;
+					} else if ( stateSpecState == android.R.attr.state_pressed ) {
+						tmp_pressed = true;
+					} else if ( stateSpecState == android.R.attr.state_checked ) {
+						tmp_checked = true;
+					}
+				}
+			}
+
+			boolean changed = ( pressed != tmp_pressed ) || ( checked != tmp_checked ) || ( selected != tmp_selected );
+
+			pressed = tmp_pressed;
+			checked = tmp_checked;
+			selected = tmp_selected;
+
+			return changed;
+		}
+
+		@Override
+		public String toString() {
+			return "{ pressed: " + pressed + ", checked: " + checked + ", selected: " + selected + " }";
+		}
+	}
 
 }
