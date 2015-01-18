@@ -4,4 +4,9 @@
     <dimen name="aviary_optionpanel_button_padding_right">12dip</dimen>
     <dimen name="aviary_optionpanel_button_padding_top">8dip</dimen>
     <dimen name="aviary_optionpanel_button_padding_bottom">10dip</dimen>
+    <dimen name="aviary_iap_previews_list_height">115dip</dimen>
+
+    <integer name="aviary_iap_dialog_height_weight">90</integer>
+
+
 </resources>

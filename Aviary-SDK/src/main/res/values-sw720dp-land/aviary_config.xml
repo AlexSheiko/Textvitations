@@ -7,6 +7,8 @@
     <integer name="aviary_iap_dialog_rows_effects">2</integer>    
     
     <integer name="aviary_iap_dialog_margin_top_weight">6</integer>
-    <integer name="aviary_iap_dialog_height_weight">70</integer>
-	<integer name="aviary_iap_dialog_width_weight">50</integer>
+    <integer name="aviary_iap_dialog_height_weight">87</integer>
+	<integer name="aviary_iap_dialog_width_weight">40</integer>
+
+
 </resources>

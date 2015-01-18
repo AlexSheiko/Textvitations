@@ -19,8 +19,8 @@
         android:focusable="false"
         android:id="@+id/image"
         style="?attr/aviaryBottomBarToolImageStyle"
-        android:layout_marginLeft="16dip"
-        android:layout_marginRight="12dip"
+        android:layout_marginLeft="@dimen/aviary_tool_margin"
+        android:layout_marginRight="@dimen/aviary_tool_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/aviary_tool_ic_feedback" />
