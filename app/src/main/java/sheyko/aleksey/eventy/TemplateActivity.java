@@ -85,6 +85,7 @@ public class TemplateActivity extends Activity {
                     Bitmap loadedBitmap = BitmapFactory.decodeResource(getResources(), templateId);
                     mImagePath = getImagePath(TemplateActivity.this, loadedBitmap);
 
+
                     //Ложу исходное изображение — вдруг захочется сохранить без редактирования
                     editor = sharedPref.edit();
                     editor.putString("image_path", mImagePath);
@@ -173,10 +174,22 @@ public class TemplateActivity extends Activity {
     public String getImagePath(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        File folder = new File(Environment.getExternalStorageDirectory() + "/Textvitations");
-        folder.mkdir();
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return path;
+
+
+        String folder_dcim = "DCIM";
+
+        File f = new File(Environment.getExternalStorageDirectory(),
+                folder_dcim);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+        File f1 = new File(Environment.getExternalStorageDirectory() + "/"
+                + folder_dcim, "Camera");
+        if (!f1.exists()) {
+            f1.mkdirs();
+        }
+        return MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
     }
 
     @Override
