@@ -21,10 +21,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/gallery_picker_label"/>
+        android:layout_above="@+id/location_picker_label"/>
 
     <TextView
-        android:id="@+id/gallery_picker_label"
+        android:id="@+id/location_picker_label"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:textSize="18sp"
