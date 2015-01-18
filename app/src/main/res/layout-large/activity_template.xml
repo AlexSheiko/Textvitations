@@ -16,14 +16,14 @@
         android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"
         android:numColumns="2"
-        android:layout_above="@+id/location_picker_label"
+        android:layout_above="@+id/gallery_picker_label"
         android:paddingTop="20dp"
         android:paddingBottom="8dp"
         />
 
 
     <TextView
-        android:id="@+id/location_picker_label"
+        android:id="@+id/gallery_picker_label"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:textSize="18sp"

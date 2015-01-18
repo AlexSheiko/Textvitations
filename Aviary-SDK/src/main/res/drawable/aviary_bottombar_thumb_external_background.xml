@@ -5,7 +5,13 @@
         <color android:color="@color/aviary_nav_divider_dark" />
     </item>
 
-    <item android:top="@dimen/aviary_nav_divider_double" android:drawable="@drawable/aviary_bottombar_thumb_external_background_selector">
+    <item android:top="@dimen/aviary_nav_divider_double">
+        <shape android:shape="rectangle" >
+            <gradient
+                android:angle="90"
+                android:endColor="@color/aviary_bottom_primary_color_inverse_dark"
+                android:startColor="@color/aviary_bottom_primary_color_inverse_light" />
+        </shape>
     </item>
 
 </layer-list>

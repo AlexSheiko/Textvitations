@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<style name="AviaryConsolidatedAdjustButtons">
-		<item name="android:layout_width">400dip</item>
-	</style>
+    <style name="AviaryWidget.IAPDialog.TopGrid">
+        <item name="android:background">@drawable/aviary_iap_grid_background_inverted</item>
+    </style>
 
 </resources>

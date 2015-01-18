@@ -1,9 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-
-	<style name="AviaryActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-		<item name="android:background">@drawable/aviary_nav_background</item>
-		<item name="background">@drawable/aviary_nav_background</item>
-	</style>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aviary="http://schemas.android.com/apk/res-auto">
 
 	<style name="AviaryWidget"></style>
 
@@ -46,7 +41,7 @@
 		<item name="aviaryWave_pointDrawable">@drawable/aviary_wave_dot</item>
 		<item name="aviaryWave_innerRadius">15dip</item>
 		<item name="aviaryWave_outerRadius">135dip</item>
-		<item name="aviaryWave_animationDuration">1200</item>
+		<item name="aviaryWave_animationDuration">2000</item>
 		<item name="aviaryCrosshair_enabled">0</item>
 	</style>
 
@@ -146,11 +141,11 @@
 		<item name="android:paddingTop">4dip</item>
 	</style>
 
-	<style name="AviaryWidget.BottomBar.Logo.Image">
+	<!--<style name="AviaryWidget.BottomBar.Logo.Image">
 		<item name="android:adjustViewBounds">true</item>
 		<item name="android:scaleType">centerInside</item>
-		<item name="android:src">@drawable/aviary_powered_selector</item>
-	</style>
+		<item name="android:src">@drawable/aviary_powered</item>
+	</style>-->
 
 	<style name="AviaryWidget.BottomBar.OptionPanel">
 		<item name="android:layout_width">match_parent</item>
@@ -207,10 +202,6 @@
 		<item name="hlv_dividerWidth">0dip</item>
 		<item name="android:overScrollMode">always</item>
 		<item name="android:choiceMode">singleChoice</item>
-	</style>
-
-	<style name="AviaryWidget.EffectsHorizontalScrollView.ShopPreviews">
-		<item name="hlv_dividerWidth">@dimen/aviary_store_detail_hlist_divider</item>
 	</style>
 
 	<style name="AviaryWidget.EffectThumb"></style>
@@ -270,16 +261,24 @@
 		<item name="aviary_animationDuration">200</item>
 	</style>
 
-	<style name="AviaryWidget.EffectThumb.Layout.Stickers">
-		<item name="android:background">@drawable/aviary_bottombar_thumb_internal_background</item>
-	</style>	
-
 	<style name="AviaryWidget.EffectThumb.Layout.External">
 		<item name="android:background">@drawable/aviary_bottombar_thumb_external_background</item>
 	</style>
 
 
 	<style name="AviaryWidget.IAPDialog"></style>
+
+	<style name="AviaryWidget.IAPDialog.PackInfoPreviewCellLayout">
+		<item name="aviary_cellStartPadding">10dip</item>
+		<item name="aviary_cellEndPadding">10dip</item>
+		<item name="aviary_cellTopPadding">10dip</item>
+		<item name="aviary_cellBottomPadding">10dip</item>
+		<item name="aviary_horizontalPadding">10dip</item>
+		<item name="aviary_verticalPadding">0dip</item>
+		<item name="aviary_cells">@integer/aviary_iap_dialog_cols_effects</item>
+		<item name="aviary_rows">@integer/aviary_iap_dialog_rows_effects</item>
+		<item name="aviary_layout_direction">horizontal</item>
+	</style>
 
 	<style name="AviaryWidget.IAPDialog.Container">
 		<item name="android:gravity">center_horizontal</item>
@@ -300,6 +299,69 @@
 		<item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
 	</style>
 
+	<style name="AviaryWidget.IAPDialog.Workspace">
+		<item name="aviary_defaultScreen">0</item>
+		<item name="aviary_overscroll">2</item>
+		<item name="android:paddingBottom">0.0dip</item>
+		<item name="android:paddingLeft">0.0dip</item>
+		<item name="android:paddingRight">0.0dip</item>
+		<item name="android:paddingTop">0.0dip</item>
+		<item name="android:background">@color/aviary_iap_workspace_background</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.CellLayoutStickers">
+		<item name="aviary_cellStartPadding">0sp</item>
+		<item name="aviary_cellEndPadding">0sp</item>
+		<item name="aviary_cellTopPadding">0sp</item>
+		<item name="aviary_cellBottomPadding">0sp</item>
+		<item name="aviary_horizontalPadding">1sp</item>
+		<item name="aviary_verticalPadding">1sp</item>
+		<item name="aviary_cells">@integer/aviary_iap_dialog_cols_stickers</item>
+		<item name="aviary_rows">@integer/aviary_iap_dialog_rows_stickers</item>
+		<item name="aviary_layout_direction">horizontal</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.CellLayoutEffects">
+		<item name="aviary_cellStartPadding">5dip</item>
+		<item name="aviary_cellEndPadding">5dip</item>
+		<item name="aviary_cellTopPadding">5dip</item>
+		<item name="aviary_cellBottomPadding">5dip</item>
+		<item name="aviary_horizontalPadding">2dip</item>
+		<item name="aviary_verticalPadding">2dip</item>
+		<item name="aviary_cells">@integer/aviary_iap_dialog_cols_effects</item>
+		<item name="aviary_rows">@integer/aviary_iap_dialog_rows_effects</item>
+		<item name="aviary_layout_direction">horizontal</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.SingleCell">
+		<item name="android:background">@color/aviary_iap_workspace_background</item>
+		<item name="android:scaleType">centerInside</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.SingleCell.Stickers">
+		<item name="android:background">@color/aviary_iap_workspace_background</item>
+		<item name="android:padding">3dip</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.WorkspaceIndicator">
+		<item name="aviary_indicatorId">@drawable/aviary_iap_workspace_indicator_selector</item>
+		<item name="android:layout_marginTop">5dip</item>
+		<item name="android:layout_height">12dip</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.ShadowTop">
+		<item name="android:minHeight">1dip</item>
+		<item name="android:background">@drawable/aviary_iap_workspace_shadow_top</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.ShadowBottom">
+		<item name="android:minHeight">1dip</item>
+		<item name="android:background">@drawable/aviary_iap_workspace_shadow_bottom</item>
+	</style>
+
+	<style name="AviaryWidget.IAPDialog.TopGrid">
+		<item name="android:background">@null</item>
+	</style>
 
 	<style name="AviaryWidget.Button.LightGray">
 		<item name="android:background">@drawable/aviary_light_gray_button_background</item>
@@ -428,7 +490,7 @@
 	<style name="AviaryWidget.NavBar"></style>
 
 	<style name="AviaryWidget.NavBar.Main">
-		<item name="android:height">?attr/actionBarSize</item>
+		<item name="android:height">@dimen/aviary_navbar_height</item>
 		<item name="android:alwaysDrawnWithCache">true</item>
 		<item name="android:animationCache">true</item>
 		<item name="android:background">@drawable/aviary_nav_background</item>
@@ -481,12 +543,6 @@
 		<item name="aviary_closeButtonMargins">@dimen/aviary_overlay_close_button_margins</item>
 	</style>
 
-	<style name="AviaryWidget.Overlay.UndoRedo">
-		<item name="android:animationDuration">300</item>
-		<item name="aviary_textMargins">30dip</item>
-		<item name="aviary_activationDelay">0</item>
-	</style>	
-
 	<style name="AviaryWidget.Overlay.Stickers"></style>
 
 	<style name="AviaryWidget.Overlay.Frames"></style>
@@ -495,11 +551,11 @@
 		<item name="android:animationDuration">300</item>
 	</style>
 
-	<style name="AviaryWidget.Overlay.Overlay">
+	<style name="AviaryWidget.Overlay.Blemish.Close">
 		<item name="android:animationDuration">300</item>
-		<item name="aviary_titleStyle">@style/AviaryWidget.TitleOverlay</item>
+		<item name="aviary_titleStyle">@style/AviaryWidget.TitleOverlay.BlemishClose</item>
+		<item name="aviary_textStyle">@style/AviaryWidget.TextOverlay.BlemishClose</item>
 		<item name="aviary_textMargins">20dip</item>
-		<item name="aviary_activationDelay">800</item>
 	</style>
 
 	<style name="AviaryWidget.TitleOverlay" parent="AviaryTextAppearance.Large">
@@ -508,6 +564,16 @@
 
 	<style name="AviaryWidget.TextOverlay" parent="AviaryTextAppearance.Medium">
 		<item name="android:textColor">#ffffffff</item>
+	</style>
+
+	<style name="AviaryWidget.TitleOverlay.BlemishClose">
+		<item name="android:textColor">#ffffffff</item>
+		<item name="android:textSize">22sp</item>
+	</style>
+
+	<style name="AviaryWidget.TextOverlay.BlemishClose">
+		<item name="android:textColor">#ffffffff</item>
+		<item name="android:textSize">18sp</item>
 	</style>
 
 	<style name="AviaryWidget.TextView.NavTitle">
@@ -581,6 +647,13 @@
 		<item name="android:background">@drawable/aviary_gray_button_background</item>
 	</style>
 
+	<style name="AviaryWidget.Button.Secondary.NavBarRestore">
+		<item name="android:paddingLeft">10dip</item>
+		<item name="android:paddingRight">10dip</item>
+		<item name="android:paddingTop">12dip</item>
+		<item name="android:paddingBottom">12dip</item>
+	</style>
+
 	<style name="AviaryWidget.Button.Secondary.Toggle"></style>
 
 	<style name="AviaryWidget.PreviewSpot">
@@ -599,15 +672,15 @@
 
 	<style name="AviaryWidget.CropImageView">
 		<item name="aviary_minCropSize">@dimen/aviary_crop_min_size</item>
-		<item name="aviary_highlightStyle">@style/AviaryGraphics.CropHighlightView</item>
+		<item name="aviary_highlightStyle">?aviaryCropHighlightStyle</item>
 	</style>
 
 	<style name="AviaryWidget.TextImageView">
-		<item name="aviary_highlightStyle">@style/AviaryGraphics.TextHighlightView</item>
+		<item name="aviary_highlightStyle">?aviaryImageViewDrawableOverlayTextHighlightStyle</item>
 	</style>
 
 	<style name="AviaryWidget.StickerImageView">
-		<item name="aviary_highlightStyle">@style/AviaryGraphics.StickerHighlightView</item>
+		<item name="aviary_highlightStyle">?aviaryImageViewDrawableOverlayStickerHighlightStyle</item>
 	</style>
 
 	<style name="AviaryWidget.AdjustImageView">
@@ -633,7 +706,7 @@
 		<item name="aviary_strokeColor4">@color/aviary_crop_stroke_internal_color_pressed</item>
 		<item name="aviary_color1">@color/aviary_crop_fill_color</item>
 		<item name="aviary_color2">@color/aviary_crop_fill_color_pressed</item>
-		<item name="android:src">@drawable/aviary_knob_selector</item>
+		<item name="android:src">@drawable/aviary_knob</item>
 	</style>
 
 	<style name="AviaryGraphics.PluginDividerText">
@@ -645,19 +718,18 @@
 	</style>
 
 	<style name="AviaryGraphics.TextHighlightView">
-		<item name="aviary_rotateDrawable">@drawable/aviary_sticker_highlight_knob_selector</item>
+		<item name="aviary_rotateDrawable">@drawable/aviary_resize_knob</item>
 		<item name="aviary_minSize">@dimen/aviary_text_overlay_min_size</item>
 		<item name="aviary_moveEnabled">1</item>
 		<item name="aviary_rotateEnabled">1</item>
 		<item name="aviary_resizeEnabled">1</item>
-		<item name="android:background">@drawable/aviary_sticker_highlight_background_selector</item>
+		<item name="android:background">@drawable/aviary_text_highlight_background</item>
 		<item name="android:padding">@dimen/aviary_text_overlay_padding</item>
 	</style>
 
 	<style name="AviaryGraphics.StickerHighlightView">
-		<item name="aviary_rotateDrawable">@drawable/aviary_sticker_highlight_knob_selector</item>
-		<item name="aviary_deleteDrawable">@drawable/aviary_sticker_highlight_delete_knob_selector</item>
-		<item name="aviary_opacityDrawable">@drawable/aviary_sticker_highlight_opacity_knob_selector</item>
+		<item name="aviary_rotateDrawable">@drawable/aviary_resize_knob</item>
+		<item name="aviary_deleteDrawable">@drawable/aviary_delete_knob</item>
 		<item name="aviary_minSize">@dimen/aviary_sticker_overlay_min_size</item>
 		<item name="aviary_moveEnabled">1</item>
 		<item name="aviary_rotateEnabled">1</item>
@@ -705,17 +777,8 @@
 		<item name="aviary_blendMode">MULTIPLY</item>
 	</style>
 
-	<style name="AviaryWidget.ImageViewVignetteStyle">
-		<item name="aviary_vignette_strokeSize">2.5dip</item>
-		<item name="aviary_vignette_strokeColor1">#ffffffff</item>
-		<item name="aviary_vignette_strokeColor2">#ff2a2c2f</item>
-		<item name="aviary_vignette_controlPointSize">4dip</item>
-		<item name="aviary_vignette_fadeout_time">1000</item>
-		<item name="aviary_vignette_feather">0.5</item>
-		<item name="aviary_vignette_intensity">70</item>
-		<item name="aviary_vignette_aviaryWave_pointDrawable">@drawable/aviary_wave_dot</item>
-		<item name="aviary_vignette_rippleAnimationDuration">1800</item>
-		<item name="aviary_vignette_animationDelay">400</item>
+	<style name="AviaryWidget.ImageRestoreSwitcher">
+		<item name="aviary_restoreTimeout">@integer/aviary_image_restore_timeout</item>
 	</style>
 
 	<style name="AviaryDialog"></style>
@@ -859,74 +922,6 @@
 
 	<style name="AviaryAnimations.AviaryToast">
 		<item name="android:windowExitAnimation">?aviaryToastExitAnimation</item>
-	</style>
-
-
-	<!-- store -->
-	<style name="AviaryStoreListItemTitle">
-		<item name="aviary_typeface">?attr/aviaryFontRegular</item>
-		<item name="android:textSize">@dimen/aviary_store_list_item_title_size</item>
-		<item name="android:textAppearance">?attr/aviaryTextAppearanceMediumInverted</item>
-		<item name="android:maxLines">1</item>
-		<item name="android:singleLine">true</item>
-		<item name="android:ellipsize">end</item>
-	</style>
-
-	<style name="AviaryStoreListItemSubTitle">
-		<item name="android:layout_marginTop">5dip</item>
-		<item name="android:textAppearance">?attr/aviaryTextAppearanceSmallInverted</item>
-		<item name="android:maxLines">1</item>
-	</style>
-
-	<style name="AviaryStoreBuyButton" parent="AviaryWidget.Button">
-		<item name="android:textAppearance">?aviaryTextAppearanceSmall</item>
-		<item name="android:background">@drawable/aviary_green_button_background</item>
-		<item name="android:paddingLeft">8dp</item>
-		<item name="android:paddingRight">8dp</item>
-		<item name="android:paddingTop">10dp</item>
-		<item name="android:paddingBottom">10dp</item>
-	</style>
-
-	<style name="AviaryStoreBuyButtonTextStyle" parent="AviaryWidget.TextView">
-		<item name="android:textAppearance">?aviaryTextAppearanceSmall</item>
-		<item name="android:textColor">@color/aviary_store_buy_button_text_color</item>
-		<item name="android:gravity">center</item>
-		<item name="android:ellipsize">end</item>
-		<item name="aviary_typeface">?attr/aviaryFontRegular</item>
-		<item name="android:maxLines">1</item>
-	</style>
-
-	<style name="InternalStoreDetailLayout">
-		<item name="android:descendantFocusability">blocksDescendants</item>
-	</style>
-
-	<style name="AviaryWidget.AviaryImageViewIntensity">
-		<item name="aviary_tooltipSize">60dip</item>
-		<item name="aviary_strokeWidth">7dip</item>
-		<item name="aviary_strokeColor">#AA000000</item>
-		<item name="android:textColor">#AAffffff</item>
-	</style>
-
-	<style name="AviaryPanelsTooltip">
-        <item name="ttlm_padding">@dimen/ttlm_default_padding</item>
-        <item name="ttlm_strokeColor">@null</item>
-        <item name="ttlm_backgroundColor">#c8252525</item>
-        <item name="ttlm_strokeWeight">0dip</item>
-        <item name="ttlm_cornerRadius">6dip</item>
-        <item name="ttlm_arrowRatio">1.4</item>		
-	</style>
-
-	<style name="AviaryUndoTooltip">
-        <item name="ttlm_padding">@dimen/ttlm_default_padding</item>
-        <item name="ttlm_strokeColor">@null</item>
-        <item name="ttlm_backgroundColor">#c8252525</item>
-        <item name="ttlm_strokeWeight">0dip</item>
-        <item name="ttlm_cornerRadius">6dip</item>
-        <item name="ttlm_arrowRatio">1.4</item>		
-	</style>
-
-	<style name="AviaryConsolidatedAdjustButtons">
-		<item name="android:layout_width">match_parent</item>
 	</style>
 
 </resources>

@@ -17,11 +17,11 @@
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:numColumns="4"
-        android:layout_above="@+id/location_picker_label"
+        android:layout_above="@+id/gallery_picker_label"
         android:paddingBottom="8dp"/>
 
     <TextView
-        android:id="@+id/location_picker_label"
+        android:id="@+id/gallery_picker_label"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:textSize="18sp"

@@ -9,12 +9,11 @@
     android:padding="15dp" >
 
     <ImageView
-	    android:duplicateParentState="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        android:src="@drawable/aviary_ic_reload" />
+        android:src="@drawable/aviary_ic_na_gold" />
 
     <com.aviary.android.feather.sdk.widget.AviaryTextView
         android:id="@+id/aviary_retry_text"
@@ -24,8 +23,9 @@
         android:gravity="center"
         android:text="@string/feather_item_not_found" />
 
-    <com.aviary.android.feather.sdk.widget.AviaryTextView
-	    style="?attr/aviaryTextAppearanceMediumInverted"
+    <Button
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
+        android:id="@+id/aviary_retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/feather_try_again"
