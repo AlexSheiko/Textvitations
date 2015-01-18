@@ -42,10 +42,10 @@
         android:name="com.aviary.android.feather.cds.AviaryCdsService"
         android:exported="false"
         android:process=":aviarycds">
-        <intent-filter>
-        <action android:name="aviary.intent.action.CDS_DOWNLOAD_START"/>
-        <action android:name="aviary.intent.action.CDS_RESTORE_USER_ITEMS"/>
-        </intent-filter>
+        <!--<intent-filter>-->
+        <!--<action android:name="aviary.intent.action.CDS_DOWNLOAD_START"/>-->
+        <!--<action android:name="aviary.intent.action.CDS_RESTORE_USER_ITEMS"/>-->
+        <!--</intent-filter>-->
         </service>
 
         <!-- Cds Content Provider -->
