@@ -175,7 +175,6 @@ public class TemplateActivity extends Activity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
-
         String folder_dcim = "DCIM";
 
         File f = new File(Environment.getExternalStorageDirectory(),
