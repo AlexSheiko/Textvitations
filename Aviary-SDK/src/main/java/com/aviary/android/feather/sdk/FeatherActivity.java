@@ -906,9 +906,20 @@ public class FeatherActivity extends MonitoredActivity
     }
 
     protected Dialog createBaseDialog(int message, String buttonText, final OnClickListener button1Listener) {
-        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
-        serviceIntent.setPackage("com.android.vending");
-        bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+
+
+        if (!mHaveExtraTools) {
+
+            Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
+            serviceIntent.setPackage("com.android.vending");
+            bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+
+        } else {
+            Toast.makeText(this, "You're already have extra tools",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
         return /*dialog*/ null;
     }
 
