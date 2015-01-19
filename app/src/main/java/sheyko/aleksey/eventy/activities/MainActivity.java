@@ -17,8 +17,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AdBuddiz.setPublisherKey("TEST_PUBLISHER_KEY");
-        AdBuddiz.setTestModeActive();
+        AdBuddiz.setPublisherKey("086c45d0-402f-455d-9c96-3519534a71cb");
         AdBuddiz.cacheAds(this); // this = current Activity
     }
 
