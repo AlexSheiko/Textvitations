@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import sheyko.aleksey.eventy.R;
 
 public class ColorPickerAdapter extends BaseAdapter {
 

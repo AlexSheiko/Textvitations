@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-class TemplateGridAdapter extends BaseAdapter {
+import sheyko.aleksey.eventy.R;
+
+public class TemplateGridAdapter extends BaseAdapter {
     private List<Item> items = new ArrayList<Item>();
     private LayoutInflater inflater;
 

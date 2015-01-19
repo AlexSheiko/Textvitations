@@ -7,7 +7,7 @@
     android:paddingLeft="8dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context="sheyko.aleksey.eventy.PreviewActivity"
+    tools:context="sheyko.aleksey.eventy.activities.PreviewActivity"
     android:id="@+id/relativeLayout">
 
     <RelativeLayout

@@ -1,14 +1,12 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.activities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,6 +21,8 @@ import com.aviary.android.feather.sdk.FeatherActivity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import sheyko.aleksey.eventy.R;
+import sheyko.aleksey.eventy.adapters.TemplateGridAdapter;
 import sheyko.aleksey.eventy.util.IabHelper;
 import sheyko.aleksey.eventy.util.IabResult;
 import sheyko.aleksey.eventy.util.Inventory;
@@ -51,29 +51,24 @@ public class TemplateActivity extends Activity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
 
+    private static final String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkGfnRZnnEzmGYHYnKad6i/YsKjNA8e1JFdQGm2yzbgfeC8h6Gk/4CIrRu3fWgbutuUbir00NZS7oU659AEfH7LdHVyhOjFb65/XSF0atmsxVUmtm56CDYppPrOzh8XZ6nGDTGwq+nrW47xwigJas7gXe/BVFqumJ9gIiyjy/nWHlttD55B34xs4Qp9B9g+rgRuK5Il3dlWboan/Du8FsCkP2jZHrSXatipYyVMWSwc/m0Vwyo//sbmYsB00aOhbLho7/+iX8fsIJ6o5sGRZj71YK7MVJnWSzrU3m5llRqLQy4bmjZ46z+/nktlV6wFEnAt8+OmSKJgUfMfmIBJRXpwIDAQAB";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_template);
-
-        if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT)
-            findViewById(R.id.gallery_picker_label).setVisibility(View.GONE);
-
-        final String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkGfnRZnnEzmGYHYnKad6i/YsKjNA8e1JFdQGm2yzbgfeC8h6Gk/4CIrRu3fWgbutuUbir00NZS7oU659AEfH7LdHVyhOjFb65/XSF0atmsxVUmtm56CDYppPrOzh8XZ6nGDTGwq+nrW47xwigJas7gXe/BVFqumJ9gIiyjy/nWHlttD55B34xs4Qp9B9g+rgRuK5Il3dlWboan/Du8FsCkP2jZHrSXatipYyVMWSwc/m0Vwyo//sbmYsB00aOhbLho7/+iX8fsIJ6o5sGRZj71YK7MVJnWSzrU3m5llRqLQy4bmjZ46z+/nktlV6wFEnAt8+OmSKJgUfMfmIBJRXpwIDAQAB";
-
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_APPEND);
 
         mCategory = sharedPref.getString("category", null);
 
 
-        GridView gridView = (GridView) findViewById(R.id.templatesGrid);
-        gridView.setAdapter(new TemplateGridAdapter(TemplateActivity.this, mCategory));
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView mGridView = (GridView) findViewById(R.id.templatesGrid);
+        mGridView.setAdapter(new TemplateGridAdapter(TemplateActivity.this, mCategory));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 mTemplate = position + 1;
 
                 editor = sharedPref.edit();
@@ -149,12 +144,12 @@ public class TemplateActivity extends Activity {
             mHaveExtraTools = (premiumPurchase != null/* && verifyDeveloperPayload(premiumPurchase)*/);
             Log.d(TAG, "User " + (mHaveExtraTools ? "HAVE extra tools" : "DOESN'T have extra tools"));
 
-            callAviaryIntent();
+            callAviaryIntent(Uri.parse(mImagePath));
             Log.d(TAG, "Initial inventory query finished; enabling main UI.");
         }
     };
 
-    public void callAviaryIntent() {
+    public void callAviaryIntent(Uri imageUri) {
 
         mImagePath = sharedPref.getString("image_path", null);
 
@@ -166,10 +161,9 @@ public class TemplateActivity extends Activity {
         }
 
         Intent aviaryIntent = new Intent(TemplateActivity.this, FeatherActivity.class);
+        aviaryIntent.setData(imageUri);
         aviaryIntent.putExtra(Constants.EXTRA_TOOLS_LIST, tools);
         aviaryIntent.putExtra(Constants.EXTRA_HIDE_EXIT_UNSAVE_CONFIRMATION, true);
-        aviaryIntent.setData(Uri.parse(mImagePath));
-
         aviaryIntent.putExtra(Constants.EXTRA_IN_API_KEY_SECRET, "85c246dd9c3b9289");
         aviaryIntent.putExtra(Constants.EXTRA_OUTPUT_QUALITY, 100);
         startActivityForResult(aviaryIntent, AVIARY_EDITOR_REQUEST);
@@ -203,20 +197,8 @@ public class TemplateActivity extends Activity {
         if (resultCode == RESULT_OK) {
             String mImagePath;
             if (requestCode == PICK_IMAGE_REQUEST) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = this.getContentResolver().query(
-                        selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                mImagePath = cursor.getString(columnIndex);
-
-                //Ложу исходное изображение — вдруг захочется сохранить без редактирования
-                editor = sharedPref.edit();
-                editor.putString("image_path", mImagePath);
-                editor.apply();
-
-                callAviaryIntent();
+                Uri mSelectedImageUri = data.getData();
+                callAviaryIntent(mSelectedImageUri);
 
             } else if (requestCode == AVIARY_EDITOR_REQUEST) {
                 mImagePath = data.getDataString();

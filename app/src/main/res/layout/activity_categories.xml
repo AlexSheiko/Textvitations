@@ -7,7 +7,7 @@
     android:paddingTop="30dp"
     android:paddingBottom="8dp"
     android:background="#EDEDED"
-    tools:context="sheyko.aleksey.eventy.CategoryActivity"
+    tools:context="sheyko.aleksey.eventy.activities.CategoryActivity"
     android:descendantFocusability="blocksDescendants"
     android:id="@+id/relativeLayout">
 

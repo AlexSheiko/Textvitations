@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,6 +32,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+
+import sheyko.aleksey.eventy.R;
 
 public class MapActivity extends Activity implements GoogleMap.OnMapClickListener, GoogleMap.OnMyLocationButtonClickListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 

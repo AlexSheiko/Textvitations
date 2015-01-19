@@ -1,9 +1,11 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import sheyko.aleksey.eventy.R;
 
 
 public class MainActivity extends Activity {

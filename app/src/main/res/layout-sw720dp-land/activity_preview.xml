@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="16dp"
-    tools:context="sheyko.aleksey.eventy.PreviewActivity"
+    tools:context="sheyko.aleksey.eventy.activities.PreviewActivity"
     android:id="@+id/relativeLayout">
 
     <RelativeLayout

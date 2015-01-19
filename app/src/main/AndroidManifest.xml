@@ -66,7 +66,7 @@
         </receiver>
 
         <activity
-            android:name="sheyko.aleksey.eventy.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -75,52 +75,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="sheyko.aleksey.eventy.CategoryActivity"
+            android:name=".activities.CategoryActivity"
             android:hardwareAccelerated="true"
             android:label="@string/title_activity_categories"
-            android:parentActivityName="sheyko.aleksey.eventy.MainActivity">
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sheyko.aleksey.eventy.MainActivity"/>
+                android:value=".activities.MainActivity"/>
         </activity>
         <activity
-            android:name="sheyko.aleksey.eventy.TemplateActivity"
+            android:name=".activities.TemplateActivity"
             android:hardwareAccelerated="true"
             android:label="@string/activity_category_title"
-            android:parentActivityName="sheyko.aleksey.eventy.CategoryActivity">
+            android:parentActivityName=".activities.CategoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sheyko.aleksey.eventy.CategoryActivity"/>
+                android:value=".activities.CategoryActivity"/>
         </activity>
         <activity
-            android:name="sheyko.aleksey.eventy.InputActivity"
+            android:name=".activities.InputActivity"
             android:launchMode="singleTask"
             android:hardwareAccelerated="true"
             android:label="@string/activity_input_title"
-            android:parentActivityName="sheyko.aleksey.eventy.TemplateActivity">
+            android:parentActivityName=".activities.TemplateActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sheyko.aleksey.eventy.TemplateActivity"/>
+                android:value=".activities.TemplateActivity"/>
         </activity>
         <activity
-            android:name="sheyko.aleksey.eventy.PreviewActivity"
+            android:name=".activities.PreviewActivity"
             android:hardwareAccelerated="true"
             android:label="Preview"
-            android:parentActivityName="sheyko.aleksey.eventy.InputActivity">
+            android:parentActivityName=".activities.InputActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sheyko.aleksey.eventy.InputActivity"/>
+                android:value=".activities.InputActivity"/>
         </activity>
 
         <activity
-            android:name="sheyko.aleksey.eventy.MapActivity"
+            android:name=".activities.MapActivity"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:label="@string/title_activity_map"
-            android:parentActivityName="sheyko.aleksey.eventy.InputActivity">
+            android:parentActivityName=".activities.InputActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".InputActivity"/>
+                android:value=".activities.InputActivity"/>
         </activity>
 
         <meta-data

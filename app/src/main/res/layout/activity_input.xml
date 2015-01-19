@@ -7,7 +7,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="16dp"
                 android:background="@android:color/white"
-                tools:context="sheyko.aleksey.eventy.InputActivity">
+                tools:context="sheyko.aleksey.eventy.activities.InputActivity">
 
 
     <LinearLayout

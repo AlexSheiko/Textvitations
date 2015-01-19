@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.activities;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -32,6 +32,8 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import sheyko.aleksey.eventy.R;
 
 
 public class PreviewActivity extends Activity {

@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.util;
 
 import android.content.Context;
 import android.util.AttributeSet;

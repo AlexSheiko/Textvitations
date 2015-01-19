@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.util;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import sheyko.aleksey.eventy.R;
+import sheyko.aleksey.eventy.adapters.ColorPickerAdapter;
 
 public class ColorPickerDialog extends Dialog {
     public String color;

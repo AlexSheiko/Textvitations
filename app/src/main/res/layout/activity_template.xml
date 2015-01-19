@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="8dp"
     android:background="@android:color/white"
-    tools:context="sheyko.aleksey.eventy.TemplateActivity">
+    tools:context="sheyko.aleksey.eventy.activities.TemplateActivity">
 
 
     <GridView

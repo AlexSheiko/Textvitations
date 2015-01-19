@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@android:color/white"
-    tools:context="sheyko.aleksey.eventy.InputActivity">
+    tools:context="sheyko.aleksey.eventy.activities.InputActivity">
 
 
     <RelativeLayout

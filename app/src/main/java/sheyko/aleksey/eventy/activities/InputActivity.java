@@ -1,4 +1,4 @@
-package sheyko.aleksey.eventy;
+package sheyko.aleksey.eventy.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,6 +23,7 @@ import com.aviary.android.feather.sdk.FeatherActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import sheyko.aleksey.eventy.R;
 import sheyko.aleksey.eventy.util.IabHelper;
 import sheyko.aleksey.eventy.util.IabResult;
 import sheyko.aleksey.eventy.util.Inventory;
