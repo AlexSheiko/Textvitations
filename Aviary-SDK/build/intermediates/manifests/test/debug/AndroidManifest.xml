@@ -22,9 +22,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application>
         <uses-library android:name="android.test.runner" />
+        <!--
+	        Aviary SDK API KEY
+	        Required
+        -->
+        <meta-data
+            android:name="com.aviary.android.feather.v1.API_KEY"
+            android:value="6bea1dd566207f91" />
         <!--
 			Aviary Cds Service is in charge of sync all the available
 			online DLC contents within the android application.

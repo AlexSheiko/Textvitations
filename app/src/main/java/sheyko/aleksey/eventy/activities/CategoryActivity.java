@@ -132,7 +132,6 @@ public class CategoryActivity extends ListActivity {
 
                 startActivity(new Intent(this,
                         InputActivity.class));
-
             }
         }
     }

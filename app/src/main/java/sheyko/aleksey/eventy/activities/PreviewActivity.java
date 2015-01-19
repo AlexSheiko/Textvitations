@@ -26,6 +26,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.services.urlshortener.Urlshortener;
 import com.google.api.services.urlshortener.model.Url;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,8 +60,9 @@ public class PreviewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_preview);
+
+        AdBuddiz.showAd(this);
 
         sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_APPEND);

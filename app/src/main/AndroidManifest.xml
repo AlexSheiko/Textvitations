@@ -111,7 +111,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.InputActivity"/>
         </activity>
-
         <activity
             android:name=".activities.MapActivity"
             android:hardwareAccelerated="true"
@@ -122,6 +121,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.InputActivity"/>
         </activity>
+        <activity android:name="com.purplebrain.adbuddiz.sdk.AdBuddizActivity"
+                  android:theme="@android:style/Theme.Translucent" />
 
         <meta-data
             android:name="com.aviary.android.feather.v1.API_KEY"
