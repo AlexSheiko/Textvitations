@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+	<item android:state_pressed="true" android:drawable="@drawable/aviary_button_dark_pressed" />
+	<item android:state_checked="true" android:drawable="@drawable/aviary_button_dark_pressed" />
+	<item android:state_selected="true" android:drawable="@drawable/aviary_button_dark_pressed" />
+	<item android:state_pressed="false" android:drawable="@drawable/aviary_button_dark" />
+	<item android:state_selected="false" android:drawable="@drawable/aviary_button_dark" />
+</selector><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_dark_button_selector.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/drawable/aviary_dark_button_selector.xml -->

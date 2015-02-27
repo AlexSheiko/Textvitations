@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape android:shape="rectangle">
+			<gradient
+				android:angle="90"
+				android:centerY="0.1"
+				android:centerX="0.1"
+				android:endColor="@color/aviary_nav_primary_color_transparent"
+				android:startColor="@color/aviary_nav_secondary_color_transparent" />
+		</shape>
+	</item>
+
+</layer-list><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_nav_background_transparent.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/drawable/aviary_nav_background_transparent.xml -->

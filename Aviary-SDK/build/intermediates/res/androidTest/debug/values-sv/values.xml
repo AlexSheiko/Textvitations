@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-sv/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Visa startsidan"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Navigera uppåt"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Fler alternativ"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Klart"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Visa alla"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Välj en app"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Ta bort frågan"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Sökfråga"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Sök"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Skicka fråga"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Röstsökning"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Dela med"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Dela med %s"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-sv/values.xml -->
+    <eat-comment/>
+    <string name="confirm_quit_message">Vänta! Du har inte sparat dina ändringar. Är du säker på att du vill stänga fotoredigeraren?</string>
+    <string name="feather_activity_not_found">Tyvärr, det finns ingen applikation på din enhet som kan hantera ditt val. Vill du ladda ned en nu?</string>
+    <string name="feather_adjust">Orientering</string>
+    <string name="feather_apply">Använd</string>
+    <string name="feather_applying_actions_counter">Tillämpar val %1$d of %2$d</string>
+    <string name="feather_attention">Varning</string>
+    <string name="feather_blemish">Fläckig</string>
+    <string name="feather_blur">Oskärpa</string>
+    <string name="feather_brightness">Ljushet</string>
+    <string name="feather_cancel">Avbryt</string>
+    <string name="feather_close">Stäng</string>
+    <string name="feather_confirm">Bekräfta</string>
+    <string name="feather_contrast">Kontrast</string>
+    <string name="feather_crop">Beskär</string>
+    <string name="feather_custom">Anpassa</string>
+    <string name="feather_delete">Ta bort</string>
+    <string name="feather_draw">Rita</string>
+    <string name="feather_edit_bottom_text">Redigera text nedan</string>
+    <string name="feather_edit_top_text">Redigera text ovan</string>
+    <string name="feather_edit_your_photo">Fotoredigerare</string>
+    <string name="feather_effect_loading_message">Tillämpar effekter</string>
+    <string name="feather_effects">Effekter</string>
+    <string name="feather_enhance">Förbättra</string>
+    <string name="feather_enter_text_here">Skriv in text här</string>
+    <string name="feather_error_download_image_message">Ett fel uppstod vid nedladdningen av bilden, vänligen försök igen senare.</string>
+    <string name="feather_error_saving_image">Hoppsan, ett fel uppstod när bilden skulle sparas.</string>
+    <string name="feather_flip">Vrid</string>
+    <string name="feather_generic_error_title">Fel</string>
+    <string name="feather_infoscreen_bottom_button">Om redigeringsverktyget</string>
+    <string name="feather_keep_editing">Fortsätt redigera</string>
+    <string name="feather_loading_image">Laddar bild...</string>
+    <string name="feather_loading_title">Laddar</string>
+    <string name="feather_meme">Meme</string>
+    <string name="feather_original">Original</string>
+    <string name="feather_powered_by_aviary">Med stöd av Aviary.com</string>
+    <string name="feather_red_eye">Röda ögon</string>
+    <string name="feather_revert_dialog_message">Du kommer att förlora alla ändringar du gjort. Är du säker på att du vill återgå till din originalbild?</string>
+    <string name="feather_revert_dialog_title">Återgå till original?</string>
+    <string name="feather_rotate">Rotera</string>
+    <string name="feather_saturation">Färgmättnad</string>
+    <string name="feather_save">Klar</string>
+    <string name="feather_save_progress">Sparar...</string>
+    <string name="feather_sharpen">Skärpa</string>
+    <string name="feather_square">Kvadrat</string>
+    <string name="feather_stickers">Accessoarer</string>
+    <string name="feather_text">Text</string>
+    <string name="feather_tool">Verktyg</string>
+    <string name="feather_tool_leave_question">Är du säker på att du vill bortse från ändringarna i verktyget?</string>
+    <string name="feather_tool_temperature">Värme</string>
+    <string name="feather_tool_tiltshift">Fokus</string>
+    <string name="feather_whiten">Gör vitare</string>
+    <string name="feather_yes_leave">Lämna redigeraren</string>
+    <string name="feather_zoom_mode">Zoomat</string>
+</resources>

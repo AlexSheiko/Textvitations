@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-v10/values.xml -->
+    <eat-comment/>
+    <integer name="aviary_feature_image_cycle_time">5000</integer>
+    <integer name="aviary_mediumAnimTime">450</integer>
+    <integer name="aviary_shortAnimTime">300</integer>
+</resources>

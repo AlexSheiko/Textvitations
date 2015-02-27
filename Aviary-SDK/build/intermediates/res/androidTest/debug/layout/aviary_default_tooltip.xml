@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!-- welcome overlay -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:background="@drawable/aviary_default_tooltip_background">
+
+	<com.aviary.android.feather.sdk.widget.AviaryTextView
+		android:clickable="false"
+		android:focusable="false"
+		android:id="@android:id/text1"
+		android:layout_centerInParent="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?attr/aviaryTextAppearanceMedium"
+		app:aviary_typeface="?attr/aviaryFontRegular"
+		android:textStyle="bold"
+		android:textColor="@color/aviary_primary_color"
+		android:gravity="center"
+		android:layout_margin="2dip"
+		android:text="@string/feather_undo" />
+
+</RelativeLayout><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/layout/aviary_default_tooltip.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/layout/aviary_default_tooltip.xml -->

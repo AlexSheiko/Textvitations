@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+	android:fromAlpha="0.0"
+	android:toAlpha="1.0"
+	android:duration="@android:integer/config_longAnimTime">
+
+</alpha><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/anim/aviary_detail_banner_fade_in.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/anim/aviary_detail_banner_fade_in.xml -->

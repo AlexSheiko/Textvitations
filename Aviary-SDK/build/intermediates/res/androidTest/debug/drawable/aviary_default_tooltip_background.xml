@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape android:shape="rectangle">
+			<corners android:radius="6dip"></corners>
+			<solid android:color="#b4252525"></solid> <!-- #FF131518 -->
+		</shape>
+	</item>
+</layer-list><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_default_tooltip_background.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/drawable/aviary_default_tooltip_background.xml -->

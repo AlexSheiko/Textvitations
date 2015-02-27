@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-pl/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Przejdź do strony głównej"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Przejdź wyżej"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Więcej opcji"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Gotowe"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Zobacz wszystkie"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Wybierz aplikację"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Wyczyść zapytanie"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Wyszukiwane hasło"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Szukaj"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Wyślij zapytanie"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Wyszukiwanie głosowe"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Udostępnij dla"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Udostępnij dla %s"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-pl/values.xml -->
+    <eat-comment/>
+    <string name="aviary_passport">Paszport</string>
+    <string name="aviary_subscription_tier1_description">1 miesiąc</string>
+    <string name="aviary_subscription_tier2_description">1 rok</string>
+    <string name="confirm_quit_message">Zaczekaj! Nie zachowałeś zmian. Czy jesteś pewien, że chcesz przerwać edycję?</string>
+    <string name="feather_about_dialog_message">Aviary to wiodący na swiecie edytor zdjęć. Zobacz jak w kilka minut dodać edytor do Twoich aplikacji.</string>
+    <string name="feather_acc_a_sticker">Naklejka</string>
+    <string name="feather_acc_color">Kolor</string>
+    <string name="feather_acc_decrease_value">Zmniejsz wartość</string>
+    <string name="feather_acc_flip_h">Lustrzane odbicie w poziomie</string>
+    <string name="feather_acc_flip_v">Lustrzane odbicie w pionie</string>
+    <string name="feather_acc_increase_value">Zwiększ wartość</string>
+    <string name="feather_acc_lens_toggle">Zoom</string>
+    <string name="feather_acc_rotate_ccw">Obróć w lewo</string>
+    <string name="feather_acc_rotate_cw">Obróć w prawo</string>
+    <string name="feather_acc_size">Rozmiar</string>
+    <string name="feather_activity_not_found">Przepraszamy, na Twoim urządzeniu nie ma aplikacji umożliwiającej przeprowadzenie tej akcji. Czy chcesz pobrać ją teraz z Google Play?</string>
+    <string name="feather_adjust">Orientacja</string>
+    <string name="feather_an_error_occurred">Pojawił się błąd</string>
+    <string name="feather_apply">Zastosuj</string>
+    <string name="feather_applying_actions_counter">Zatwierdzanie akcji %1$d z %2$d</string>
+    <string name="feather_attention">Uwaga</string>
+    <string name="feather_blemish">Rozcieranie</string>
+    <string name="feather_blemish_tool_tip">Po prostu stuknij</string>
+    <string name="feather_blur">Rozmazywanie</string>
+    <string name="feather_borders">Ramki</string>
+    <string name="feather_borders_dialog_first_time">Aby rozpocząć, zainstaluj darmowy zestaw niesamowitych ramek Aviary w wysokiej rozdzielczości.</string>
+    <string name="feather_brightness">Jasność</string>
+    <string name="feather_cancel">Anuluj</string>
+    <string name="feather_cant_undo_anymore">Nie można cofnąć</string>
+    <string name="feather_cant_undo_anymore_text">Naciśnij i przytrzymaj zdjęcie, aby przywrócić oryginał.</string>
+    <string name="feather_circle">Zakreśl</string>
+    <string name="feather_close">Zamknij</string>
+    <string name="feather_colorfix">Poprawianie koloru</string>
+    <string name="feather_colorsplash_eraser">Gumka</string>
+    <string name="feather_colorsplash_free">Dowolny kolor</string>
+    <string name="feather_colorsplash_smart">Najlepszy kolor</string>
+    <string name="feather_confirm">Zatwierdź</string>
+    <string name="feather_contrast">Kontrast</string>
+    <string name="feather_crop">Kadruj</string>
+    <string name="feather_custom">Manualnie</string>
+    <string name="feather_delete">Skasuj</string>
+    <string name="feather_details">Szczegóły</string>
+    <string name="feather_download">Pobierz</string>
+    <string name="feather_download_start_failed">Zakup nie powiódł się. Spróbuj ponownie.</string>
+    <string name="feather_draw">Rysowanie</string>
+    <string name="feather_edit_bottom_text">Edytuj dolny tekst</string>
+    <string name="feather_edit_top_text">Edytuj górny tekst</string>
+    <string name="feather_edit_your_photo">Edytor zdjęć</string>
+    <string name="feather_effect_intensity_tooltip">Aby dostosować intensywność, przesuń w górę lub w dół</string>
+    <string name="feather_effect_loading_message">Dodawanie efektów</string>
+    <string name="feather_effects">Efekty</string>
+    <string name="feather_enhance">Wzmocnij</string>
+    <string name="feather_enhance_effect_food">Jedzenie</string>
+    <string name="feather_enhance_effect_night">Noc</string>
+    <string name="feather_enhance_effect_portrait">Portret</string>
+    <string name="feather_enhance_effect_scenery">Sceneria</string>
+    <string name="feather_enter_text_here">Wpisz tekst</string>
+    <string name="feather_error_download_image_message">Wystąpił błąd w trakcie pobierania zdjęcia, spróbuj ponownie później.</string>
+    <string name="feather_error_saving_image">Ups, wystąpił błąd w trakcie zapisywania obrazka.</string>
+    <string name="feather_featured">Polecane</string>
+    <string name="feather_feedback">reakcje, opinie</string>
+    <string name="feather_feedback_dialog_message">Masz propozycje, jak poprawić edytor Aviary? Daj nam znać.</string>
+    <string name="feather_filters">Filtry</string>
+    <string name="feather_flip">Odwróć</string>
+    <string name="feather_generic_error_title">Błąd</string>
+    <string name="feather_get_more">Sklep</string>
+    <string name="feather_hidef">Hi-Def</string>
+    <string name="feather_iap_download">Darmowe</string>
+    <string name="feather_iap_download_failed">Pobieranie nieudane</string>
+    <string name="feather_iap_failed_download_informations">Pobieranie wymaganych informacji nie powiodło się</string>
+    <string name="feather_iap_failed_download_previews">Nie udało się pobrać podglądów</string>
+    <string name="feather_iap_install">Zainstaluj</string>
+    <string name="feather_iap_notification_installed_summary">Wtyczka została zainstalowana</string>
+    <string name="feather_iap_owned">Zainstalowane</string>
+    <string name="feather_iap_pack_installed">Zainstalowany</string>
+    <string name="feather_iap_restore">Przywróć</string>
+    <string name="feather_iap_restore_all">Przywróć wszystkie</string>
+    <string name="feather_iap_restore_all_failed">Przywracanie Przywracanie wszystkich elementów nie powiodło się</string>
+    <string name="feather_iap_restore_all_in_progress">Przywracanie Trwa przywracanie wszystkich elementów</string>
+    <string name="feather_iap_restore_all_summary">Już kupione? Dotknij poniżej aby przywrócić wszystkie zakupione aplikacje za darmo.</string>
+    <string name="feather_iap_retry">Ponów próbę</string>
+    <string name="feather_iap_subscription_banner_text">„Zdobądź ten pakiet i całą masę innych efektów od Aviary – dla posiadaczy Aviary Passport w jednej, niskiej cenie”!</string>
+    <string name="feather_iap_unavailable">Niedostępne</string>
+    <string name="feather_iap_uninstall">Odinstaluj</string>
+    <string name="feather_illuminate">Rozjaśnij</string>
+    <string name="feather_infoscreen_bottom_button">O edytorze</string>
+    <string name="feather_item_not_found">Nie znaleziono elementu</string>
+    <string name="feather_keep_editing">Kontynuuj edytowanie</string>
+    <string name="feather_loading_image">Wczytywanie obrazka...</string>
+    <string name="feather_loading_title">Wczytywanie…</string>
+    <string name="feather_meme">Meme</string>
+    <string name="feather_message_button_no">Nie, dzięki.</string>
+    <string name="feather_message_button_yes">Pewnie!</string>
+    <string name="feather_new_stickers">Nowe naklejki</string>
+    <string name="feather_notification_n_items_cant_be_restored">Przywracanie %1$s element/-ów nie powiodło się</string>
+    <string name="feather_notification_no_items_to_restore">Nie ma potrzeby przywracania jakichkolwiek elementów</string>
+    <string name="feather_notification_plugins_installed_count">%1$d zainstalowanych wtyczek</string>
+    <string name="feather_notification_plus_more">Pozostało %1$d</string>
+    <string name="feather_notification_restore_all_completed">Przywracanie Ukończono przywracanie wszystkich elementów</string>
+    <string name="feather_notification_some_items_cant_be_restored">Przywracanie niektórych elementów nie powiodło się</string>
+    <string name="feather_ops_error_download_image">Mamy problemy z połączeniem :(</string>
+    <string name="feather_original">Początkowy</string>
+    <string name="feather_overlay_blemish_close_text">Sprawdź nowe narzędzie &lt;b>Blur&lt;/b>!</string>
+    <string name="feather_overlay_blemish_close_title">Szukasz dawnego Blemish?</string>
+    <string name="feather_overlay_blemish_tap_text">Stuknij w niedoskonałości, aby je usunąć.</string>
+    <string name="feather_overlay_stickers_text">Zainstaluj ten darmowy pakiet, aby rozpocząć!</string>
+    <string name="feather_overlay_tap_title">Stuknij</string>
+    <string name="feather_overlay_undo_title">Przeciągnij, aby cofnąć lub powtórzyć zmiany</string>
+    <string name="feather_overlay_zoom_text">Możesz też uszczypnąć ekran, aby powiększyć!</string>
+    <string name="feather_overlay_zoom_title">Powiększ</string>
+    <string name="feather_passport">Paszport Aviary</string>
+    <string name="feather_please_try_again_later">Proszę spróbować później</string>
+    <string name="feather_powered_by_aviary">Stworzone przez Aviary.com</string>
+    <string name="feather_rectangle">Prostokąt</string>
+    <string name="feather_red_eye">Czerwone oczy</string>
+    <string name="feather_redo">Powtórz</string>
+    <string name="feather_refresh">Odśwież</string>
+    <string name="feather_restore_all_request_sent">Wysłano zapytanie. Więcej informacji w powiadomieniach w Twoim urządzeniu mobilnym</string>
+    <string name="feather_revert_dialog_message">Stracisz wszystkie zmiany, których dokonałeś. Czy na pewno chcesz powrócic to orginalnego obrazu?</string>
+    <string name="feather_revert_dialog_title">Przywrócić oryginał?</string>
+    <string name="feather_rotate">Obróć</string>
+    <string name="feather_saturation">Nasycenie</string>
+    <string name="feather_save">Gotowe</string>
+    <string name="feather_save_progress">Zapisywanie...</string>
+    <string name="feather_see_more">Zobacz więcej</string>
+    <string name="feather_send_feedback">Wyślij informacje zwrotną</string>
+    <string name="feather_settings_join_beta_description">Uzyskaj wcześniejszy dostęp do nowych opcji i jeszcze lepszego Aviary!</string>
+    <string name="feather_settings_join_beta_title">Wypróbuj wersję beta Aviary</string>
+    <string name="feather_shapes">Kształty</string>
+    <string name="feather_sharpen">Ostrość</string>
+    <string name="feather_square">Kwadrat</string>
+    <string name="feather_sticker_flip_tooltip">Stuknij, aby odwrócić etykietkę</string>
+    <string name="feather_stickers">Naklejki</string>
+    <string name="feather_stickers_dialog_first_time">Aby rozpocząć, zainstaluj darmowy zestaw niesamowitych naklejek Aviary w wysokiej rozdzielczości.</string>
+    <string name="feather_store_ask_uninstall_free_body">To jest bezpłatny pakiet z edycji limitowanej. Jeśli odinstalujesz ten pakiet, przywrócenie go w przyszłości może się okazać niemożliwe.</string>
+    <string name="feather_store_checking_additional_packs">Trwa sprawdzanie, czy dostępne są dodatkowe pakiety...</string>
+    <string name="feather_store_connection_problem">Wystąpił problem przy próbie połączenia ze sklepem Google Play. Spróbuj ponownie.</string>
+    <string name="feather_store_monthly">Miesięcznie</string>
+    <string name="feather_store_my_stuff">Moje materiały</string>
+    <string name="feather_store_passport_account_info">Paszport - dane konta</string>
+    <string name="feather_store_passport_banner_text">„Zdobądź ten zestaw i wiele innych efektów Aviary po jednej niskiej cenie, dzięki Paszportowi Aviary! Kliknij po więcej informacji!”</string>
+    <string name="feather_store_passport_cancelled">Anulowane</string>
+    <string name="feather_store_passport_refunded">Zwrot wypłacony</string>
+    <string name="feather_store_passport_status">Status paszportu</string>
+    <string name="feather_store_passport_subscribed">Subskrybowane</string>
+    <string name="feather_store_passport_type">Rodzaj Paszportu</string>
+    <string name="feather_store_passport_unknown">Nieznane</string>
+    <string name="feather_store_passport_welcome_body">Masz teraz nieograniczony dostęp do każdego pakietu efektów, nalepek i ramek z naszej oferty, a także do wszystkich przyszłych pakietów. W celu zarządzania statusem swojej subskrypcji odwiedź ekran konta Paszport w sklepie. Przyjemnego edytowania!</string>
+    <string name="feather_store_passport_welcome_title">Witamy w koncie Paszport!</string>
+    <string name="feather_store_purchase_date">Data zakupu</string>
+    <string name="feather_store_title">Sklep Aviary</string>
+    <string name="feather_store_unsubscribe">Zrezygnuj</string>
+    <string name="feather_store_yearly">Rocznie</string>
+    <string name="feather_subscribe">Zapisz się</string>
+    <string name="feather_text">Tekst</string>
+    <string name="feather_tool">Narzędzie</string>
+    <string name="feather_tool_colorsplash">Efekt Splash</string>
+    <string name="feather_tool_leave_question">Czy na pewno chcesz anulować wszystkie zmiany?</string>
+    <string name="feather_tool_temperature">Ocieplenie</string>
+    <string name="feather_tool_tiltshift">Nieostrość</string>
+    <string name="feather_try_again">Spróbuj ponownie</string>
+    <string name="feather_undo">Cofnij</string>
+    <string name="feather_unsaved_from_camera">Czy na pewno chcesz wrócić? Wszelkie niezapisane postępy mogą zostać utracone.</string>
+    <string name="feather_version">Wersja</string>
+    <string name="feather_vignette">Winieta</string>
+    <string name="feather_warning">Ostrzeżenie</string>
+    <string name="feather_welcome_to_frames">RAMKI!</string>
+    <string name="feather_welcome_to_stickers">NAKLEJEKI!</string>
+    <string name="feather_whiten">Wybielanie</string>
+    <string name="feather_yes_leave">Wyjdź z edytora</string>
+    <string name="feather_zoom_mode">Tryb powiększania</string>
+</resources>

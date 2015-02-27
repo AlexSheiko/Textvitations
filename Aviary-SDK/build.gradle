@@ -80,12 +80,12 @@ gradle.startParameter.getTaskNames().each { task ->
 }
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "20"
+    compileSdkVersion 21
+    buildToolsVersion "20.0.0"
 
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 20
+        targetSdkVersion 21
 
         versionCode Integer.parseInt(aviarySdkVersionCode)
         versionName VERSION_NAME
@@ -121,7 +121,6 @@ android {
 
 dependencies {
     println "(sdk) finalFlavor: $aviarySdkFlavor - $aviarySdkBuildType"
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.aviary.android.feather.sdk:sdk-library:+'
 }

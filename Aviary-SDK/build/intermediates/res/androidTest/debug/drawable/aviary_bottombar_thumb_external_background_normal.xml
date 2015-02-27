@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+	<gradient
+		android:angle="90"
+		android:endColor="@color/aviary_bottom_primary_color_inverse_dark"
+		android:startColor="@color/aviary_bottom_primary_color_inverse_light" />
+</shape><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/drawable/aviary_bottombar_thumb_external_background_normal.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/drawable/aviary_bottombar_thumb_external_background_normal.xml -->

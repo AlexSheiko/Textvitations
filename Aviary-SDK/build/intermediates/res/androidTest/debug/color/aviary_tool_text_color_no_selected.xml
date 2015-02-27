@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/aviary_primary_color"></item>
+</selector><!-- From: file:/D:/Textvitations/Aviary-SDK/src/main/res/color/aviary_tool_text_color_no_selected.xml --><!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/color/aviary_tool_text_color_no_selected.xml -->

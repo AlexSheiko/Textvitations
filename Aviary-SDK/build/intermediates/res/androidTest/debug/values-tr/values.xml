@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-tr/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Ana ekrana git"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Yukarı git"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Diğer seçenekler"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Tamamlandı"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Tümünü göster"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Bir uygulama seçin"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Sorguyu temizle"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Arama sorgusu"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Ara"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Sorguyu gönder"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Sesli arama"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Şununla paylaş"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"%s ile paylaş"</string>
+    <!-- From: file:/D:/Textvitations/Aviary-SDK/build/intermediates/bundles/debug/res/values-tr/values.xml -->
+    <eat-comment/>
+    <string name="confirm_quit_message">Bekle! Yaptığın işi kaydetmedin. Editörü kapatmak istediğinden emin misin?</string>
+    <string name="feather_activity_not_found">Üzgünüz. Telefonunda bu aksiyonu gerçekleştirebilmek için gereken uygulama yok. Dükkan\'dan indirmek ister misin?</string>
+    <string name="feather_adjust">Döndür</string>
+    <string name="feather_apply">Uygula</string>
+    <string name="feather_applying_actions_counter">İşlemler uygulanıyor: %1$d / %2$d</string>
+    <string name="feather_attention">Dikkat</string>
+    <string name="feather_blemish">Rötuş</string>
+    <string name="feather_blur">Bulanıklaştır</string>
+    <string name="feather_borders">Çerçeveler</string>
+    <string name="feather_borders_dialog_first_time">Aviary\'nin bedava başlangıç paketi olan güzel yüksek çözünürlüklü çerçeveleri kur.</string>
+    <string name="feather_brightness">Işık</string>
+    <string name="feather_cancel">Vazgeç</string>
+    <string name="feather_circle">Daire</string>
+    <string name="feather_close">Kapat</string>
+    <string name="feather_colorsplash_eraser">Silgi</string>
+    <string name="feather_colorsplash_free">Serbest Renk</string>
+    <string name="feather_colorsplash_smart">Akıllı Renk</string>
+    <string name="feather_confirm">Onayla</string>
+    <string name="feather_contrast">Karşıtlık</string>
+    <string name="feather_crop">Kes</string>
+    <string name="feather_custom">Özel</string>
+    <string name="feather_delete">Sil</string>
+    <string name="feather_details">Detaylar</string>
+    <string name="feather_download">İndir</string>
+    <string name="feather_draw">Çiz</string>
+    <string name="feather_edit_bottom_text">Alt metini düzenle</string>
+    <string name="feather_edit_top_text">Üst metni düzenle</string>
+    <string name="feather_edit_your_photo">Fotoğraf düzenleyici</string>
+    <string name="feather_effect_loading_message">Efektler uygulanıyor</string>
+    <string name="feather_effects">Efektler</string>
+    <string name="feather_enhance">Canlandır</string>
+    <string name="feather_enter_text_here">Buraya text girin</string>
+    <string name="feather_error_download_image_message">Görüntüyü kaydederken bir hata oluştu. Lütfen tekrar deneyin.</string>
+    <string name="feather_error_saving_image">Görüntüyü kaydederken bir hata oluştu.</string>
+    <string name="feather_featured">Öne çıkan</string>
+    <string name="feather_flip">Ters çevir</string>
+    <string name="feather_generic_error_title">Hata</string>
+    <string name="feather_iap_pack_installed">Kuruldu</string>
+    <string name="feather_infoscreen_bottom_button">Bu araç hakkında</string>
+    <string name="feather_keep_editing">Düzenlemeye devam et</string>
+    <string name="feather_loading_image">Resmi yüklüyor...</string>
+    <string name="feather_loading_title">Yüklüyor</string>
+    <string name="feather_meme">Meme</string>
+    <string name="feather_original">Orijinal</string>
+    <string name="feather_overlay_blemish_close_text">Yeni &lt;b>Flulaştırma&lt;/b> aracına bir göz at!</string>
+    <string name="feather_overlay_blemish_close_title">Eski kusuru mu arıyorsun?</string>
+    <string name="feather_powered_by_aviary">Powered by Aviary.com</string>
+    <string name="feather_rectangle">Diktörtgen</string>
+    <string name="feather_red_eye">Kırmızı göz</string>
+    <string name="feather_revert_dialog_message">Yaptığın tüm değişiklikleri kaydetmek üzeresin. Orijinal resme dönmek istediğine emin misin?</string>
+    <string name="feather_revert_dialog_title">Orijinal hale geri dönmek mi istiyorsun?</string>
+    <string name="feather_rotate">Döndür</string>
+    <string name="feather_saturation">Doygunluk</string>
+    <string name="feather_save">Bitti</string>
+    <string name="feather_save_progress">Kaydediliyor...</string>
+    <string name="feather_sharpen">Keskinlik</string>
+    <string name="feather_square">Kare</string>
+    <string name="feather_stickers">Çıkartmalar</string>
+    <string name="feather_stickers_dialog_first_time">Aviary\'nin bedava başlangıç paketi olan güzel yüksek çözünürlüklü çıkartmaları kur.</string>
+    <string name="feather_text">Metin</string>
+    <string name="feather_tool">Araç</string>
+    <string name="feather_tool_colorsplash">Sıçrama</string>
+    <string name="feather_tool_leave_question">Bu araç ile yaptığınız değişiklikler kaydedilmeyecektir</string>
+    <string name="feather_tool_temperature">Sıcaklık</string>
+    <string name="feather_tool_tiltshift">Odak</string>
+    <string name="feather_whiten">Beyazlat</string>
+    <string name="feather_yes_leave">Düzenleyiciden çık</string>
+    <string name="feather_zoom_mode">Yakınlaşma modu</string>
+</resources>
