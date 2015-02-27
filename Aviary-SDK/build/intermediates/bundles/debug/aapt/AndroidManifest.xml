@@ -34,6 +34,9 @@
         <meta-data
             android:name="com.aviary.android.feather.v1.API_KEY"
             android:value="6bea1dd566207f91" />
+        <meta-data
+            android:name="com.aviary.android.feather.v1.API_KEY_SECRET"
+            android:value="85c246dd9c3b9289" />
     </application>
 
 </manifest>

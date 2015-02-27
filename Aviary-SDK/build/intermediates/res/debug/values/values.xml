@@ -818,7 +818,7 @@ low price with Aviary Passport!</string>
 		<item name="aviaryLightGrayButtonStyle">@style/AviaryWidget.Button.LightGray</item>
 		<item name="aviaryToggleButtonStyle">@style/AviaryWidget.Button.Secondary.Toggle</item>
 	</style>
-    <style name="AviaryBaseTheme.Dark.Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
+    <style name="AviaryBaseTheme.Dark.Dialog" parent="@android:style/Theme.Holo.Dialog">
 		<item name="aviaryFontRegular">fonts/Roboto-Bold.ttf</item>
 		<item name="aviaryFontLight">fonts/Roboto-Light.ttf</item>
 		<item name="aviaryTextAppearance">@style/AviaryTextAppearance</item>

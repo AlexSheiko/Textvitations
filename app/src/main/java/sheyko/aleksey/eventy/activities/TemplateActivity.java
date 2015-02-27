@@ -89,6 +89,8 @@ public class TemplateActivity extends Activity {
                     editor = sharedPref.edit();
                     editor.putString("image_path", mImagePath);
                     editor.apply();
+
+                    callAviaryIntent(Uri.parse(mImagePath));
                 }
 
                 mHelper = new IabHelper(TemplateActivity.this, base64EncodedPublicKey);
